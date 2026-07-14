@@ -1,5 +1,6 @@
 import { about, profile } from '../data'
 import { CountUp, Eyebrow, PillLink, Reveal } from './ui'
+import StatCard from './StatCard'
 
 /**
  * The About bento.
@@ -44,29 +45,20 @@ export default function About() {
           </div>
         </Reveal>
 
-        {/* The 2x2. These are the "card" reveal — 40px of travel, not 30. */}
+        {/* The 2x2. The top two tiles are the LANDING SLOTS for the cards that
+            fly down out of the hero — same component, so the card that leaves
+            the hero is the card that arrives here. On desktop these render
+            invisible and TravelingStats draws the real ones on top; below lg
+            there's no travel and these are simply the cards. They don't get a
+            reveal, because something is already flying into them. */}
         <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-          <Reveal as="card" delay={0.05}>
-            <div className="card flex h-full flex-col justify-between gap-6 p-6">
-              <p className="max-w-[10rem] text-sm leading-snug text-body">{about.stats[0].label}</p>
-              <CountUp
-                to={about.stats[0].value}
-                suffix={about.stats[0].suffix}
-                className="text-4xl font-semibold tracking-tight text-ink"
-              />
-            </div>
-          </Reveal>
+          <div className="self-start">
+            <StatCard stat={about.stats[0]} anchorId="stat-about-0" anchor />
+          </div>
 
-          <Reveal as="card" delay={0.1}>
-            <div className="card flex h-full flex-col justify-between gap-6 p-6">
-              <p className="max-w-[10rem] text-sm leading-snug text-body">{about.stats[1].label}</p>
-              <CountUp
-                to={about.stats[1].value}
-                suffix={about.stats[1].suffix}
-                className="text-4xl font-semibold tracking-tight text-ink"
-              />
-            </div>
-          </Reveal>
+          <div className="self-start">
+            <StatCard stat={about.stats[1]} anchorId="stat-about-1" anchor />
+          </div>
 
           {/* Rating tile: big number, then the star chip. */}
           <Reveal as="card" delay={0.15}>

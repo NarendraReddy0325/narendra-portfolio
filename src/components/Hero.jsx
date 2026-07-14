@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { profile, heroTags, about } from '../data'
-import { CountUp } from './ui'
+import StatCard from './StatCard'
 
 /* ---------------------------------------------------------------------------
    Hero motion — the reference's appear-animation config, verbatim.
@@ -51,20 +51,16 @@ function TiltTag({ label, rotate, className }) {
   )
 }
 
-function StatCard({ stat, delay = 0 }) {
+/* The hero slot for a travelling card. It animates in like everything else, but
+   on desktop it renders invisible — TravelingStats draws the real card on top
+   of it and then carries it down into the About bento. Below lg there is no
+   travel, so the card here is the visible one. */
+function StatSlot({ stat, anchorId, delay = 0 }) {
   const reduce = useReducedMotion()
 
   return (
-    <motion.div
-      {...(reduce ? {} : fadeUp(delay))}
-      className="card flex items-center justify-between gap-6 px-6 py-5 shadow-[0_24px_60px_-30px_rgba(16,16,16,0.35)]"
-    >
-      <p className="max-w-[9rem] text-[0.8rem] leading-snug text-body">{stat.label}</p>
-      <CountUp
-        to={stat.value}
-        suffix={stat.suffix}
-        className="text-3xl font-semibold tracking-tight text-ink"
-      />
+    <motion.div {...(reduce ? {} : fadeUp(delay))}>
+      <StatCard stat={stat} anchorId={anchorId} anchor />
     </motion.div>
   )
 }
@@ -74,17 +70,15 @@ export default function Hero() {
   const sectionRef = useRef(null)
   const m = (props) => (reduce ? {} : props)
 
-  /* Scroll-linked descent: the two cards ride downward as the hero leaves the
-     viewport and hand off to the About bento, which carries the same figures.
-     Springing the progress keeps the travel from feeling glued to the bar. */
+  /* The stat cards' travel is owned by TravelingStats — they leave this section
+     entirely and land in the About bento, so nothing here moves them. All that's
+     left scroll-linked here is the ghost word drifting up against the portrait,
+     which separates the layers as you scroll. */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
   })
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 })
-
-  const cardsY = useTransform(progress, [0, 1], [0, 300])
-  const cardsOpacity = useTransform(progress, [0, 0.72, 1], [1, 1, 0])
   const ghostY = useTransform(progress, [0, 1], [0, -70])
 
   return (
@@ -144,13 +138,12 @@ export default function Hero() {
             className="top-[24%] right-0 sm:right-6 lg:right-28"
           />
 
-          <motion.div
-            style={reduce ? undefined : { y: cardsY, opacity: cardsOpacity }}
-            className="absolute right-0 bottom-6 hidden w-[21rem] flex-col gap-3 lg:flex"
-          >
-            <StatCard stat={about.stats[0]} delay={0.45} />
-            <StatCard stat={about.stats[1]} delay={0.6} />
-          </motion.div>
+          {/* Departure slots. No scroll-fade any more — the cards physically
+              travel, so fading them out here would delete the thing that moves. */}
+          <div className="absolute right-0 bottom-6 hidden w-[21rem] flex-col gap-3 lg:flex">
+            <StatSlot stat={about.stats[0]} anchorId="stat-hero-0" delay={0.45} />
+            <StatSlot stat={about.stats[1]} anchorId="stat-hero-1" delay={0.6} />
+          </div>
         </div>
 
         {/* Headline sits bottom-left, overlapping the portrait's base. */}
@@ -169,10 +162,10 @@ export default function Hero() {
           </motion.h1>
         </div>
 
-        {/* Below lg the cards can't float, so they become a normal row. */}
+        {/* Below lg there's no travel — these are just cards. */}
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:hidden">
-          <StatCard stat={about.stats[0]} delay={0.1} />
-          <StatCard stat={about.stats[1]} delay={0.2} />
+          <StatCard stat={about.stats[0]} />
+          <StatCard stat={about.stats[1]} />
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import SmoothScroll from './components/SmoothScroll'
+import TravelingStats from './components/TravelingStats'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -18,6 +19,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-page">
       <SmoothScroll />
+
+      {/* The two counter cards live here, not in Hero or About — they travel
+          between the two, so neither section can own them. */}
+      <TravelingStats />
 
       <a
         href="#top"
