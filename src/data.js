@@ -1,30 +1,17 @@
 /* ---------------------------------------------------------------------------
-   ALL SITE CONTENT.
-   Edit this one file to change the site — no component needs touching.
-
-   Anything marked TODO(you) is placeholder text I wrote so the layout looks
-   finished. Replace it before you publish.
+   ALL CONTENT. Edit this file only — no component needs touching.
+   Anything marked TODO(you) is placeholder copy.
 --------------------------------------------------------------------------- */
 
 export const profile = {
   name: 'Narendra Reddy',
-  initial: 'N', // the lime circle in the navbar + footer
-  role: 'Product, UI/UX & Brand Design',
   greeting: 'Hey, I’m Narendra',
-
-  // TODO(you): your real one-liner. This is the main hero paragraph.
-  intro:
-    'I design interfaces and then build them. Most of my work lives in the handoff gap — the place where a clean Figma file usually turns into messy code. I close that gap myself.',
-
-  availability: 'Available for new projects',
+  // The two hero lines. Kept as separate lines so they break exactly here.
+  headline: ['Product, UI/UX', '& Brand Design'],
+  ghostWord: 'DESIGNER', // the giant word behind the hero portrait
   email: 'reddynarendra.vemireddy@gmail.com',
+  portrait: '/images/portrait.jpg', // TODO(you): drop your photo here
 }
-
-export const socials = [
-  { label: 'Behance', href: 'https://www.behance.net/narendarreddy994' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/narendrareddy-uiuxdesigner/' },
-  { label: 'GitHub', href: 'https://github.com/NarendraReddy0325' },
-]
 
 export const nav = [
   { label: 'About', href: '#about' },
@@ -34,213 +21,226 @@ export const nav = [
   { label: 'Contact', href: '#contact' },
 ]
 
-// Keep these true — they're the first hard claim a visitor reads.
-export const stats = [
-  { value: '2+', label: 'Years Designing Digital Products' },
-  { value: '10', label: 'Projects Shipped End to End' },
-  { value: '6', label: 'Live in Production Today' },
-]
+// The tilted pills floating over the hero portrait.
+export const heroTags = ['Web design', 'UI/UX']
 
 export const about = {
-  heading: 'Design that earns trust and drives growth.',
-  // TODO(you): your real bio.
-  body: 'I’m a product designer two years in, working with founders and small teams on the interfaces people actually use — commerce, booking and SaaS. I care about the strategy behind the pixels: clarity, usability, and a point of view that survives contact with engineering.',
-  tools: ['Figma', 'Framer', 'Webflow', 'React', 'Three.js', 'After Effects'],
+  statement:
+    'I create thoughtful digital experiences that connect strategy, usability, and visual clarity.',
+  image: '/images/about.jpg', // TODO(you)
+  // Count-up cards. `value` is the number that animates; `suffix` is appended.
+  stats: [
+    { value: 2, suffix: '+', label: 'Years Crafting Digital Products' },
+    { value: 10, suffix: '', label: 'Projects Shipped End To End' },
+    { value: 6, suffix: '', label: 'Live In Production Today' },
+  ],
+  rating: { score: '4.8', label: 'Client Satisfaction Score' },
+  approach: {
+    title: 'Strategic Thinking, Clean Execution.',
+    tags: ['Interface Design', 'Product Strategy', 'No-code Development', 'Branding'],
+  },
 }
 
 /* ---------------------------------------------------------------------------
-   PROJECTS — all 10.
+   PROJECTS — the numbered 01…10 rows.
 
-   `type` is either "live" or "concept":
-     live     → card links out to `url` in a new tab, tagged "Live"
-     concept  → card opens a gallery of `images`, tagged "Concept"
-                (so nothing implies a shipped product that isn't one)
-
-   `color` is the Tailwind gradient used as the card artwork. To use a real
-   screenshot instead, add `image: '/images/<slug>/thumb.jpg'` to an entry and
-   drop the file in public/images/<slug>/ — the card renders it over the
-   gradient automatically.
+   `type` decides what the button does:
+     live    → "Explore Project" opens `url` in a new tab
+     concept → "View Screens" opens `images` in a lightbox, and the row is
+               marked "Concept" so nothing implies a shipped product
 --------------------------------------------------------------------------- */
 export const projects = [
   {
     title: 'Lumen Supply',
-    category: 'E-commerce',
-    year: '2025',
     type: 'live',
-    url: 'https://example.com', // TODO(you): the real URL
-    desc: 'A direct-to-consumer lighting store rebuilt around a checkout that stopped losing people at the shipping step.',
-    color: 'from-[#f5d6c6] to-[#c98b6f]',
+    url: 'https://example.com', // TODO(you)
+    image: '/images/lumen-supply.jpg',
+    desc: 'Rebuilt a direct-to-consumer lighting store around a checkout that stopped losing people at the shipping step — delivery cost surfaced up front, duplicate fields collapsed.',
   },
   {
     title: 'Northbank',
-    category: 'Fintech',
-    year: '2025',
     type: 'live',
     url: 'https://example.com',
-    desc: 'A reconciliation dashboard for finance teams, designed so the exception — not the ledger — is what you see first.',
-    color: 'from-[#bcd0ff] to-[#5a78c4]',
+    image: '/images/northbank.jpg',
+    desc: 'A reconciliation dashboard for finance teams, inverted so the exceptions surface first and the forty thousand matched rows collapse into one confirmable line.',
   },
   {
     title: 'Atlas Retreats',
-    category: 'Booking',
-    year: '2025',
     type: 'concept',
-    images: [
-      '/images/atlas-retreats/1.jpg',
-      '/images/atlas-retreats/2.jpg',
-      '/images/atlas-retreats/3.jpg',
-    ],
-    desc: 'A booking flow for remote cabins where the calendar is the product, not a step buried three screens in.',
-    color: 'from-[#d6f5cf] to-[#6fb86f]',
+    images: ['/images/atlas-1.jpg', '/images/atlas-2.jpg', '/images/atlas-3.jpg'],
+    image: '/images/atlas-1.jpg',
+    desc: 'A date-first booking flow for remote cabins, where the availability calendar is the product rather than a step buried three screens in.',
   },
   {
     title: 'Meridian',
-    category: 'SaaS',
-    year: '2024',
     type: 'live',
     url: 'https://example.com',
-    desc: 'Onboarding for a project-management tool, rebuilt so the first session ends with real work in the product.',
-    color: 'from-[#e3c6f5] to-[#9a6fc9]',
+    image: '/images/meridian.jpg',
+    desc: 'Onboarding for a project-management tool, rebuilt so the first session ends with the user’s own work in the product instead of a five-step tour.',
   },
   {
     title: 'Kiln Studio',
-    category: 'Web Experience',
-    year: '2024',
     type: 'live',
     url: 'https://example.com',
-    desc: 'A ceramics studio’s site, built so the work photographs itself and the type stays out of the way.',
-    color: 'from-[#f5e3c6] to-[#c9a86f]',
+    image: '/images/kiln-studio.jpg',
+    desc: 'A ceramics studio’s site, designed as a frame for the photography — full-bleed imagery, no interface chrome competing with the objects.',
   },
   {
     title: 'Verge Health',
-    category: 'Healthcare',
-    year: '2024',
     type: 'concept',
-    images: ['/images/verge-health/1.jpg', '/images/verge-health/2.jpg'],
-    desc: 'A patient-records interface designed for the ninety seconds a clinician actually has to read it.',
-    color: 'from-[#c6f0f5] to-[#6fa8c9]',
+    images: ['/images/verge-1.jpg', '/images/verge-2.jpg'],
+    image: '/images/verge-1.jpg',
+    desc: 'A patient-records summary layer designed for the ninety seconds a clinician actually has — current medications and anything changed since the last visit, above the fold.',
   },
   {
     title: 'Orbit Analytics',
-    category: 'Product Design',
-    year: '2024',
     type: 'concept',
-    images: ['/images/orbit-analytics/1.jpg', '/images/orbit-analytics/2.jpg'],
-    desc: 'An analytics product that answers the question in a sentence before it draws a single chart.',
-    color: 'from-[#d8d8f5] to-[#7a7ac4]',
+    images: ['/images/orbit-1.jpg', '/images/orbit-2.jpg'],
+    image: '/images/orbit-1.jpg',
+    desc: 'An analytics product that answers the question in a sentence and puts the chart underneath as evidence, rather than handing over twelve charts and hoping.',
   },
   {
     title: 'Ferra Market',
-    category: 'E-commerce',
-    year: '2024',
     type: 'live',
     url: 'https://example.com',
-    desc: 'A grocery marketplace whose search finally understands that people shop by meal, not by SKU.',
-    color: 'from-[#f5cfd6] to-[#c96f85]',
+    image: '/images/ferra-market.jpg',
+    desc: 'A grocery marketplace whose browse layer is built around meals rather than aisles, with substitutions inline instead of a dead zero-results page.',
   },
   {
     title: 'Palette',
-    category: 'Design System',
-    year: '2023',
     type: 'concept',
-    images: ['/images/palette/1.jpg', '/images/palette/2.jpg', '/images/palette/3.jpg'],
-    desc: 'A component library built token-first, so a rebrand is a variable change rather than a redraw.',
-    color: 'from-[#e8f5c6] to-[#a8c96f]',
+    images: ['/images/palette-1.jpg', '/images/palette-2.jpg'],
+    image: '/images/palette-1.jpg',
+    desc: 'A component library built token-first — primitives, then semantic aliases, then components — so a rebrand is a variable change rather than a redraw.',
   },
   {
     title: 'Tide',
-    category: 'Mobile UX',
-    year: '2023',
     type: 'concept',
-    images: ['/images/tide/1.jpg', '/images/tide/2.jpg'],
-    desc: 'A surf-forecast app that gives you a decision, not a dataset, in the four seconds before you leave the house.',
-    color: 'from-[#c6d8f5] to-[#6f8ec9]',
+    images: ['/images/tide-1.jpg', '/images/tide-2.jpg'],
+    image: '/images/tide-1.jpg',
+    desc: 'A surf-forecast app that gives you a verdict, not a dataset, in the four seconds before you leave the house — legible at arm’s length in bright sun.',
   },
 ]
 
+/* Services bento. `tone` picks the card colour: 'dark' or 'light'.
+   `tags` only render on the first card, matching the reference layout. */
 export const services = [
   {
     title: 'Brand Identity',
-    desc: 'Logos, visual systems, and guidelines that give your brand a distinct, lasting voice.',
-    items: ['Logo & Marks', 'Visual Systems', 'Guidelines'],
+    desc: 'Strategic brand systems built for clarity and growth.',
+    tone: 'dark',
+    tags: ['Brand Strategy', 'Visual Identity', 'Brand Guidelines', 'Colour', 'Typography', 'Voice'],
+  },
+  {
+    title: 'UI/UX Design',
+    desc: 'End-to-end product design, from research and flows to the shipped interface.',
+    tone: 'light',
   },
   {
     title: 'Web Experience',
     desc: 'Marketing sites and landing pages designed to convert and built to scale.',
-    items: ['Landing Pages', 'Marketing Sites', 'Webflow / Framer'],
-  },
-  {
-    title: 'UI/UX Design',
-    desc: 'End-to-end product design from research and flows to polished interfaces.',
-    items: ['Research', 'Wireframes', 'Design Systems'],
+    tone: 'dark',
   },
   {
     title: 'Development',
-    desc: 'Pixel-perfect, performant front-ends that bring the design to life.',
-    items: ['React', 'Animation', 'Three.js'],
+    desc: 'Pixel-accurate, performant front-ends that bring the design to life.',
+    tone: 'light',
   },
 ]
 
-/* TODO(you): REPLACE THESE BEFORE PUBLISHING.
-   These are invented placeholder quotes with invented names — they exist only
-   so the section can be laid out. Publishing them as-is means attributing words
-   to people who never said them. Swap in real quotes from real clients, or
-   delete <Testimonials /> from App.jsx and the section disappears cleanly. */
+// TODO(you): swap for real client logos, or delete the <Partners/> strip.
+export const partners = ['Lumen', 'Northbank', 'Atlas', 'Meridian', 'Kiln', 'Ferra', 'Orbit']
+
+/* TODO(you): REPLACE BEFORE PUBLISHING.
+   Invented quotes with invented names — placeholders so the carousel can be
+   laid out. Publishing them attributes words to people who never said them.
+   Swap in real quotes, or delete <Testimonials /> from App.jsx. */
 export const testimonials = [
   {
     quote:
-      'PLACEHOLDER — replace with a real client quote. Narendra turned a messy brief into a brand that finally feels like us.',
+      'PLACEHOLDER — replace with a real client quote. Every design decision was thoughtful, strategic, and clearly aligned with our product goals.',
     name: 'Client name',
     role: 'Role, Company',
+    image: '/images/client-1.jpg',
   },
   {
     quote:
-      'PLACEHOLDER — replace with a real client quote. The redesign lifted our trial conversion and every screen feels considered.',
+      'PLACEHOLDER — replace with a real client quote. Our platform became significantly easier to use after the redesign.',
     name: 'Client name',
     role: 'Role, Company',
+    image: '/images/client-2.jpg',
   },
   {
     quote:
-      'PLACEHOLDER — replace with a real client quote. Rare to find someone strong in both strategy and craft.',
+      'PLACEHOLDER — replace with a real client quote. The execution was precise, timely, and focused on delivering measurable results.',
     name: 'Client name',
     role: 'Role, Company',
+    image: '/images/client-3.jpg',
   },
 ]
 
 export const faqs = [
   {
-    q: 'What is your typical project timeline?',
-    a: 'Most brand or web projects run 3–6 weeks depending on scope. Smaller pieces — a landing page, an audit — usually land inside a week.',
+    q: 'How long does a typical project take?',
+    a: 'Most projects take between two and six weeks depending on scope, research depth, and revision rounds. Clear timelines are shared before we begin.',
   },
   {
     q: 'What does your design process look like?',
-    a: 'Discovery, direction, design, delivery. You get async updates at every step, and I stay through build, because the decisions that matter get made in implementation.',
+    a: 'Discovery, direction, design, delivery. You get async updates at every step, and I stay through build — the decisions that matter get made in implementation.',
   },
   {
-    q: 'How do revisions work?',
-    a: 'Revisions are unlimited within an active engagement. We iterate until it is right — no surprises, no per-round billing.',
+    q: 'Do you offer revisions?',
+    a: 'Revisions are unlimited within an active engagement. We iterate until it is right — no per-round billing, no surprises.',
   },
   {
-    q: 'Do you offer post-launch support?',
+    q: 'Do you provide post-launch support?',
     a: 'Yes. Every project includes 30 days of support, and ongoing care is available on retainer.',
   },
 ]
 
-// TODO(you): real posts, and point `href` at them. Until then the cards are
-// inert — they don't link anywhere, rather than pretending to.
+// `href: null` renders an inert card rather than a link that goes nowhere.
 export const posts = [
-  { title: 'Designing with restraint: why less converts more', tag: 'Principles', date: 'May 2025', href: null },
-  { title: 'The UX details users feel but never notice', tag: 'UX Insights', date: 'Apr 2025', href: null },
-  { title: 'Building a brand system that scales with you', tag: 'Brand Strategy', date: 'Mar 2025', href: null },
+  { title: 'Design Principles', tag: 'Featured', image: '/images/post-1.jpg', href: null },
+  { title: 'UX Insights', tag: 'Trending', image: '/images/post-2.jpg', href: null },
+  { title: 'Brand Strategy', tag: 'New', image: '/images/post-3.jpg', href: null },
 ]
 
-export const marqueeWords = [
-  'Brand Identity',
-  'Product Design',
-  'UI / UX',
-  'Design Systems',
-  'Prototyping',
-  'Motion',
-  'React',
-  'Three.js',
+export const socials = [
+  { label: 'Behance', href: 'https://www.behance.net/narendarreddy994' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/narendrareddy-uiuxdesigner/' },
+  { label: 'GitHub', href: 'https://github.com/NarendraReddy0325' },
+]
+
+/* Pricing is built but NOT mounted — you asked to drop it.
+   To bring it back: import Pricing from './components/Pricing' in App.jsx and
+   add <Pricing /> after <Services />. */
+export const pricing = [
+  {
+    name: 'Starter',
+    price: '$1,800',
+    period: '/Month',
+    desc: 'For startups needing consistent product design support and structured visual direction.',
+    features: [
+      'Website or landing page design',
+      'Core UI system setup',
+      'Mobile-responsive layouts',
+      'Monthly strategy sync',
+      'Two revision rounds',
+    ],
+    featured: false,
+  },
+  {
+    name: 'Growth',
+    price: '$3,200',
+    period: '/Month',
+    desc: 'For scaling brands seeking advanced UX thinking, conversion strategy, and continuous design.',
+    features: [
+      'Full website or product design',
+      'UX research & wireframing',
+      'Conversion optimisation',
+      'Analytics review & insights',
+      'Priority design support',
+    ],
+    featured: true,
+  },
 ]

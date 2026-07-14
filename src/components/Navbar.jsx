@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { nav, profile } from '../data'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
-  // The pill only grows its border and blur once you've left the hero.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
@@ -22,91 +21,104 @@ export default function Navbar() {
 
   return (
     <motion.header
-      initial={{ y: -80, opacity: 0 }}
+      initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4"
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed inset-x-0 top-0 z-50"
     >
-      <nav
-        aria-label="Primary"
-        className={`flex w-full max-w-5xl items-center justify-between rounded-full border px-4 py-2.5 transition-all duration-500 ${
-          scrolled ? 'border-line bg-ink/80 backdrop-blur-xl' : 'border-transparent bg-transparent'
+      <div
+        className={`shell flex items-center justify-between py-5 transition-colors duration-500 ${
+          scrolled ? 'bg-page/80 backdrop-blur-xl' : ''
         }`}
       >
-        <a href="#top" className="flex items-center gap-2 pl-2">
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-accent text-sm font-bold text-ink">
-            {profile.initial}
+        {/* Wordmark. The reference uses a solid dark block; this is the name. */}
+        <a href="#top" className="flex items-center gap-2.5">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-dark text-sm font-semibold text-white">
+            {profile.name.charAt(0)}
           </span>
-          <span className="font-display text-lg font-semibold tracking-tight">{profile.name}</span>
+          <span className="text-[0.95rem] font-semibold tracking-tight text-ink">
+            {profile.name}
+          </span>
         </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
-          {nav.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="rounded-full px-3.5 py-2 text-sm text-muted transition-colors hover:text-cream"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <nav aria-label="Primary" className="hidden md:block">
+          <ul className="flex items-center gap-8">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="text-sm text-body transition-colors duration-300 hover:text-ink"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <div className="flex items-center gap-2">
-          <a href="#contact" className="btn-primary hidden md:inline-flex">
+          <a href="#contact" className="pill hidden md:inline-flex">
             Get In Touch
+          </a>
+          <a href="#contact" aria-hidden="true" tabIndex={-1} className="pill-arrow hidden md:grid">
+            →
           </a>
 
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-line md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full bg-deep text-white md:hidden"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="mobile-nav"
           >
-            <span className="space-y-1.5">
+            <span className="space-y-1">
               <span
-                className={`block h-0.5 w-5 bg-cream transition ${open ? 'translate-y-2 rotate-45' : ''}`}
+                className={`block h-0.5 w-4 bg-white transition ${open ? 'translate-y-1.5 rotate-45' : ''}`}
               />
-              <span className={`block h-0.5 w-5 bg-cream transition ${open ? 'opacity-0' : ''}`} />
+              <span className={`block h-0.5 w-4 bg-white transition ${open ? 'opacity-0' : ''}`} />
               <span
-                className={`block h-0.5 w-5 bg-cream transition ${open ? '-translate-y-2 -rotate-45' : ''}`}
+                className={`block h-0.5 w-4 bg-white transition ${open ? '-translate-y-1.5 -rotate-45' : ''}`}
               />
             </span>
           </button>
         </div>
-      </nav>
+      </div>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <motion.nav
             id="mobile-nav"
-            initial={{ opacity: 0, y: -10 }}
+            aria-label="Mobile"
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute top-20 right-4 left-4 rounded-3xl border border-line bg-panel/95 p-4 backdrop-blur-xl md:hidden"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="shell md:hidden"
           >
-            <ul className="flex flex-col gap-1">
+            <ul className="card overflow-hidden p-2 shadow-[0_20px_60px_-30px_rgba(16,16,16,0.4)]">
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
-                    onClick={() => setOpen(false)}
                     href={item.href}
-                    className="block rounded-2xl px-4 py-3 text-cream hover:bg-card"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-2xl px-4 py-3 text-ink hover:bg-surface"
                   >
                     {item.label}
                   </a>
                 </li>
               ))}
-              <li>
-                <a onClick={() => setOpen(false)} href="#contact" className="btn-primary mt-2 w-full">
+              <li className="p-2">
+                <a
+                  href="#contact"
+                  onClick={() => setOpen(false)}
+                  className="pill w-full justify-center"
+                >
                   Get In Touch
                 </a>
               </li>
             </ul>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </motion.header>

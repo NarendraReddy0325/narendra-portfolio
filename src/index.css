@@ -1,58 +1,50 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   Design tokens.
-   Same palette, fonts and animations as the reference template, expressed as
-   Tailwind v4 CSS-first theme vars (v4's equivalent of tailwind.config.js →
-   theme.extend). Every one of these becomes a utility: bg-ink, text-accent,
-   font-display, animate-marquee, …
+   Design tokens — matched to the reference template.
+   Tailwind v4 is CSS-first, so everything in @theme becomes a utility:
+   bg-page, text-body, rounded-card, …
 --------------------------------------------------------------------------- */
 @theme {
-  --color-ink: #0a0a0c; /* page background */
-  --color-panel: #121216;
-  --color-card: #16161c;
-  --color-line: #23232c; /* every border on the site */
-  --color-muted: #8a8a96; /* secondary text */
-  --color-cream: #ededed; /* primary text */
-  --color-accent: #c6f24e; /* lime */
-  --color-accent-dim: #9bc23a;
+  /* Surfaces, lightest → darkest */
+  --color-page: #e9ecf3; /* the cool lavender-grey page */
+  --color-surface: #f6f7fa; /* recessed panels inside white cards */
+  --color-card: #ffffff; /* the white cards */
+  --color-dark: #2a2a33; /* dark cards + image placeholders */
+  --color-deep: #101010; /* black buttons */
 
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Clash Display', 'Inter', sans-serif;
+  /* Text */
+  --color-ink: #101010; /* headings */
+  --color-body: #474747; /* body copy */
+  --color-faint: #9a9dab; /* metadata, ghost numbers */
+  --color-line: #dfe0eb; /* hairlines */
 
-  --animate-marquee: marquee 28s linear infinite;
-  --animate-float: float 6s ease-in-out infinite;
+  /* Accent — used sparingly: eyebrow marks, the featured plan, focus rings */
+  --color-accent: #3458ff;
+  --color-accent-soft: #cdd5fb;
+  --color-accent-tint: #eef1ff;
+  --color-star: #ffc036;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* The template's corner radii — big and soft. */
+  --radius-card: 1.75rem;
+  --radius-panel: 2.25rem;
+
+  --animate-marquee: marquee 34s linear infinite;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes marquee {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
-
-  * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
   html {
     scroll-behavior: smooth;
   }
@@ -60,35 +52,34 @@
   body {
     margin: 0;
     overflow-x: hidden;
-    background-color: var(--color-ink);
-    color: var(--color-cream);
+    background-color: var(--color-page);
+    color: var(--color-body);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings are tight and dark; the template leans on weight, not size alone. */
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    font-weight: 600;
   }
 
   ::selection {
     background: var(--color-accent);
-    color: var(--color-ink);
+    color: #fff;
   }
 
-  /* Visible focus ring — the template has none, and keyboard users need one. */
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: 999px;
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--color-ink);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-line);
-    border-radius: 6px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #33333f;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -106,44 +97,45 @@
 }
 
 @layer components {
-  .container-px {
-    @apply mx-auto w-full max-w-6xl px-6 md:px-8;
+  .shell {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8;
   }
 
-  .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-line bg-panel/60 px-4 py-1.5 text-xs font-medium tracking-[0.2em] text-muted uppercase;
+  /* The black pill. The site's primary action, everywhere. */
+  .pill {
+    @apply inline-flex items-center justify-center rounded-full bg-deep px-6 py-3.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-ink/85;
   }
 
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-ink transition-transform duration-300 hover:scale-[1.03] active:scale-95;
+  /* The circular arrow that sits beside a pill. */
+  .pill-arrow {
+    @apply grid h-12 w-12 shrink-0 place-items-center rounded-full bg-deep text-white transition-transform duration-300 hover:scale-105;
   }
 
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-transparent px-6 py-3 text-sm font-semibold text-cream transition-colors duration-300 hover:border-cream/40 hover:bg-panel;
+  .card {
+    @apply rounded-card bg-card;
   }
 
-  .card-surface {
-    @apply rounded-3xl border border-line bg-card/70 backdrop-blur-sm;
+  /* Small grey chip: skill tags, blog tags, "What's Included" rows. */
+  .chip {
+    @apply inline-flex items-center rounded-full bg-surface px-3.5 py-1.5 text-xs font-medium text-body;
   }
 }
 
-/* The faint graph-paper grid behind the hero and inside cards. */
-.grid-bg {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-
-/* Lime bloom behind the hero and the contact panel. */
-.glow {
-  background: radial-gradient(circle at 50% 0%, rgba(198, 242, 78, 0.16), transparent 60%);
-}
-
-/* White → grey vertical fade used on the second hero headline line. */
-.text-gradient {
-  background: linear-gradient(180deg, #ffffff 0%, #9a9aa6 100%);
+/* The oversized ghost word behind the hero portrait. Sits under everything,
+   clipped by the section, and is decorative — screen readers never see it. */
+.ghost-word {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.8;
+  color: transparent;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 90%);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
+  user-select: none;
+}
+
+/* Hero backdrop: a cool grey wash that resolves into the page colour. */
+.hero-wash {
+  background:
+    radial-gradient(120% 90% at 50% 0%, #ced3de 0%, #d5d9e2 45%, #e4e7ef 100%);
 }
