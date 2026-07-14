@@ -34,8 +34,43 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, ease: EASE, delay, type: 'tween' },
 })
 
-/** A pill that drops in and rotates into its tilt on the way down. */
-function TiltTag({ label, rotate, className }) {
+/* The four pills around the portrait. Each has its own corner, angle and drift.
+   The floats are deliberately mismatched in distance, direction and duration —
+   four pills bobbing on the same clock read as a broken loop, not as objects
+   hanging in the air. */
+const TAGS = [
+  {
+    className: 'top-[40%] left-0 sm:left-4 lg:left-12',
+    rotate: -26,
+    float: { y: 12, x: 5, duration: 4.2, delay: 0 },
+  },
+  {
+    className: 'top-[22%] right-0 sm:right-4 lg:right-16',
+    rotate: 15,
+    float: { y: -14, x: -6, duration: 5.1, delay: 0.5 },
+  },
+  {
+    className: 'top-[6%] left-2 sm:left-14 lg:left-24',
+    rotate: 11,
+    float: { y: 14, x: -5, duration: 4.7, delay: 0.9 },
+  },
+  {
+    // High and right — NOT bottom-right, which is where the stat cards fly in
+    // and sit in a layer above these, so a pill parked there is simply buried.
+    className: 'top-[2%] right-8 sm:right-24 lg:right-48',
+    rotate: -13,
+    float: { y: -11, x: 7, duration: 5.6, delay: 0.3 },
+  },
+]
+
+/**
+ * A pill that drops in, rotates into its tilt on the way down, and then floats.
+ *
+ * Two layers, because the drop and the float both want `y`: the outer span
+ * owns the entrance (and the final angle), the inner one owns the endless
+ * drift. Put both on one element and the float would overwrite the landing.
+ */
+function HeroTag({ label, rotate, className, float }) {
   const reduce = useReducedMotion()
 
   return (
@@ -44,9 +79,29 @@ function TiltTag({ label, rotate, className }) {
       initial={reduce ? { rotate } : { y: -135, rotate: 0 }}
       animate={{ y: 0, rotate }}
       transition={{ duration: 1, ease: EASE, type: 'tween' }}
-      className={`absolute z-20 rounded-full bg-page/90 px-4 py-2 text-xs font-medium whitespace-nowrap text-body shadow-[0_10px_30px_-12px_rgba(16,16,16,0.35)] backdrop-blur ${className}`}
+      className={`absolute z-20 ${className}`}
     >
-      {label}
+      <motion.span
+        className="block rounded-full bg-page/90 px-4 py-2 text-xs font-medium whitespace-nowrap text-body shadow-[0_10px_30px_-12px_rgba(16,16,16,0.35)] backdrop-blur"
+        animate={
+          reduce
+            ? undefined
+            : { y: [0, float.y, 0], x: [0, float.x, 0], rotate: [0, float.x > 0 ? 2 : -2, 0] }
+        }
+        transition={
+          reduce
+            ? undefined
+            : {
+                duration: float.duration,
+                // Starts only once the pill has landed, so the drop reads clean.
+                delay: 1 + float.delay,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }
+        }
+      >
+        {label}
+      </motion.span>
     </motion.span>
   )
 }
@@ -127,16 +182,9 @@ export default function Hero() {
             />
           </motion.div>
 
-          <TiltTag
-            label={heroTags[0]}
-            rotate={-26}
-            className="top-[40%] left-0 sm:left-6 lg:left-20"
-          />
-          <TiltTag
-            label={heroTags[1]}
-            rotate={15}
-            className="top-[24%] right-0 sm:right-6 lg:right-28"
-          />
+          {heroTags.map((label, i) => (
+            <HeroTag key={label} label={label} {...TAGS[i % TAGS.length]} />
+          ))}
 
           {/* Departure slots. No scroll-fade any more — the cards physically
               travel, so fading them out here would delete the thing that moves. */}

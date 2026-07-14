@@ -35,8 +35,9 @@ export const nav = [
   { label: 'Contact', href: '#contact' },
 ]
 
-// The tilted pills floating over the hero portrait.
-export const heroTags = ['UI/UX', 'Product']
+// The tilted pills floating around the hero portrait. Order matters — each one
+// gets its own position, angle and float in Hero.jsx.
+export const heroTags = ['UI/UX', 'Product', 'Web Design', 'Mobile Design']
 
 /* Keep these true — they are the first hard claim a visitor reads, and the
    first thing a sharp interviewer will test.
