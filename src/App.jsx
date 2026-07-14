@@ -1,61 +1,42 @@
-import { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
-
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import Cursor from './components/Cursor'
+import Hero from './components/Hero'
+import Marquee from './components/Marquee'
+import Stats from './components/Stats'
+import About from './components/About'
+import Portfolio from './components/Portfolio'
+import Services from './components/Services'
+import Testimonials from './components/Testimonials'
+import FAQ from './components/FAQ'
+import Blog from './components/Blog'
+import Contact from './components/Contact'
 
-import Home from './pages/Home'
-import Work from './pages/Work'
-import CaseStudy from './pages/CaseStudy'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import NotFound from './pages/NotFound'
-
-/** Reset scroll on navigation. */
-function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-  }, [pathname])
-  return null
-}
-
+/* Single-page scroll. Section order = the order below; delete a line and the
+   section is gone (its nav link lives in src/data.js → `nav`). */
 export default function App() {
-  const location = useLocation()
-
   return (
-    <>
-      <div className="grain" aria-hidden="true" />
-      <Cursor />
-      <ScrollToTop />
-
+    <div className="relative min-h-screen bg-ink">
       <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:font-mono focus:text-meta focus:text-paper"
+        href="#top"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
       >
         Skip to content
       </a>
 
       <Navbar />
 
-      <main id="main">
-        {/* mode="wait" so the outgoing page clears before the next one draws —
-            a crossfade would briefly overlap two folio rails. */}
-        <AnimatePresence mode="wait" initial={false}>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/work" element={<Work />} />
-            <Route path="/work/:slug" element={<CaseStudy />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AnimatePresence>
+      <main>
+        <Hero />
+        <Marquee />
+        <Stats />
+        <About />
+        <Portfolio />
+        <Services />
+        <Testimonials />
+        <FAQ />
+        <Blog />
       </main>
 
-      <Footer />
-    </>
+      <Contact />
+    </div>
   )
 }
