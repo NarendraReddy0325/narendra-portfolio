@@ -1,23 +1,29 @@
-import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { impact, partners, services } from '../data'
 import { Eyebrow, Media, PillLink, Reveal } from './ui'
 
 /* The Brand Identity chips.
-   `from` / `spin`  — where each flies in from, and the angle it lands at
-   `drift`          — how far it parallaxes as you scroll past
+   `from` / `spin`  — where each flies in from, and the angle it settles at
    `bounce`         — its own ball bounce: height, speed, pause between hops,
-                      and an offset so the chips never bounce in lockstep. A
-                      row of chips hopping in unison reads as a pulsing UI bug;
-                      staggered, they read as objects. */
+                      and a phase offset so the chips never hop in lockstep. A
+                      row bouncing in unison reads as a pulsing UI bug;
+                      staggered, they read as objects.
+
+   The angles are deliberately shallow. The reference tilts these hard, but its
+   chips then overlap and bury each other's backgrounds — which is exactly the
+   thing to avoid when they're also moving. Enough tilt to look tossed down,
+   not enough to collide.
+
+   There's no scroll drift on them any more: a chip that both drifts on scroll
+   AND bounces ends up wandering out of its own row. */
 const TAGS = [
-  { from: 50, spin: 30, drift: -46, bounce: { height: 10, duration: 1.5, rest: 0.5, offset: 0 } },
-  { from: -50, spin: -13, drift: -22, bounce: { height: 7, duration: 1.7, rest: 0.9, offset: 0.35 } },
-  { from: 0, spin: 0, drift: -60, bounce: { height: 12, duration: 1.4, rest: 0.4, offset: 0.7 } },
-  { from: -50, spin: 12, drift: -34, bounce: { height: 8, duration: 1.6, rest: 0.7, offset: 0.15 } },
-  { from: -50, spin: 0, drift: -50, bounce: { height: 11, duration: 1.55, rest: 0.6, offset: 0.5 } },
-  { from: 50, spin: 0, drift: -28, bounce: { height: 6, duration: 1.8, rest: 1, offset: 0.9 } },
-  { from: 50, spin: -8, drift: -40, bounce: { height: 9, duration: 1.45, rest: 0.55, offset: 0.25 } },
+  { from: 50, spin: 8, bounce: { height: 12, duration: 1.5, rest: 0.5, offset: 0 } },
+  { from: -50, spin: -6, bounce: { height: 9, duration: 1.7, rest: 0.9, offset: 0.35 } },
+  { from: 0, spin: 4, bounce: { height: 14, duration: 1.4, rest: 0.4, offset: 0.7 } },
+  { from: -50, spin: -9, bounce: { height: 10, duration: 1.6, rest: 0.7, offset: 0.15 } },
+  { from: -50, spin: 5, bounce: { height: 13, duration: 1.55, rest: 0.6, offset: 0.5 } },
+  { from: 50, spin: -4, bounce: { height: 8, duration: 1.8, rest: 1, offset: 0.9 } },
+  { from: 50, spin: 7, bounce: { height: 11, duration: 1.45, rest: 0.55, offset: 0.25 } },
 ]
 
 /**
@@ -35,53 +41,50 @@ const TAGS = [
  * easeOut on the way up), and it squashes on impact and stretches as it leaves.
  * A symmetric ease would read as floating, not bouncing.
  */
-function DriftTag({ label, from, spin, drift, delay, progress, bounce }) {
+function BounceTag({ label, from, spin, delay, bounce }) {
   const reduce = useReducedMotion()
-  const y = useTransform(progress, [0, 1], [0, drift])
 
   return (
-    // Layer 1 — scroll parallax. Bound to a MotionValue, so nothing else may
-    // animate `y` on this element.
-    <motion.li style={reduce ? undefined : { y }}>
-      {/* Layer 2 — the fly-in. Only touches x / rotate / opacity. */}
+    // Layer 1 — the fly-in. Only touches x / rotate / opacity, so it never
+    // fights the bounce for the `y` transform.
+    <motion.li
+      initial={reduce ? { rotate: spin } : { opacity: 0.001, x: from, rotate: 0 }}
+      whileInView={{ opacity: 1, x: 0, rotate: spin }}
+      viewport={{ once: true, margin: '-70px' }}
+      transition={{ duration: 0.6, delay, ease: [0.44, 0, 0.56, 1], type: 'tween' }}
+    >
+      {/* Layer 2 — the bounce, and the chip itself. The pill IS this element, so
+          the whole thing hops: background, padding and all.
+
+          origin-bottom means the squash flattens it against the floor rather
+          than around its middle, which is what sells the impact. */}
       <motion.div
-        initial={reduce ? { rotate: spin } : { opacity: 0.001, x: from, rotate: 0 }}
-        whileInView={{ opacity: 1, x: 0, rotate: spin }}
-        viewport={{ once: true, margin: '-70px' }}
-        transition={{ duration: 0.6, delay, ease: [0.44, 0, 0.56, 1], type: 'tween' }}
+        className="inline-block origin-bottom rounded-full bg-page px-3 py-1.5 text-xs font-medium whitespace-nowrap text-body"
+        animate={
+          reduce
+            ? undefined
+            : {
+                y: [0, -bounce.height, 0, 0],
+                scaleY: [1, 1.04, 0.9, 1],
+                scaleX: [1, 0.97, 1.1, 1],
+              }
+        }
+        transition={
+          reduce
+            ? undefined
+            : {
+                duration: bounce.duration,
+                // Up slow, down fast, then the squash and recovery on impact.
+                times: [0, 0.45, 0.58, 0.75],
+                ease: ['easeOut', 'easeIn', 'easeOut'],
+                repeat: Infinity,
+                repeatDelay: bounce.rest,
+                // Each chip is on its own beat, so they never pulse in unison.
+                delay: delay + 0.7 + bounce.offset,
+              }
+        }
       >
-        {/* Layer 3 — the bounce, and the chip itself. The pill IS this element,
-            so the whole thing hops: background, padding and all. Putting the
-            bounce on an inner span would leave the pill sitting still while its
-            label jumped around inside it. */}
-        <motion.div
-          className="inline-block origin-bottom rounded-full bg-page px-3 py-1.5 text-xs font-medium whitespace-nowrap text-body"
-          animate={
-            reduce
-              ? undefined
-              : {
-                  y: [0, -bounce.height, 0, 0],
-                  scaleY: [1, 1.04, 0.9, 1],
-                  scaleX: [1, 0.97, 1.1, 1],
-                }
-          }
-          transition={
-            reduce
-              ? undefined
-              : {
-                  duration: bounce.duration,
-                  // Up slow, down fast, then the squash and recovery on impact.
-                  times: [0, 0.45, 0.58, 0.75],
-                  ease: ['easeOut', 'easeIn', 'easeOut'],
-                  repeat: Infinity,
-                  repeatDelay: bounce.rest,
-                  // Each chip is on its own beat, so they never pulse in unison.
-                  delay: delay + 0.7 + bounce.offset,
-                }
-          }
-        >
-          {label}
-        </motion.div>
+        {label}
       </motion.div>
     </motion.li>
   )
@@ -115,7 +118,7 @@ function Ticker({ images, title }) {
   )
 }
 
-function ServiceCard({ s, progress }) {
+function ServiceCard({ s }) {
   const dark = s.tone === 'dark'
 
   return (
@@ -131,16 +134,14 @@ function ServiceCard({ s, progress }) {
         {s.desc}
       </p>
 
+      {/* The chips need headroom above them to bounce into, and a floor to land
+          on — items-end gives them a shared baseline so they all bounce off the
+          same line instead of each hopping around its own centre. The row gap is
+          wide enough that a tilted chip never covers its neighbour's background. */}
       {s.media === 'tags' && (
-        <ul className="mt-auto flex flex-wrap items-center gap-2 pt-10">
+        <ul className="mt-auto flex flex-wrap items-end gap-x-3 gap-y-5 pt-14 pb-2">
           {s.tags.map((t, i) => (
-            <DriftTag
-              key={t}
-              label={t}
-              {...TAGS[i % TAGS.length]}
-              delay={0.05 * i}
-              progress={progress}
-            />
+            <BounceTag key={t} label={t} {...TAGS[i % TAGS.length]} delay={0.05 * i} />
           ))}
         </ul>
       )}
@@ -177,14 +178,8 @@ function ServiceCard({ s, progress }) {
 }
 
 export default function Services() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-
   return (
-    <section id="services" ref={ref} className="shell py-20 lg:py-28">
+    <section id="services" className="shell py-20 lg:py-28">
       <Reveal className="flex flex-col items-center text-center">
         <Eyebrow tone="dark">Core Services</Eyebrow>
         <h2 className="mt-5 max-w-[16ch] text-3xl font-semibold text-white sm:text-5xl">
@@ -199,7 +194,7 @@ export default function Services() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {[services[0], services[2]].map((s, i) => (
               <Reveal key={s.title} as="card" delay={i * 0.06} className="h-full">
-                <ServiceCard s={s} progress={scrollYProgress} />
+                <ServiceCard s={s} />
               </Reveal>
             ))}
           </div>
@@ -207,7 +202,7 @@ export default function Services() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {[services[1], services[3]].map((s, i) => (
               <Reveal key={s.title} as="card" delay={0.04 + i * 0.06} className="h-full">
-                <ServiceCard s={s} progress={scrollYProgress} />
+                <ServiceCard s={s} />
               </Reveal>
             ))}
           </div>
