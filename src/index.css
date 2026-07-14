@@ -12,6 +12,7 @@
   --color-card: #ffffff; /* the white cards */
   --color-dark: #2a2a33; /* dark cards + image placeholders */
   --color-deep: #101010; /* black buttons */
+  --color-deepblue: #03236d; /* the blurred navy glow behind services/pricing */
 
   /* Text */
   --color-ink: #101010; /* headings */
@@ -128,10 +129,15 @@
    the same thing sideways. It's the signature micro-interaction of the whole
    template, and nothing else in the design relies on colour change for hover.
 --------------------------------------------------------------------------- */
+/* The box MUST be exactly one line tall, or both copies show at rest — which is
+   precisely what happens if you only set overflow:hidden and let the height go
+   auto. Height and line-height are locked to the same value so the clone sits
+   exactly one line below, and translateY(-50%) lands it perfectly. */
 .roll {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
+  height: 1.5em;
   line-height: 1.5;
 }
 .roll__inner {
@@ -140,6 +146,8 @@
 }
 .roll__inner > span {
   display: block;
+  height: 1.5em;
+  line-height: 1.5;
 }
 .group:hover .roll__inner,
 .group:focus-visible .roll__inner {

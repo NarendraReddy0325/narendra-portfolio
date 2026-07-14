@@ -37,7 +37,9 @@ export default function Footer() {
     <footer id="contact" ref={ref} className="shell pt-10 pb-12 lg:pt-16">
       <motion.div
         style={reduce ? undefined : { scale, opacity }}
-        className="rounded-panel flex origin-bottom flex-col items-center gap-8 bg-dark px-6 py-20 text-center text-white lg:py-28"
+        // Navy, not charcoal — the reference footer carries the same #03236d
+        // wash as the services block, not the dark grey of the FAQ panel.
+        className="rounded-panel flex origin-bottom flex-col items-center gap-8 bg-deepblue px-6 py-20 text-center text-white lg:py-28"
       >
         {/* Footer blocks each travel 34px — their own distance in the reference. */}
         <Reveal as="footer">
