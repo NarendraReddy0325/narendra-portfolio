@@ -321,6 +321,21 @@
    that reads as a badly cropped image. Two masks, intersected: one fades the
    bottom out, the other pulls in both sides — so the shirt dissolves into the
    page before it can hit a frame edge. */
+/* Optically centre the subject, not the file.
+
+   The cut-out's shoulders run to both edges of the frame, so the image's own
+   centre is meaningless — measured on the alpha channel, the head sits at
+   52.66% across, i.e. ~31px right of centre on a 1145px-wide file. Centring the
+   <img> therefore centres the FRAME and leaves the face looking off.
+
+   Shifting the image left by that difference puts the head on the centre line,
+   which is what the eye actually reads as "centred". Kept as a variable so it's
+   one number to change if the photo is ever re-cropped. */
+.portrait-center {
+  --subject-offset: 2.66%;
+  transform: translateX(calc(-1 * var(--subject-offset)));
+}
+
 .portrait-fade {
   -webkit-mask-image:
     linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0.55) 88%, transparent 100%),

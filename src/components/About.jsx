@@ -40,7 +40,7 @@ export default function About() {
               decoding="async"
               width={1131}
               height={1372}
-              className="portrait-fade w-[88%] max-w-[22rem] object-contain"
+              className="portrait-fade portrait-center w-[88%] max-w-[22rem] object-contain"
             />
           </div>
         </Reveal>

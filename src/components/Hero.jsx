@@ -257,7 +257,7 @@ export default function Hero() {
               alt={`${profile.name}, product and UI/UX designer`}
               width={1131}
               height={1372}
-              className="portrait-fade relative w-full object-contain"
+              className="portrait-fade portrait-center relative w-full object-contain"
             />
           </motion.div>
 
