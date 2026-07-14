@@ -1,5 +1,18 @@
 import { partners, services } from '../data'
-import { Eyebrow, PillLink, Reveal } from './ui'
+import { Eyebrow, FlyTag, PillLink, Reveal } from './ui'
+
+/* The scattered tags on the Brand Identity card don't just fade — each flies in
+   from a side and rotates into a slightly different angle. Offsets and spins
+   read straight off the reference's own transforms. */
+const TAG_MOTION = [
+  { from: 50, spin: 30 },
+  { from: -50, spin: -13 },
+  { from: 0, spin: 0 },
+  { from: -50, spin: 12 },
+  { from: -50, spin: 0 },
+  { from: 50, spin: 0 },
+  { from: 50, spin: -8 },
+]
 
 /** One bento tile. Dark or light, per the data. */
 function ServiceCard({ s, className = '' }) {
@@ -12,22 +25,30 @@ function ServiceCard({ s, className = '' }) {
       } ${className}`}
     >
       <h3 className={`text-xl font-semibold ${dark ? 'text-white' : 'text-ink'}`}>{s.title}</h3>
-      <p className={`mt-3 max-w-[30ch] text-sm leading-relaxed ${dark ? 'text-white/60' : 'text-body'}`}>
+      <p
+        className={`mt-3 max-w-[30ch] text-sm leading-relaxed ${dark ? 'text-white/60' : 'text-body'}`}
+      >
         {s.desc}
       </p>
 
       {s.tags && (
         <ul className="mt-auto flex flex-wrap gap-2 pt-8">
-          {s.tags.map((t) => (
-            <li
-              key={t}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-                dark ? 'bg-white/10 text-white/80' : 'bg-surface text-body'
-              }`}
-            >
-              {t}
-            </li>
-          ))}
+          {s.tags.map((t, i) => {
+            const { from, spin } = TAG_MOTION[i % TAG_MOTION.length]
+            return (
+              <FlyTag
+                key={t}
+                from={from}
+                spin={spin}
+                delay={0.05 * i}
+                className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+                  dark ? 'bg-white/10 text-white/80' : 'bg-surface text-body'
+                }`}
+              >
+                {t}
+              </FlyTag>
+            )
+          })}
         </ul>
       )}
     </div>

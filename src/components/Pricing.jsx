@@ -21,7 +21,7 @@ export default function Pricing() {
 
       <div className="mt-14 grid gap-5 lg:grid-cols-2">
         {pricing.map((plan, i) => (
-          <Reveal key={plan.name} delay={i * 0.08} className="h-full">
+          <Reveal key={plan.name} as="pop" delay={i * 0.08} className="h-full">
             <div
               className={`rounded-card flex h-full flex-col p-8 ${
                 plan.featured ? 'bg-accent-tint ring-1 ring-accent-soft' : 'bg-card'

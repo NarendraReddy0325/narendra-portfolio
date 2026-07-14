@@ -3,7 +3,7 @@ import { motion, useInView, useReducedMotion } from 'framer-motion'
 
 /* The reference's easing curve — a symmetric in-out. Traced off the running
    page frame by frame: the reveal creeps for ~130ms, accelerates hard through
-   the middle, and settles slowly. Used site-wide. */
+   the middle, and settles slowly. */
 export const EASE = [0.44, 0, 0.56, 1]
 export const DURATION = 0.6
 
@@ -12,18 +12,24 @@ export const DURATION = 0.6
  *
  * The reference does NOT use one distance for everything — the travel scales
  * with the weight of the thing moving, which is what gives the page its
- * rhythm. Measured off the original:
+ * rhythm. Every value below was read off the original's own markup:
  *
- *   text  → y 30    headings, eyebrows, body copy
- *   card  → y 40    the about-bento tiles
- *   panel → y 60    the big project rows
- *   image → scale 0.9, no translate
+ *   text   y 30       headings, eyebrows, body copy
+ *   card   y 40       the about-bento tiles
+ *   list   y 50       the FAQ accordion
+ *   panel  y 60       project rows, blog cards
+ *   footer y 34       the closing footer blocks
+ *   image  scale 0.9  images grow, they don't translate
+ *   pop    scale 0.7  pricing + testimonial cards, which arrive much smaller
  */
 const VARIANTS = {
   text: { opacity: 0.001, y: 30 },
   card: { opacity: 0.001, y: 40 },
+  list: { opacity: 0.001, y: 50 },
   panel: { opacity: 0.001, y: 60 },
+  footer: { opacity: 0.001, y: 34 },
   image: { opacity: 0.001, scale: 0.9 },
+  pop: { opacity: 0.001, scale: 0.7 },
 }
 
 export function Reveal({ children, as = 'text', delay = 0, className = '' }) {
@@ -43,6 +49,26 @@ export function Reveal({ children, as = 'text', delay = 0, className = '' }) {
   )
 }
 
+/**
+ * A chip that flies in from the side and rotates into place — the service
+ * card's scattered tags. `from` is the x offset, `spin` the landing angle.
+ */
+export function FlyTag({ children, from = 50, spin = 0, delay = 0, className = '' }) {
+  const reduce = useReducedMotion()
+
+  return (
+    <motion.li
+      className={className}
+      initial={reduce ? { rotate: spin } : { opacity: 0.001, x: from, rotate: 0 }}
+      whileInView={{ opacity: 1, x: 0, rotate: spin }}
+      viewport={{ once: true, margin: '-70px' }}
+      transition={{ duration: DURATION, delay, ease: EASE, type: 'tween' }}
+    >
+      {children}
+    </motion.li>
+  )
+}
+
 /** The small blue-diamond eyebrow above every section heading. */
 export function Eyebrow({ children, tone = 'light' }) {
   return (
@@ -57,6 +83,34 @@ export function Eyebrow({ children, tone = 'light' }) {
   )
 }
 
+/**
+ * The label inside a pill. Two stacked copies in a clipped box: on hover the
+ * pair rolls up, so the second copy takes the first's place. The clone is
+ * hidden from assistive tech — it's the same word twice.
+ */
+export function Roll({ children }) {
+  return (
+    <span className="roll">
+      <span className="roll__inner">
+        <span>{children}</span>
+        <span aria-hidden="true">{children}</span>
+      </span>
+    </span>
+  )
+}
+
+/** Same trick, sideways, for the arrow. */
+export function RollArrow() {
+  return (
+    <span aria-hidden="true" className="roll-x">
+      <span className="roll-x__inner">
+        <span>→</span>
+        <span>→</span>
+      </span>
+    </span>
+  )
+}
+
 /** Black pill + its circular arrow. The site's one call to action. */
 export function PillLink({ href, children, external = false, className = '' }) {
   const props = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
@@ -64,11 +118,11 @@ export function PillLink({ href, children, external = false, className = '' }) {
   return (
     <span className={`group inline-flex items-center gap-2 ${className}`}>
       <a href={href} {...props} className="pill">
-        {children}
+        <Roll>{children}</Roll>
         {external && <span className="sr-only">(opens in a new tab)</span>}
       </a>
       <a href={href} {...props} aria-hidden="true" tabIndex={-1} className="pill-arrow">
-        <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        <RollArrow />
       </a>
     </span>
   )
@@ -82,11 +136,11 @@ export function PillButton({ onClick, children, className = '' }) {
       onClick={onClick}
       className={`group inline-flex items-center gap-2 ${className}`}
     >
-      <span className="pill">{children}</span>
-      <span aria-hidden="true" className="pill-arrow">
-        <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">
-          →
-        </span>
+      <span className="pill">
+        <Roll>{children}</Roll>
+      </span>
+      <span className="pill-arrow">
+        <RollArrow />
       </span>
     </button>
   )
@@ -94,9 +148,8 @@ export function PillButton({ onClick, children, className = '' }) {
 
 /**
  * Count-up number. Runs once, when the card scrolls into view.
- *
  * Reduced-motion users get the final number immediately — the animation is a
- * flourish, and the value is the information.
+ * flourish, the value is the information.
  */
 export function CountUp({ to, suffix = '', duration = 1600, className = '' }) {
   const ref = useRef(null)

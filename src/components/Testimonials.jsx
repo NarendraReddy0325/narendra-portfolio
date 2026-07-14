@@ -19,7 +19,9 @@ export default function Testimonials() {
         </h2>
       </Reveal>
 
-      <Reveal as="panel" className="mt-14">
+      {/* Testimonial + pricing cards arrive at scale 0.7 in the reference —
+          markedly smaller than anything else, so they pop rather than slide. */}
+      <Reveal as="pop" className="mt-14">
         <div className="card grid gap-6 p-5 sm:p-7 lg:grid-cols-2 lg:gap-10">
           <div className="flex flex-col justify-between">
             <div>

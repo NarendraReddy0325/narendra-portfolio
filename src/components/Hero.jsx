@@ -4,22 +4,28 @@ import { profile, heroTags, about } from '../data'
 import { CountUp } from './ui'
 
 /* ---------------------------------------------------------------------------
-   Hero motion, taken from the reference's appear-animation config.
+   Hero motion — the reference's appear-animation config, verbatim.
 
-   The signature is that almost nothing fades — elements slide into place at
-   full opacity, and the two pills rotate into their tilt as they land. Only the
-   greeting and headline fade, staggered 0.2s apart.
+     ghost word ("Desinger")  y:  95 → 0   1.0s   ease
+     portrait arch            y: 170 → 0   0.6s   LINEAR
+     tilt pill (left)         y:-135 → 0,  rotate 0 → -26°   1.0s
+     tilt pill (right)        y:-135 → 0,  rotate 0 → +15°   1.0s
+     greeting                 y:  30 → 0,  fade   0.6s
+     headline                 y:  30 → 0,  fade   0.6s, delay 0.2s
 
-   ease [0.44, 0, 0.56, 1] is a symmetric in-out: it accelerates out of the
+   Note almost nothing fades: elements slide into place at full opacity, and the
+   pills rotate into their tilt as they land. Only the two lines of text fade.
+
+   ease [0.44, 0, 0.56, 1] is a symmetric in-out — it accelerates out of the
    start and decelerates into the end, which is what gives the drop its weight.
 --------------------------------------------------------------------------- */
 const EASE = [0.44, 0, 0.56, 1]
 const LINEAR = [0, 0, 1, 1]
 
-const slide = (from, duration = 1, ease = EASE, delay = 0) => ({
+const slide = (from, duration = 1, ease = EASE) => ({
   initial: { y: from },
   animate: { y: 0 },
-  transition: { duration, ease, delay, type: 'tween' },
+  transition: { duration, ease, type: 'tween' },
 })
 
 const fadeUp = (delay = 0) => ({
@@ -38,19 +44,19 @@ function TiltTag({ label, rotate, className }) {
       initial={reduce ? { rotate } : { y: -135, rotate: 0 }}
       animate={{ y: 0, rotate }}
       transition={{ duration: 1, ease: EASE, type: 'tween' }}
-      className={`absolute z-20 rounded-full bg-white/90 px-4 py-2 text-xs font-medium whitespace-nowrap text-body shadow-[0_10px_30px_-12px_rgba(16,16,16,0.35)] backdrop-blur ${className}`}
+      className={`absolute z-20 rounded-full bg-page/90 px-4 py-2 text-xs font-medium whitespace-nowrap text-body shadow-[0_10px_30px_-12px_rgba(16,16,16,0.35)] backdrop-blur ${className}`}
     >
       {label}
     </motion.span>
   )
 }
 
-function StatCard({ stat, delay = 0, animate = true }) {
+function StatCard({ stat, delay = 0 }) {
   const reduce = useReducedMotion()
 
   return (
     <motion.div
-      {...(reduce || !animate ? {} : fadeUp(delay))}
+      {...(reduce ? {} : fadeUp(delay))}
       className="card flex items-center justify-between gap-6 px-6 py-5 shadow-[0_24px_60px_-30px_rgba(16,16,16,0.35)]"
     >
       <p className="max-w-[9rem] text-[0.8rem] leading-snug text-body">{stat.label}</p>
@@ -68,11 +74,9 @@ export default function Hero() {
   const sectionRef = useRef(null)
   const m = (props) => (reduce ? {} : props)
 
-  /* Scroll-linked descent.
-     The two cards are pinned to the scroll position of the hero: as it leaves
-     the viewport they ride downward, decelerating, and hand off to the About
-     bento below — which carries the same two figures. Springing the progress
-     keeps the travel from feeling glued to the scrollbar. */
+  /* Scroll-linked descent: the two cards ride downward as the hero leaves the
+     viewport and hand off to the About bento, which carries the same figures.
+     Springing the progress keeps the travel from feeling glued to the bar. */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
@@ -81,7 +85,6 @@ export default function Hero() {
 
   const cardsY = useTransform(progress, [0, 1], [0, 300])
   const cardsOpacity = useTransform(progress, [0, 0.72, 1], [1, 1, 0])
-  // The ghost word drifts the other way, so the layers separate as you scroll.
   const ghostY = useTransform(progress, [0, 1], [0, -70])
 
   return (
@@ -90,13 +93,13 @@ export default function Hero() {
       id="top"
       className="hero-wash relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24"
     >
-      {/* Ghost word — rises in on load, then drifts up as you scroll. */}
+      {/* Ghost word — rises 95px on load, then drifts up as you scroll. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-[14%] z-0 flex justify-center"
       >
         <motion.span
-          {...m(slide(170, 0.6, LINEAR))}
+          {...m(slide(95, 1))}
           style={reduce ? undefined : { y: ghostY }}
           className="ghost-word text-[24vw] whitespace-nowrap lg:text-[15rem]"
         >
@@ -106,19 +109,27 @@ export default function Hero() {
 
       <div className="shell relative z-10">
         <div className="relative mx-auto flex justify-center">
-          {/* Portrait: a transparent cut-out, so it sits straight on the wash
-              with no card behind it. .portrait-fade dissolves the bottom and
-              both sides — see index.css for why that's necessary. */}
+          {/* The arch + portrait rise together, 170px, linear, over 0.6s. */}
           <motion.div
-            {...m(slide(95, 1))}
-            className="relative z-10 w-full max-w-[380px] lg:max-w-[440px]"
+            {...m(slide(170, 0.6, LINEAR))}
+            className="relative z-10 flex w-full max-w-[380px] justify-center lg:max-w-[440px]"
           >
+            {/* The blue arch behind you — a 300px-radius dome running from the
+                accent down into the page grey. */}
+            <div
+              aria-hidden="true"
+              className="hero-arch absolute inset-x-0 bottom-0 top-[12%] rounded-b-none"
+            />
+
+            {/* Transparent cut-out. .portrait-fade dissolves the bottom and both
+                sides — the source photo crops your shoulders at its own borders,
+                so without it the shirt ends in hard vertical edges. */}
             <img
               src={profile.portrait}
               alt={`${profile.name}, product and UI/UX designer`}
               width={1131}
               height={1372}
-              className="portrait-fade w-full object-contain"
+              className="portrait-fade relative w-full object-contain"
             />
           </motion.div>
 
@@ -133,7 +144,6 @@ export default function Hero() {
             className="top-[24%] right-0 sm:right-6 lg:right-28"
           />
 
-          {/* Desktop: the two travelling cards. */}
           <motion.div
             style={reduce ? undefined : { y: cardsY, opacity: cardsOpacity }}
             className="absolute right-0 bottom-6 hidden w-[21rem] flex-col gap-3 lg:flex"

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { nav, profile, socials } from '../data'
-import { PillLink } from './ui'
+import { PillLink, Reveal } from './ui'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -39,16 +39,21 @@ export default function Footer() {
         style={reduce ? undefined : { scale, opacity }}
         className="rounded-panel flex origin-bottom flex-col items-center gap-8 bg-dark px-6 py-20 text-center text-white lg:py-28"
       >
-        <h2 className="max-w-[16ch] text-4xl font-semibold text-white sm:text-6xl">
-          Ready To Start Something Great?
-        </h2>
+        {/* Footer blocks each travel 34px — their own distance in the reference. */}
+        <Reveal as="footer">
+          <h2 className="max-w-[16ch] text-4xl font-semibold text-white sm:text-6xl">
+            Ready To Start Something Great?
+          </h2>
+        </Reveal>
 
-        <PillLink
-          href={`mailto:${profile.email}`}
-          className="[&_.pill]:bg-white [&_.pill]:text-ink [&_.pill-arrow]:bg-white [&_.pill-arrow]:text-ink"
-        >
-          Get In Touch
-        </PillLink>
+        <Reveal as="footer" delay={0.08}>
+          <PillLink
+            href={`mailto:${profile.email}`}
+            className="[&_.pill]:bg-white [&_.pill]:text-ink [&_.pill-arrow]:bg-white [&_.pill-arrow]:text-ink"
+          >
+            Get In Touch
+          </PillLink>
+        </Reveal>
 
         <a href={`mailto:${profile.email}`} className="text-sm text-white/60 hover:text-white">
           {profile.email}

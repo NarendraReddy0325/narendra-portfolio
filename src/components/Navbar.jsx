@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { nav, profile } from '../data'
+import { Roll, RollArrow } from './ui'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -41,28 +42,30 @@ export default function Navbar() {
           </span>
         </a>
 
+        {/* Nav links roll too — the label is stacked twice in a clipped box and
+            slides up on hover. No colour change; the motion is the feedback. */}
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-8">
             {nav.map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="text-sm text-body transition-colors duration-300 hover:text-ink"
-                >
-                  {item.label}
+                <a href={item.href} className="group block text-sm text-body hover:text-ink">
+                  <Roll>{item.label}</Roll>
                 </a>
               </li>
             ))}
           </ul>
         </nav>
 
+        <div className="group hidden items-center gap-2 md:flex">
+          <a href="#contact" className="pill">
+            <Roll>Get In Touch</Roll>
+          </a>
+          <a href="#contact" aria-hidden="true" tabIndex={-1} className="pill-arrow">
+            <RollArrow />
+          </a>
+        </div>
+
         <div className="flex items-center gap-2">
-          <a href="#contact" className="pill hidden md:inline-flex">
-            Get In Touch
-          </a>
-          <a href="#contact" aria-hidden="true" tabIndex={-1} className="pill-arrow hidden md:grid">
-            →
-          </a>
 
           <button
             type="button"

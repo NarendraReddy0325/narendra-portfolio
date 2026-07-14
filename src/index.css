@@ -103,12 +103,12 @@
 
   /* The black pill. The site's primary action, everywhere. */
   .pill {
-    @apply inline-flex items-center justify-center rounded-full bg-deep px-6 py-3.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-ink/85;
+    @apply inline-flex items-center justify-center overflow-hidden rounded-full bg-deep px-6 py-3.5 text-sm font-medium text-white;
   }
 
   /* The circular arrow that sits beside a pill. */
   .pill-arrow {
-    @apply grid h-12 w-12 shrink-0 place-items-center rounded-full bg-deep text-white transition-transform duration-300 hover:scale-105;
+    @apply grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-deep text-white;
   }
 
   .card {
@@ -119,6 +119,69 @@
   .chip {
     @apply inline-flex items-center rounded-full bg-surface px-3.5 py-1.5 text-xs font-medium text-body;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   THE TEXT ROLL.
+   Every button and nav link in the reference stacks two copies of its label in
+   an overflow-clipped box and rolls the second one up on hover. The arrow does
+   the same thing sideways. It's the signature micro-interaction of the whole
+   template, and nothing else in the design relies on colour change for hover.
+--------------------------------------------------------------------------- */
+.roll {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.5;
+}
+.roll__inner {
+  display: block;
+  transition: transform 0.45s var(--ease-out-expo);
+}
+.roll__inner > span {
+  display: block;
+}
+.group:hover .roll__inner,
+.group:focus-visible .roll__inner {
+  transform: translateY(-50%);
+}
+
+/* Horizontal twin: the arrow exits right, its clone enters from the left. */
+.roll-x {
+  display: block;
+  overflow: hidden;
+  width: 1.25em;
+}
+.roll-x__inner {
+  display: flex;
+  transition: transform 0.45s var(--ease-out-expo);
+}
+.roll-x__inner > span {
+  flex: 0 0 100%;
+  text-align: center;
+}
+.group:hover .roll-x__inner,
+.group:focus-visible .roll-x__inner {
+  transform: translateX(-100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll__inner,
+  .roll-x__inner {
+    transition: none;
+  }
+  .group:hover .roll__inner,
+  .group:hover .roll-x__inner {
+    transform: none;
+  }
+}
+
+/* The blue arch behind the hero portrait. A 300px top radius and a gradient
+   running from the accent down into the page grey. */
+.hero-arch {
+  background: linear-gradient(180deg, var(--color-accent) 0%, #dfe0eb 100%);
+  border-top-left-radius: 300px;
+  border-top-right-radius: 300px;
 }
 
 /* The oversized ghost word behind the hero portrait. Sits under everything,

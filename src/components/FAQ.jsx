@@ -25,7 +25,9 @@ export default function FAQ() {
           </div>
         </Reveal>
 
-        <Reveal as="card" delay={0.08} className="lg:col-span-7">
+        {/* The accordion list travels 50px — its own distance in the reference,
+            between the card (40) and panel (60) groups. */}
+        <Reveal as="list" delay={0.08} className="lg:col-span-7">
           <div className="space-y-3">
             {faqs.map((f, i) => {
               const isOpen = open === i
