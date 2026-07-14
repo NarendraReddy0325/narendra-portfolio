@@ -6,7 +6,7 @@ import StatCard from './StatCard'
  * The About bento.
  *
  * Left: a tall portrait plate. Right: a 2x2 of small cards — two count-up
- * stats, a rating tile, and the "approach" tile with its skill chips.
+ * stats, a third stat with a capability chip, and the "approach" tile.
  * On mobile the bento unstacks into a single column in reading order.
  */
 export default function About() {
@@ -62,7 +62,12 @@ export default function About() {
           <StatCard stat={about.stats[0]} anchorId="stat-about-0" anchor />
           <StatCard stat={about.stats[1]} anchorId="stat-about-1" anchor />
 
-          {/* Rating tile: big number, then the star chip. */}
+          {/* Third stat, plus a capability chip.
+
+              This tile used to carry a "4.8 client satisfaction score" with a
+              star — a number the template invented. It's gone. A fabricated
+              rating is the fastest way to lose a room, and it's the first thing
+              anyone sharp will ask you to back up. What's here now is true. */}
           <Reveal as="card" delay={0.15}>
             <div className="card flex h-full flex-col justify-between gap-5 p-6">
               <div>
@@ -74,14 +79,12 @@ export default function About() {
                 <p className="mt-2 text-sm leading-snug text-body">{about.stats[2].label}</p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5">
-                  <span aria-hidden="true" className="text-star">
-                    &#9733;
-                  </span>
-                  <span className="text-sm font-semibold text-ink">{about.rating.score}</span>
+                  <span aria-hidden="true" className="block h-1.5 w-1.5 rotate-45 bg-accent" />
+                  <span className="text-sm font-semibold text-ink">{about.capability.label}</span>
                 </span>
-                <span className="text-xs text-faint">{about.rating.label}</span>
+                <span className="text-xs text-faint">{about.capability.caption}</span>
               </div>
             </div>
           </Reveal>

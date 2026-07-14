@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { impact, partners, services } from '../data'
+import { impact, services, tools } from '../data'
 import { Eyebrow, Media, PillLink, Reveal } from './ui'
 
 /* ---------------------------------------------------------------------------
@@ -329,15 +329,21 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Partner strip. Duplicated once so the -50% scroll loops seamlessly. */}
-      <div className="marquee mt-14" aria-label="Clients and partners">
-        <ul className="marquee__track flex w-max items-center gap-14">
-          {[...partners, ...partners].map((p, i) => (
+      {/* The toolchain strip.
+
+          This was a "Trusted By Global Partners" row of invented client names.
+          Claiming clients you don't have is the kind of thing that unravels in
+          one conversation. These are tools you actually use — a claim you can
+          defend in any room. Duplicated once so the -50% scroll loops
+          seamlessly. */}
+      <div className="marquee mt-14" aria-label="Tools I work in">
+        <ul className="marquee__track flex w-max items-center gap-12">
+          {[...tools, ...tools].map((t, i) => (
             <li
-              key={`${p}-${i}`}
-              className="text-xl font-semibold whitespace-nowrap text-white/30 select-none"
+              key={`${t}-${i}`}
+              className="text-xl font-semibold whitespace-nowrap text-white/35 select-none"
             >
-              {p}
+              {t}
             </li>
           ))}
         </ul>

@@ -15,9 +15,9 @@ export default function Blog() {
   return (
     <section id="blog" className="shell py-20 lg:py-28">
       <Reveal className="flex flex-col items-center text-center">
-        <Eyebrow>Latest Articles</Eyebrow>
-        <h2 className="mt-5 max-w-[14ch] text-3xl font-semibold sm:text-5xl">
-          Where strategy meets creativity
+        <Eyebrow>Writing</Eyebrow>
+        <h2 className="mt-5 max-w-[16ch] text-3xl font-semibold sm:text-5xl">
+          Notes on design, and on building it
         </h2>
       </Reveal>
 

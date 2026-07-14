@@ -12,11 +12,13 @@ export default function Testimonials() {
 
   return (
     <section className="shell py-20 lg:py-28">
-      {/* Also on the navy glow — heading white, left-aligned like the original. */}
+      {/* Heading softened from the template's "Trusted by ambitious teams
+          worldwide" — that's a claim, and the quotes below it are still
+          placeholders. Don't reinstate it until you have real ones. */}
       <Reveal className="flex flex-col items-start text-left">
         <Eyebrow tone="dark">Client Feedback</Eyebrow>
         <h2 className="mt-5 max-w-[18ch] text-3xl font-semibold text-white sm:text-5xl">
-          Trusted by ambitious teams worldwide
+          What it’s like to work with me
         </h2>
       </Reveal>
 

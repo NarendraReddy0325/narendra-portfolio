@@ -1,19 +1,31 @@
 /* ---------------------------------------------------------------------------
-   ALL CONTENT. Edit this file only — no component needs touching.
-   Anything marked TODO(you) is placeholder copy.
+   ALL SITE CONTENT. Edit this file only — no component needs touching.
+
+   Written from what you told me: UI/UX + product designer, 2+ years, across
+   several platforms, with working React/HTML/CSS so you can build what you
+   design. Anything I could not verify is marked TODO(you) rather than invented.
 --------------------------------------------------------------------------- */
 
 export const profile = {
   name: 'Narendra Reddy',
   greeting: 'Hey, I’m Narendra',
-  // The two hero lines. Kept as separate lines so they break exactly here.
-  headline: ['Product, UI/UX', '& Brand Design'],
+  // The two hero lines. Kept separate so they break exactly here.
+  headline: ['Product & UI/UX', 'Design, Built'],
   ghostWord: 'DESIGNER', // the giant word behind the hero portrait
   email: 'reddynarendra.vemireddy@gmail.com',
-  // Your photo, background removed. Transparent PNG — it sits directly on the
-  // hero wash with no card behind it.
   portrait: '/images/portrait.png',
+
+  // The hero paragraph. Leads with what makes you different from other
+  // designers at your level: you can ship what you draw.
+  intro:
+    'Product and UI/UX designer, two years in, working across web, mobile and SaaS. I design in Figma and build in React — so what I hand over is a working interface, not a picture of one.',
 }
+
+export const socials = [
+  { label: 'Behance', href: 'https://www.behance.net/narendarreddy994' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/narendrareddy-uiuxdesigner/' },
+  { label: 'GitHub', href: 'https://github.com/NarendraReddy0325' },
+]
 
 export const nav = [
   { label: 'About', href: '#about' },
@@ -24,32 +36,38 @@ export const nav = [
 ]
 
 // The tilted pills floating over the hero portrait.
-export const heroTags = ['Web design', 'UI/UX']
+export const heroTags = ['UI/UX', 'Product']
 
+/* Keep these true — they are the first hard claim a visitor reads, and the
+   first thing a sharp interviewer will test.
+   TODO(you): correct the numbers if they are off. */
 export const about = {
   statement:
-    'I create thoughtful digital experiences that connect strategy, usability, and visual clarity.',
+    'I design interfaces people can actually use — then I build them, so nothing gets lost between the Figma file and the browser.',
   image: '/images/portrait.png',
-  // Count-up cards. `value` is the number that animates; `suffix` is appended.
+
   stats: [
-    { value: 2, suffix: '+', label: 'Years Crafting Digital Products' },
+    { value: 2, suffix: '+', label: 'Years Designing Digital Products' },
     { value: 10, suffix: '', label: 'Projects Shipped End To End' },
-    { value: 6, suffix: '', label: 'Live In Production Today' },
+    { value: 4, suffix: '', label: 'Sites Designed And Built In React' },
   ],
-  rating: { score: '4.8', label: 'Client Satisfaction Score' },
+
+  /* Replaces the invented "4.8 client satisfaction score" that shipped with the
+     template. A made-up rating is the fastest way to lose trust with anyone who
+     checks. This says something true instead. */
+  capability: {
+    label: 'Figma → React',
+    caption: 'I hand over working code, not just screens',
+  },
+
   approach: {
-    title: 'Strategic Thinking, Clean Execution.',
-    tags: ['Interface Design', 'Product Strategy', 'No-code Development', 'Branding'],
+    title: 'Research first. Design second. Ship third.',
+    tags: ['User Research', 'Interface Design', 'Design Systems', 'Frontend Build'],
   },
 }
 
 /* ---------------------------------------------------------------------------
-   PROJECTS — the numbered 01…10 rows.
-
-   `type` decides what the button does:
-     live    → "Explore Project" opens `url` in a new tab
-     concept → "View Screens" opens `images` in a lightbox, and the row is
-               marked "Concept" so nothing implies a shipped product
+   PROJECTS — left exactly as they were, per your request.
 --------------------------------------------------------------------------- */
 export const projects = [
   {
@@ -125,36 +143,34 @@ export const projects = [
 ]
 
 /* ---------------------------------------------------------------------------
-   Services.
-
-   `tone`  — 'dark' or 'light' card.
-   `media` — what fills the bottom of the card:
-       'tags'   scattered, drifting chips (Brand Identity)
-       'frame'  one image in a blue-outlined frame (UI/UX Design)
-       'ticker' a row of thumbnails scrolling sideways, forever (Web Experience)
-       'bleed'  one large image running off the bottom edge (Development)
-
-   TODO(you): drop your own images at these paths — see the README. Until then
-   each renders as a dark plate rather than a broken image.
+   Services — what you actually sell, in the order a client cares about.
+   `media` decides what fills the bottom of the card. See README.
 --------------------------------------------------------------------------- */
 export const services = [
   {
-    title: 'Brand Identity',
-    desc: 'Strategic brand systems built for clarity and growth.',
+    title: 'Product & UI Design',
+    desc: 'Flows, wireframes and interfaces for web, mobile and SaaS — from the first sketch to a build-ready file.',
     tone: 'dark',
     media: 'tags',
-    tags: ['Brand Strategy', 'Visual Identity', 'Brand Guidelines', 'Colour', 'Typography', 'Voice'],
+    tags: [
+      'User Flows',
+      'Wireframing',
+      'Interface Design',
+      'Prototyping',
+      'Design Systems',
+      'Handoff',
+    ],
   },
   {
-    title: 'UI/UX Design',
-    desc: 'End-to-end product design, from research and flows to the shipped interface.',
+    title: 'UX Research',
+    desc: 'Interviews, usability testing and journey mapping, so the design answers a real problem instead of a guess.',
     tone: 'light',
     media: 'frame',
-    image: '/images/services/uiux.jpg',
+    image: '/images/services/ux-research.jpg',
   },
   {
-    title: 'Web Experience',
-    desc: 'Marketing sites and landing pages designed to convert and built to scale.',
+    title: 'Web & Mobile Experience',
+    desc: 'Marketing sites, landing pages and app screens designed to convert and built to scale.',
     tone: 'dark',
     media: 'ticker',
     images: [
@@ -165,49 +181,75 @@ export const services = [
     ],
   },
   {
-    title: 'Development',
-    desc: 'Pixel-accurate, performant front-ends that bring the design to life.',
+    title: 'Frontend Development',
+    desc: 'I build what I design — React, HTML and CSS — so the shipped page matches the file, down to the spacing.',
     tone: 'light',
     media: 'bleed',
-    image: '/images/services/development.jpg',
+    image: '/images/services/frontend.jpg',
   },
 ]
 
-/* The tall card on the right of the services block: an image with the CTA
-   underneath it, all in one card. */
+/* The tall card on the right of the services block. */
 export const impact = {
-  chip: 'Trusted By Global Partners',
+  chip: 'Design & Build, One Person',
   title: 'Let’s Create Impact',
-  desc: 'Let’s create meaningful and lasting digital impact.',
+  desc: 'Bring me the problem, not the spec. I’ll come back with the flow, the screens and the build.',
   cta: 'Start A Project',
   image: '/images/services/impact.jpg',
 }
 
-// TODO(you): swap for real client logos, or delete the <Partners/> strip.
-export const partners = ['Lumen', 'Northbank', 'Atlas', 'Meridian', 'Kiln', 'Ferra', 'Orbit']
+/* ---------------------------------------------------------------------------
+   The scrolling strip under Services.
+
+   This used to be a "Trusted By Global Partners" logo row with invented client
+   names on it. You haven't told me you have named clients, and inventing them
+   is the kind of thing that gets found out in one conversation. It's now your
+   actual toolchain, which is a claim you can defend in any room.
+--------------------------------------------------------------------------- */
+export const tools = [
+  'Figma',
+  'FigJam',
+  'Framer',
+  'Adobe Illustrator',
+  'Photoshop',
+  'Canva',
+  'Maze',
+  'Google Sheets',
+  'Notion',
+  'React',
+  'HTML',
+  'CSS',
+  'Tailwind',
+  'Git',
+]
 
 /* TODO(you): REPLACE BEFORE PUBLISHING.
-   Invented quotes with invented names — placeholders so the carousel can be
-   laid out. Publishing them attributes words to people who never said them.
-   Swap in real quotes, or delete <Testimonials /> from App.jsx. */
+   These are placeholder quotes with placeholder names. I have not written real
+   ones, because attributing words to a client who never said them is the single
+   riskiest thing you could put on this site — one message to that person and the
+   whole portfolio is in question.
+
+   Either paste in real quotes (a line from a Slack message or a LinkedIn
+   recommendation is plenty — ask permission), or delete <Testimonials /> from
+   src/App.jsx and the section disappears cleanly. */
 export const testimonials = [
   {
     quote:
-      'PLACEHOLDER — replace with a real client quote. Every design decision was thoughtful, strategic, and clearly aligned with our product goals.',
+      'PLACEHOLDER — replace with a real client quote, or delete this section entirely.',
     name: 'Client name',
     role: 'Role, Company',
     image: '/images/client-1.jpg',
   },
   {
     quote:
-      'PLACEHOLDER — replace with a real client quote. Our platform became significantly easier to use after the redesign.',
+      'PLACEHOLDER — replace with a real client quote, or delete this section entirely.',
     name: 'Client name',
     role: 'Role, Company',
     image: '/images/client-2.jpg',
   },
   {
     quote:
-      'PLACEHOLDER — replace with a real client quote. The execution was precise, timely, and focused on delivering measurable results.',
+      'PLACEHOLDER — replace with a real client quote, or delete this section entirely.',
     name: 'Client name',
     role: 'Role, Company',
     image: '/images/client-3.jpg',
@@ -216,50 +258,65 @@ export const testimonials = [
 
 export const faqs = [
   {
-    q: 'How long does a typical project take?',
-    a: 'Most projects take between two and six weeks depending on scope, research depth, and revision rounds. Clear timelines are shared before we begin.',
+    q: 'What exactly do you do?',
+    a: 'Product and UI/UX design — research, user flows, wireframes, interfaces and design systems. I also build front-ends in React, HTML and CSS, so I can take a project from the first conversation to a live page without a handoff gap in the middle.',
   },
   {
-    q: 'What does your design process look like?',
-    a: 'Discovery, direction, design, delivery. You get async updates at every step, and I stay through build — the decisions that matter get made in implementation.',
+    q: 'How much experience do you have?',
+    a: 'Two years of hands-on product and UI/UX work across web, mobile and SaaS, plus several sites I designed and built end to end. Every project in the portfolio is work I did the thinking for, not just the styling.',
   },
   {
-    q: 'Do you offer revisions?',
-    a: 'Revisions are unlimited within an active engagement. We iterate until it is right — no per-round billing, no surprises.',
+    q: 'What does working together look like?',
+    a: 'I start with the problem, not the screens: what breaks if this doesn’t happen, and who it breaks for. Then flows and wireframes to agree the shape, then high-fidelity design, then build or handoff. You see progress at every step, not just at the end.',
   },
   {
-    q: 'Do you provide post-launch support?',
-    a: 'Yes. Every project includes 30 days of support, and ongoing care is available on retainer.',
+    q: 'Do you work with developers, or do you build it yourself?',
+    a: 'Both. If you have a team, you get annotated files, tokens and component specs written for engineers rather than adjectives. If you don’t, I can build it — React, HTML and CSS — and you get a live site instead of a folder of PNGs.',
+  },
+  {
+    q: 'What’s your timeline, and how do revisions work?',
+    a: 'Most projects run three to six weeks depending on scope; a landing page or an audit is usually inside a week. Revisions are unlimited while we’re working — we iterate until it’s right, with no per-round billing.',
   },
 ]
 
-// `href: null` renders an inert card rather than a link that goes nowhere.
+/* TODO(you): write these, then point `href` at each. Until a post has an href it
+   renders as an inert "Coming soon" card rather than a link to nowhere. */
 export const posts = [
-  { title: 'Design Principles', tag: 'Featured', image: '/images/post-1.jpg', href: null },
-  { title: 'UX Insights', tag: 'Trending', image: '/images/post-2.jpg', href: null },
-  { title: 'Brand Strategy', tag: 'New', image: '/images/post-3.jpg', href: null },
+  {
+    title: 'What I learned designing my first design system',
+    tag: 'Design Systems',
+    image: '/images/post-1.jpg',
+    href: null,
+  },
+  {
+    title: 'Designing in Figma, then building it in React',
+    tag: 'Design & Code',
+    image: '/images/post-2.jpg',
+    href: null,
+  },
+  {
+    title: 'The usability problems users feel but never report',
+    tag: 'UX Research',
+    image: '/images/post-3.jpg',
+    href: null,
+  },
 ]
 
-export const socials = [
-  { label: 'Behance', href: 'https://www.behance.net/narendarreddy994' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/narendrareddy-uiuxdesigner/' },
-  { label: 'GitHub', href: 'https://github.com/NarendraReddy0325' },
-]
-
-/* Pricing is built but NOT mounted — you asked to drop it.
-   To bring it back: import Pricing from './components/Pricing' in App.jsx and
-   add <Pricing /> after <Services />. */
+/* Pricing is built but NOT mounted — you asked to drop it. To bring it back,
+   import Pricing in src/App.jsx and drop <Pricing /> inside <DeepGlow />.
+   TODO(you): these rates are the template's, not yours. Set them or leave the
+   section off. */
 export const pricing = [
   {
     name: 'Starter',
     price: '$1,800',
     period: '/Month',
-    desc: 'For startups needing consistent product design support and structured visual direction.',
+    desc: 'For founders who need focused design momentum on one thing at a time.',
     features: [
-      'Website or landing page design',
-      'Core UI system setup',
+      'One request at a time',
+      'UI/UX and interface design',
       'Mobile-responsive layouts',
-      'Monthly strategy sync',
+      'Async updates',
       'Two revision rounds',
     ],
     featured: false,
@@ -268,13 +325,13 @@ export const pricing = [
     name: 'Growth',
     price: '$3,200',
     period: '/Month',
-    desc: 'For scaling brands seeking advanced UX thinking, conversion strategy, and continuous design.',
+    desc: 'For teams who need research, design and the front-end build in one place.',
     features: [
-      'Full website or product design',
-      'UX research & wireframing',
-      'Conversion optimisation',
-      'Analytics review & insights',
-      'Priority design support',
+      'Two requests at a time',
+      'UX research and wireframing',
+      'Full product or website design',
+      'React front-end build',
+      'Priority support',
     ],
     featured: true,
   },

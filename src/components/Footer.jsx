@@ -43,8 +43,8 @@ export default function Footer() {
       >
         {/* Footer blocks each travel 34px — their own distance in the reference. */}
         <Reveal as="footer">
-          <h2 className="max-w-[16ch] text-4xl font-semibold text-white sm:text-6xl">
-            Ready To Start Something Great?
+          <h2 className="max-w-[18ch] text-4xl font-semibold text-white sm:text-6xl">
+            Got Something That Needs Designing?
           </h2>
         </Reveal>
 
@@ -95,7 +95,7 @@ export default function Footer() {
       </motion.div>
 
       <p className="mt-8 text-center text-xs text-faint">
-        © {year} {profile.name}. Designed &amp; built by {profile.name}.
+        © {year} {profile.name}. Designed in Figma, built in React — by me.
       </p>
     </footer>
   )
