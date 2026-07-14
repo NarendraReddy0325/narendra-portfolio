@@ -38,7 +38,7 @@ export default function About() {
               decoding="async"
               width={1131}
               height={1372}
-              className="w-[86%] max-w-[22rem] translate-y-1 object-contain"
+              className="portrait-fade w-[88%] max-w-[22rem] object-contain"
             />
           </div>
         </Reveal>

@@ -139,3 +139,20 @@
   background:
     radial-gradient(120% 90% at 50% 0%, #ced3de 0%, #d5d9e2 45%, #e4e7ef 100%);
 }
+
+/* Portrait fade.
+   The source photo crops the shoulders at its own left and right borders, so
+   the cut-out has hard vertical edges down there. Left alone on a light page
+   that reads as a badly cropped image. Two masks, intersected: one fades the
+   bottom out, the other pulls in both sides — so the shirt dissolves into the
+   page before it can hit a frame edge. */
+.portrait-fade {
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0.55) 88%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0.55) 88%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  mask-composite: intersect;
+}
