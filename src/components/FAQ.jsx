@@ -10,18 +10,18 @@ export default function FAQ() {
   return (
     <section className="shell py-20 lg:py-28">
       <div className="grid gap-5 lg:grid-cols-12">
-        <Reveal as="panel" className="lg:col-span-5">
-          <div className="rounded-panel flex h-full flex-col items-center justify-center gap-7 bg-dark p-10 text-center text-white">
+        {/* The dark panel sits at its own height, top-aligned — it does not
+            stretch to match the accordion beside it. */}
+        <Reveal as="panel" className="lg:col-span-5 lg:self-start">
+          <div className="rounded-panel flex flex-col items-center justify-center gap-7 bg-dark px-8 py-16 text-center text-white">
             <Eyebrow tone="dark">FAQ Questions</Eyebrow>
             <h2 className="max-w-[14ch] text-3xl font-semibold text-white sm:text-4xl">
               Got questions about working together?
             </h2>
-            <PillLink
-              href="#contact"
-              className="[&_.pill]:bg-white [&_.pill]:text-ink [&_.pill-arrow]:bg-white [&_.pill-arrow]:text-ink"
-            >
-              Get In Touch
-            </PillLink>
+            {/* Black pill on the dark card, as in the reference — not the white
+                inversion. It reads as a raised object on the panel rather than
+                a hole punched through it. */}
+            <PillLink href="#contact">Get In Touch</PillLink>
           </div>
         </Reveal>
 
@@ -43,13 +43,20 @@ export default function FAQ() {
                       className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
                     >
                       <span className="font-medium text-ink">{f.q}</span>
+
+                      {/* A bare plus that becomes a minus — two crossed bars,
+                          with the vertical one collapsing on open. No circle
+                          behind it; the reference has none. */}
                       <span
                         aria-hidden="true"
-                        className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-lg transition-all duration-300 ${
-                          isOpen ? 'rotate-45 bg-deep text-white' : 'bg-surface text-body'
-                        }`}
+                        className="relative grid h-5 w-5 shrink-0 place-items-center"
                       >
-                        +
+                        <span className="absolute h-[2px] w-4 rounded bg-ink" />
+                        <span
+                          className={`absolute h-[2px] w-4 rounded bg-ink transition-transform duration-300 ${
+                            isOpen ? 'rotate-0 scale-x-0' : 'rotate-90'
+                          }`}
+                        />
                       </span>
                     </button>
                   </h3>

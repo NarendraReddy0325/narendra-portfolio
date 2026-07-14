@@ -46,6 +46,10 @@ export const about = {
     'I design interfaces people can actually use — then I build them, so nothing gets lost between the Figma file and the browser.',
   image: '/images/portrait.png',
 
+  // The small plate tucked into the corner of the third bento tile.
+  // TODO(you): a crop of your work — a UI screen, a component sheet, anything.
+  tileImage: '/images/about-tile.jpg',
+
   stats: [
     { value: 2, suffix: '+', label: 'Years Designing Digital Products' },
     { value: 10, suffix: '', label: 'Projects Shipped End To End' },

@@ -1,5 +1,5 @@
 import { about, profile } from '../data'
-import { CountUp, Eyebrow, PillLink, Reveal } from './ui'
+import { CountUp, Eyebrow, Media, PillLink, Reveal } from './ui'
 import StatCard from './StatCard'
 
 /**
@@ -62,44 +62,65 @@ export default function About() {
           <StatCard stat={about.stats[0]} anchorId="stat-about-0" anchor />
           <StatCard stat={about.stats[1]} anchorId="stat-about-1" anchor />
 
-          {/* Third stat, plus a capability chip.
+          {/* Third stat: big number top-left, a chip on the baseline, and a small
+              image plate tucked into the bottom-right corner — the reference's
+              layout exactly.
 
-              This tile used to carry a "4.8 client satisfaction score" with a
-              star — a number the template invented. It's gone. A fabricated
-              rating is the fastest way to lose a room, and it's the first thing
-              anyone sharp will ask you to back up. What's here now is true. */}
+              What's NOT here is the reference's "4.8 client satisfaction score"
+              star. That number was invented by the template. The shape of the
+              tile is the same; the claim in it is one you can defend. */}
           <Reveal as="card" delay={0.15}>
-            <div className="card flex h-full flex-col justify-between gap-5 p-6">
-              <div>
-                <CountUp
-                  to={about.stats[2].value}
-                  suffix={about.stats[2].suffix}
-                  className="text-4xl font-semibold tracking-tight text-ink"
-                />
-                <p className="mt-2 text-sm leading-snug text-body">{about.stats[2].label}</p>
-              </div>
+            <div className="card relative h-full overflow-hidden p-6 pb-8">
+              <CountUp
+                to={about.stats[2].value}
+                suffix={about.stats[2].suffix}
+                className="text-4xl font-semibold tracking-tight text-ink"
+              />
+              <p className="mt-2 max-w-[16ch] text-sm leading-snug text-body">
+                {about.stats[2].label}
+              </p>
 
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5">
-                  <span aria-hidden="true" className="block h-1.5 w-1.5 rotate-45 bg-accent" />
-                  <span className="text-sm font-semibold text-ink">{about.capability.label}</span>
+              {/* The chip sits bottom-left, the image plate bottom-right — the
+                  reference's arrangement. The chip's caption lived here at first
+                  and the plate covered it, so it's gone: the label carries the
+                  claim on its own. */}
+              <span className="absolute bottom-7 left-6 inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-2">
+                <span aria-hidden="true" className="block h-2 w-2 rotate-45 bg-accent" />
+                <span className="text-sm font-semibold whitespace-nowrap text-ink">
+                  {about.capability.label}
                 </span>
-                <span className="text-xs text-faint">{about.capability.caption}</span>
-              </div>
+              </span>
+
+              <Media
+                src={about.tileImage}
+                alt=""
+                rounded="rounded-tl-[16px]"
+                className="absolute right-0 bottom-0 h-[110px] w-[120px] object-cover"
+              />
             </div>
           </Reveal>
 
-          {/* Approach tile */}
+          {/* Approach tile. The last chip is rotated and pinned to the right —
+              the reference's "Branding" chip standing on its edge. */}
           <Reveal as="card" delay={0.2}>
-            <div className="card flex h-full flex-col gap-5 p-6">
-              <h3 className="text-xl leading-snug font-semibold">{about.approach.title}</h3>
-              <ul className="flex flex-wrap gap-2">
-                {about.approach.tags.map((t) => (
+            <div className="card relative h-full overflow-hidden p-6 pb-8">
+              <h3 className="max-w-[18ch] text-xl leading-snug font-semibold">
+                {about.approach.title}
+              </h3>
+
+              <ul className="mt-6 flex flex-col items-start gap-2 pr-24">
+                {about.approach.tags.slice(0, 3).map((t) => (
                   <li key={t} className="chip">
                     {t}
                   </li>
                 ))}
               </ul>
+
+              {about.approach.tags[3] && (
+                <span className="chip absolute right-5 bottom-8 rotate-[62deg] origin-bottom">
+                  {about.approach.tags[3]}
+                </span>
+              )}
             </div>
           </Reveal>
         </div>

@@ -220,6 +220,18 @@
   }
 }
 
+/* Hide the native pointer only once the eyes cursor is actually live — the flag
+   is set by the component itself, so if it never mounts (touch device, reduced
+   motion, JS error) you keep your normal cursor rather than losing it. */
+@media (hover: hover) and (pointer: fine) {
+  body[data-cursor='on'],
+  body[data-cursor='on'] a,
+  body[data-cursor='on'] button,
+  body[data-cursor='on'] [role='button'] {
+    cursor: none;
+  }
+}
+
 /* The blue arch behind the hero portrait. A 300px top radius and a gradient
    running from the accent down into the page grey. */
 .hero-arch {
