@@ -48,7 +48,9 @@ const TAGS = [
   { left: '3%', drop: 6, rotate: -14, float: { y: 12, x: 5, duration: 4.2, delay: 0 } },
   { left: '26%', drop: -10, rotate: 9, float: { y: -14, x: -6, duration: 5.1, delay: 0.5 } },
   { left: '58%', drop: 8, rotate: -8, float: { y: 14, x: -5, duration: 4.7, delay: 0.9 } },
-  { left: '79%', drop: -6, rotate: 13, float: { y: -11, x: 7, duration: 5.6, delay: 0.3 } },
+  // Sits high above the baseline on purpose: at the word's right edge the stat
+  // cards are stacked, and this is the only pill that would land under them.
+  { left: '79%', drop: 108, rotate: 13, float: { y: -11, x: 7, duration: 5.6, delay: 0.3 } },
 ]
 
 /**
@@ -179,12 +181,17 @@ export default function Hero() {
   const ghostY = useTransform(progress, [0, 1], [0, -70])
 
   return (
+    /* The hero is exactly one screen tall, and everything inside it is sized in
+       svh so it stays that way: the portrait and the ghost word scale down on a
+       short laptop rather than pushing the headline below the fold. svh (not vh)
+       because on mobile vh is the tallest the viewport ever gets — with the URL
+       bar showing, a 100vh hero overflows by the height of the bar. */
     <section
       ref={sectionRef}
       id="top"
-      className="hero-wash relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24"
+      className="hero-wash relative flex min-h-svh flex-col justify-center overflow-hidden pt-24 pb-10 lg:pt-28 lg:pb-14"
     >
-      <div className="shell relative z-10">
+      <div className="shell relative z-10 w-full">
         <div className="relative mx-auto flex justify-center">
           {/* The ghost word, centred ACROSS the portrait and lifted a little above
               its middle, so it reads behind your head rather than across your chest.
@@ -212,13 +219,13 @@ export default function Hero() {
               style={reduce ? undefined : { y: ghostY }}
               className="relative inline-block"
             >
-              <span className="ghost-base ghost-word block text-[24vw] lg:text-[15rem]">
+              <span className="ghost-base ghost-word block text-[24vw] lg:text-[min(15rem,30svh)]">
                 {profile.ghostWord}
               </span>
 
               <span
                 ref={darkRef}
-                className={`ghost-base ghost-dark block text-[24vw] lg:text-[15rem] ${
+                className={`ghost-base ghost-dark block text-[24vw] lg:text-[min(15rem,30svh)] ${
                   ghostHot ? 'ghost-dark--on' : ''
                 }`}
               >
@@ -239,7 +246,7 @@ export default function Hero() {
             className="pointer-events-none absolute inset-0 z-20 flex -translate-y-12 items-center justify-center lg:-translate-y-20"
           >
             <div className="relative">
-              <span className="ghost-base invisible block text-[24vw] lg:text-[15rem]">
+              <span className="ghost-base invisible block text-[24vw] lg:text-[min(15rem,30svh)]">
                 {profile.ghostWord}
               </span>
 
@@ -249,11 +256,16 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* The arch + portrait rise together, 170px, linear, over 0.6s. */}
+          {/* The arch + portrait rise together, 170px, linear, over 0.6s.
+
+              The photo is 1131x1372, so its height is ~1.21x its width — capping
+              the WIDTH in svh therefore caps its height too (43svh of width is
+              ~52svh of portrait), and that is what keeps the headline beneath it
+              on screen. On a tall display the 440px cap wins and nothing moves. */}
           <motion.div
             ref={portraitRef}
             {...m(slide(170, 0.6, LINEAR))}
-            className="relative z-10 flex w-full max-w-[380px] justify-center lg:max-w-[440px]"
+            className="relative z-10 flex w-full max-w-[min(380px,40svh)] justify-center lg:max-w-[min(440px,43svh)]"
           >
             {/* The blue arch behind you — a 300px-radius dome running from the
                 accent down into the page grey. */}
