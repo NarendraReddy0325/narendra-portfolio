@@ -10,7 +10,9 @@ export const profile = {
   headline: ['Product, UI/UX', '& Brand Design'],
   ghostWord: 'DESIGNER', // the giant word behind the hero portrait
   email: 'reddynarendra.vemireddy@gmail.com',
-  portrait: '/images/portrait.jpg', // TODO(you): drop your photo here
+  // Your photo, background removed. Transparent PNG — it sits directly on the
+  // hero wash with no card behind it.
+  portrait: '/images/portrait.png',
 }
 
 export const nav = [
@@ -27,7 +29,7 @@ export const heroTags = ['Web design', 'UI/UX']
 export const about = {
   statement:
     'I create thoughtful digital experiences that connect strategy, usability, and visual clarity.',
-  image: '/images/about.jpg', // TODO(you)
+  image: '/images/portrait.png',
   // Count-up cards. `value` is the number that animates; `suffix` is appended.
   stats: [
     { value: 2, suffix: '+', label: 'Years Crafting Digital Products' },

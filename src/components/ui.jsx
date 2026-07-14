@@ -1,19 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 
-const EASE = [0.16, 1, 0.3, 1]
+/* The reference's easing curve — a symmetric in-out. Used site-wide so every
+   transition shares the same feel as the hero. */
+const EASE = [0.44, 0, 0.56, 1]
 
-/** Scroll-in reveal. Used on every section block. */
-export function Reveal({ children, delay = 0, y = 24, className = '' }) {
+/**
+ * Scroll-in reveal: fade up 30px over 0.6s — the same values the reference
+ * uses for its hero text, reused for section content as it enters the viewport.
+ */
+export function Reveal({ children, delay = 0, y = 30, className = '' }) {
   const reduce = useReducedMotion()
 
   return (
     <motion.div
       className={className}
-      initial={reduce ? {} : { opacity: 0, y }}
+      initial={reduce ? {} : { opacity: 0.001, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-70px' }}
-      transition={{ duration: 0.7, delay, ease: EASE }}
+      transition={{ duration: 0.6, delay, ease: EASE, type: 'tween' }}
     >
       {children}
     </motion.div>

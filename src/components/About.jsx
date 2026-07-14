@@ -1,5 +1,5 @@
 import { about, profile } from '../data'
-import { CountUp, Eyebrow, Media, PillLink, Reveal } from './ui'
+import { CountUp, Eyebrow, PillLink, Reveal } from './ui'
 
 /**
  * The About bento.
@@ -27,13 +27,20 @@ export default function About() {
       </Reveal>
 
       <div className="mt-14 grid gap-4 lg:grid-cols-12">
-        {/* Portrait plate */}
+        {/* Portrait plate. The cut-out has no background of its own, so the card
+            provides one — a soft grey wash it stands on, bottom-aligned. */}
         <Reveal className="lg:col-span-5">
-          <Media
-            src={about.image}
-            alt={`${profile.name} at work`}
-            className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto lg:min-h-[22rem]"
-          />
+          <div className="rounded-card relative flex h-full min-h-[20rem] items-end justify-center overflow-hidden bg-gradient-to-b from-[#dfe3ec] to-[#eef0f5]">
+            <img
+              src={about.image}
+              alt={`${profile.name}, product and UI/UX designer`}
+              loading="lazy"
+              decoding="async"
+              width={1131}
+              height={1372}
+              className="w-[86%] max-w-[22rem] translate-y-1 object-contain"
+            />
+          </div>
         </Reveal>
 
         {/* The 2×2 */}
