@@ -113,14 +113,29 @@ export default function Hero() {
   const reduce = useReducedMotion()
   const sectionRef = useRef(null)
   const ghostRef = useRef(null)
+  const darkRef = useRef(null)
   const portraitRef = useRef(null)
   const [ghostHot, setGhostHot] = useState(false)
   const m = (props) => (reduce ? {} : props)
 
-  /* Hovering the ghost word.
-     Worked out geometrically rather than with :hover, because the .shell above
-     it covers this region and eats the pointer — see the note in index.css.
-     Hovering the portrait doesn't count: you're over the photo, not the word. */
+  /* The spotlight on the ghost word.
+
+     Only the letters under the cursor darken. A dark copy of the word sits on
+     top of the pale one, masked to a soft circle that follows the pointer — so
+     the darkening is local, and fades out at the edge of the circle instead of
+     switching on and off.
+
+     Two things worth knowing:
+
+     1. This can't be a CSS :hover. The word sits at z-0 beneath the .shell that
+        holds the portrait and headline, and that shell's box covers this whole
+        region — it eats the pointer even where it's fully transparent. Raising
+        the word above the shell would fix the hover and wreck the design, since
+        it would paint over the portrait. So the hit test is geometric.
+
+     2. The mask centre is written straight to the DOM rather than through React
+        state. It changes on every mouse move; re-rendering Hero at that rate
+        would drop frames for no reason. */
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
@@ -129,9 +144,17 @@ export default function Hero() {
       r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
 
     const onMove = (e) => {
-      const word = ghostRef.current?.getBoundingClientRect()
+      const dark = darkRef.current
+      const word = dark?.getBoundingClientRect()
       const face = portraitRef.current?.getBoundingClientRect()
-      setGhostHot(inside(word, e) && !inside(face, e))
+      const on = inside(word, e) && !inside(face, e)
+
+      setGhostHot(on)
+      if (!on || !dark) return
+
+      // Mask centre, in the dark word's own coordinate space.
+      dark.style.setProperty('--mx', `${e.clientX - word.left}px`)
+      dark.style.setProperty('--my', `${e.clientY - word.top}px`)
     }
 
     const onLeave = () => setGhostHot(false)
@@ -166,15 +189,28 @@ export default function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-[14%] z-0 flex justify-center"
       >
+        {/* Two copies of the word, stacked and pixel-identical: the pale one, and
+            a dark one masked to a circle under the cursor. Both take their
+            metrics and size from the same classes, or the dark layer would sit a
+            fraction off and the letters would ghost. */}
         <motion.span
           ref={ghostRef}
           {...m(slide(95, 1))}
           style={reduce ? undefined : { y: ghostY }}
-          className={`ghost-word text-[24vw] whitespace-nowrap lg:text-[15rem] ${
-            ghostHot ? 'ghost-word--hot' : ''
-          }`}
+          className="relative inline-block"
         >
-          {profile.ghostWord}
+          <span className="ghost-base ghost-word block text-[24vw] lg:text-[15rem]">
+            {profile.ghostWord}
+          </span>
+
+          <span
+            ref={darkRef}
+            className={`ghost-base ghost-dark block text-[24vw] lg:text-[15rem] ${
+              ghostHot ? 'ghost-dark--on' : ''
+            }`}
+          >
+            {profile.ghostWord}
+          </span>
         </motion.span>
       </div>
 

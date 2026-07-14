@@ -247,39 +247,67 @@
    simply swap the gradient and only the LETTERS darken — the box around them
    stays invisible. Painting a background on hover instead would light up a
    giant rectangle across the hero. */
-.ghost-word {
+/* Shared metrics. Both copies of the word MUST use these identically, or the
+   dark layer will sit a fraction off the pale one and the letters will ghost. */
+.ghost-base {
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.8;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* The pale word. Its colour is a gradient clipped to the glyphs. */
+.ghost-word {
   color: transparent;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 90%);
   -webkit-background-clip: text;
   background-clip: text;
-  user-select: none;
-  transition: background 0.45s var(--ease-out-expo);
 }
 
-/* Toggled from JS, not :hover.
+/* The dark word, sitting exactly on top of the pale one and masked to a soft
+   circle under the pointer — so only the letters the cursor is actually over
+   darken, and they fade off at the edge of the spotlight rather than switching.
+   The mask centre is written from JS as --mx / --my.
 
-   The word sits at z-0, beneath the .shell that holds the portrait and the
-   headline — and that shell's box covers this whole region, so it swallows the
-   pointer even where it is completely transparent. A CSS :hover on the word can
-   therefore never fire. Raising the word above the shell would fix the hover
-   and break the design: it would paint over the portrait.
+   Note this is a MASK, not a background: it reveals the dark letters through a
+   hole that follows the cursor. A radial background clipped to text would tint
+   the whole word at once, which is what we're getting away from. */
+.ghost-dark {
+  position: absolute;
+  inset: 0;
+  color: rgba(16, 16, 16, 0.72);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out-expo);
 
-   So Hero.jsx works out geometrically whether the pointer is over the word (and
-   not over the portrait) and sets this class. */
-.ghost-word--hot {
-  background: linear-gradient(180deg, rgba(16, 16, 16, 0.5) 0%, rgba(16, 16, 16, 0.06) 92%);
-  -webkit-background-clip: text;
-  background-clip: text;
+  --mx: 50%;
+  --my: 50%;
+  --spot: 130px;
+
+  -webkit-mask-image: radial-gradient(
+    circle var(--spot) at var(--mx) var(--my),
+    #000 0%,
+    #000 35%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    circle var(--spot) at var(--mx) var(--my),
+    #000 0%,
+    #000 35%,
+    transparent 72%
+  );
+}
+
+.ghost-dark--on {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ghost-word {
+  .ghost-dark {
     transition: none;
   }
 }
+
 
 /* Hero backdrop: a cool grey wash that resolves into the page colour. */
 .hero-wash {
