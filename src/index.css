@@ -184,6 +184,42 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Sideways tickers — the thumbnail strip inside the Web Experience card, and
+   the partner names below the services block.
+
+   CSS rather than JS so hovering can genuinely pause them: a strip you can't
+   stop to read is decoration, not content. The track is duplicated in the
+   markup, so translating it -50% lands seamlessly back at the start.
+--------------------------------------------------------------------------- */
+.marquee {
+  position: relative;
+  overflow: hidden;
+}
+.marquee__track {
+  animation: marquee-run 38s linear infinite;
+}
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+@keyframes marquee-run {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+  .marquee {
+    overflow-x: auto;
+  }
+}
+
 /* The blue arch behind the hero portrait. A 300px top radius and a gradient
    running from the accent down into the page grey. */
 .hero-arch {

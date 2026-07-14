@@ -124,31 +124,64 @@ export const projects = [
   },
 ]
 
-/* Services bento. `tone` picks the card colour: 'dark' or 'light'.
-   `tags` only render on the first card, matching the reference layout. */
+/* ---------------------------------------------------------------------------
+   Services.
+
+   `tone`  — 'dark' or 'light' card.
+   `media` — what fills the bottom of the card:
+       'tags'   scattered, drifting chips (Brand Identity)
+       'frame'  one image in a blue-outlined frame (UI/UX Design)
+       'ticker' a row of thumbnails scrolling sideways, forever (Web Experience)
+       'bleed'  one large image running off the bottom edge (Development)
+
+   TODO(you): drop your own images at these paths — see the README. Until then
+   each renders as a dark plate rather than a broken image.
+--------------------------------------------------------------------------- */
 export const services = [
   {
     title: 'Brand Identity',
     desc: 'Strategic brand systems built for clarity and growth.',
     tone: 'dark',
+    media: 'tags',
     tags: ['Brand Strategy', 'Visual Identity', 'Brand Guidelines', 'Colour', 'Typography', 'Voice'],
   },
   {
     title: 'UI/UX Design',
     desc: 'End-to-end product design, from research and flows to the shipped interface.',
     tone: 'light',
+    media: 'frame',
+    image: '/images/services/uiux.jpg',
   },
   {
     title: 'Web Experience',
     desc: 'Marketing sites and landing pages designed to convert and built to scale.',
     tone: 'dark',
+    media: 'ticker',
+    images: [
+      '/images/services/web-1.jpg',
+      '/images/services/web-2.jpg',
+      '/images/services/web-3.jpg',
+      '/images/services/web-4.jpg',
+    ],
   },
   {
     title: 'Development',
     desc: 'Pixel-accurate, performant front-ends that bring the design to life.',
     tone: 'light',
+    media: 'bleed',
+    image: '/images/services/development.jpg',
   },
 ]
+
+/* The tall card on the right of the services block: an image with the CTA
+   underneath it, all in one card. */
+export const impact = {
+  chip: 'Trusted By Global Partners',
+  title: 'Let’s Create Impact',
+  desc: 'Let’s create meaningful and lasting digital impact.',
+  cta: 'Start A Project',
+  image: '/images/services/impact.jpg',
+}
 
 // TODO(you): swap for real client logos, or delete the <Partners/> strip.
 export const partners = ['Lumen', 'Northbank', 'Atlas', 'Meridian', 'Kiln', 'Ferra', 'Orbit']
