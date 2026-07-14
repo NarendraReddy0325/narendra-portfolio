@@ -15,7 +15,9 @@ export default function StatCard({ stat, anchorId, anchor = false, live = false 
   return (
     <div
       id={anchorId}
-      className={`card flex items-center justify-between gap-6 px-6 py-5 shadow-[0_24px_60px_-30px_rgba(16,16,16,0.35)] ${
+      // h-full so the card fills its grid row (and, in the fixed layer, fills
+      // the box TravelingStats sizes for it).
+      className={`card flex h-full items-center justify-between gap-6 px-6 py-5 shadow-[0_24px_60px_-30px_rgba(16,16,16,0.35)] ${
         anchor ? 'lg:invisible' : ''
       }`}
     >

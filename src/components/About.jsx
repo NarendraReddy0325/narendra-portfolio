@@ -51,14 +51,16 @@ export default function About() {
             invisible and TravelingStats draws the real ones on top; below lg
             there's no travel and these are simply the cards. They don't get a
             reveal, because something is already flying into them. */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-          <div className="self-start">
-            <StatCard stat={about.stats[0]} anchorId="stat-about-0" anchor />
-          </div>
-
-          <div className="self-start">
-            <StatCard stat={about.stats[1]} anchorId="stat-about-1" anchor />
-          </div>
+        {/* content-start is doing real work here. This column stretches to match
+            the portrait beside it, and a grid's auto rows STRETCH to fill that
+            extra height by default — which is what left a gap under each counter
+            card. Pinning align-content to the start keeps both rows at their
+            natural size: the counter cards stay compact around their content,
+            the taller tiles keep their own height, and the only space between
+            them is the gap. */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:content-start">
+          <StatCard stat={about.stats[0]} anchorId="stat-about-0" anchor />
+          <StatCard stat={about.stats[1]} anchorId="stat-about-1" anchor />
 
           {/* Rating tile: big number, then the star chip. */}
           <Reveal as="card" delay={0.15}>
