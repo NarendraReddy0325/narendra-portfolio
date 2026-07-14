@@ -184,58 +184,71 @@ export default function Hero() {
       id="top"
       className="hero-wash relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24"
     >
-      {/* Ghost word — rises 95px on load, then drifts up as you scroll. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[14%] z-0 flex justify-center"
-      >
-        {/* Two copies of the word, stacked and pixel-identical: the pale one, and
-            a dark one masked to a circle under the cursor. Both take their
-            metrics and size from the same classes, or the dark layer would sit a
-            fraction off and the letters would ghost. */}
-        <motion.span
-          ref={ghostRef}
-          {...m(slide(95, 1))}
-          style={reduce ? undefined : { y: ghostY }}
-          className="relative inline-block"
-        >
-          <span className="ghost-base ghost-word block text-[24vw] lg:text-[15rem]">
-            {profile.ghostWord}
-          </span>
-
-          <span
-            ref={darkRef}
-            className={`ghost-base ghost-dark block text-[24vw] lg:text-[15rem] ${
-              ghostHot ? 'ghost-dark--on' : ''
-            }`}
-          >
-            {profile.ghostWord}
-          </span>
-        </motion.span>
-      </div>
-
-      {/* The pills, strung along the bottom edge of that word.
-
-          They live in their own box rather than inside the portrait row, so they
-          can be anchored to the word's baseline. It shares the word's `top` and
-          matches its height (the ghost has line-height 0.8, so its box is 0.8 ×
-          its font size), which puts `bottom-0` exactly on the baseline.
-
-          z-20 keeps them above the portrait — the ghost word itself is z-0 and
-          sits behind everything. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[14%] z-20 h-[19.2vw] lg:h-[12rem]"
-      >
-        <div className="shell relative h-full">
-          {heroTags.map((label, i) => (
-            <HeroTag key={label} label={label} {...TAGS[i % TAGS.length]} />
-          ))}
-        </div>
-      </div>
-
       <div className="shell relative z-10">
         <div className="relative mx-auto flex justify-center">
+          {/* The ghost word, centred ACROSS the portrait and lifted a little above
+              its middle, so it reads behind your head rather than across your chest.
+
+              It used to hang off the hero section at a fixed `top`, which put it
+              high on the page while the portrait sat well below it. Anchoring it
+              to this row instead keeps it registered to you at any viewport height,
+              because the row IS the portrait's box; the -translate-y is the lift.
+              The pills layer below carries the SAME lift, so it stays on the word's
+              baseline.
+
+              z-0 keeps it behind the portrait (z-10). It's wider than the row and
+              simply overflows it, which is what we want — it's a backdrop. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 flex -translate-y-12 items-center justify-center lg:-translate-y-20"
+          >
+            {/* Two copies, stacked and pixel-identical: the pale word, and a dark
+                one masked to a circle under the cursor. Both take their metrics
+                from the same classes, or the dark layer sits a fraction off and
+                the letters ghost. */}
+            <motion.span
+              ref={ghostRef}
+              {...m(slide(95, 1))}
+              style={reduce ? undefined : { y: ghostY }}
+              className="relative inline-block"
+            >
+              <span className="ghost-base ghost-word block text-[24vw] lg:text-[15rem]">
+                {profile.ghostWord}
+              </span>
+
+              <span
+                ref={darkRef}
+                className={`ghost-base ghost-dark block text-[24vw] lg:text-[15rem] ${
+                  ghostHot ? 'ghost-dark--on' : ''
+                }`}
+              >
+                {profile.ghostWord}
+              </span>
+            </motion.span>
+          </div>
+
+          {/* The pills, strung along the word's bottom edge.
+
+              This box is centred exactly like the word and sized by an invisible
+              copy of it, so `bottom-0` lands on the word's baseline and the `left`
+              percentages spread the pills across the WORD rather than the page.
+              Sizing it from the word itself means it can never drift out of sync
+              with it. z-20 puts them in front of the portrait. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-20 flex -translate-y-12 items-center justify-center lg:-translate-y-20"
+          >
+            <div className="relative">
+              <span className="ghost-base invisible block text-[24vw] lg:text-[15rem]">
+                {profile.ghostWord}
+              </span>
+
+              {heroTags.map((label, i) => (
+                <HeroTag key={label} label={label} {...TAGS[i % TAGS.length]} />
+              ))}
+            </div>
+          </div>
+
           {/* The arch + portrait rise together, 170px, linear, over 0.6s. */}
           <motion.div
             ref={portraitRef}
