@@ -40,42 +40,49 @@ function DriftTag({ label, from, spin, drift, delay, progress, bounce }) {
   const y = useTransform(progress, [0, 1], [0, drift])
 
   return (
-    <motion.li
-      style={reduce ? undefined : { y }}
-      initial={reduce ? { rotate: spin } : { opacity: 0.001, x: from, rotate: 0 }}
-      whileInView={{ opacity: 1, x: 0, rotate: spin }}
-      viewport={{ once: true, margin: '-70px' }}
-      transition={{ duration: 0.6, delay, ease: [0.44, 0, 0.56, 1], type: 'tween' }}
-      className="rounded-full bg-page px-3 py-1.5 text-xs font-medium whitespace-nowrap text-body"
-    >
-      <motion.span
-        className="block origin-bottom"
-        animate={
-          reduce
-            ? undefined
-            : {
-                y: [0, -bounce.height, 0, 0],
-                scaleY: [1, 1.04, 0.9, 1],
-                scaleX: [1, 0.97, 1.1, 1],
-              }
-        }
-        transition={
-          reduce
-            ? undefined
-            : {
-                duration: bounce.duration,
-                // Up slow, down fast, then the squash and recovery on impact.
-                times: [0, 0.45, 0.58, 0.75],
-                ease: ['easeOut', 'easeIn', 'easeOut'],
-                repeat: Infinity,
-                repeatDelay: bounce.rest,
-                // Each chip starts on its own beat, so they don't pulse in unison.
-                delay: delay + 0.7 + bounce.offset,
-              }
-        }
+    // Layer 1 — scroll parallax. Bound to a MotionValue, so nothing else may
+    // animate `y` on this element.
+    <motion.li style={reduce ? undefined : { y }}>
+      {/* Layer 2 — the fly-in. Only touches x / rotate / opacity. */}
+      <motion.div
+        initial={reduce ? { rotate: spin } : { opacity: 0.001, x: from, rotate: 0 }}
+        whileInView={{ opacity: 1, x: 0, rotate: spin }}
+        viewport={{ once: true, margin: '-70px' }}
+        transition={{ duration: 0.6, delay, ease: [0.44, 0, 0.56, 1], type: 'tween' }}
       >
-        {label}
-      </motion.span>
+        {/* Layer 3 — the bounce, and the chip itself. The pill IS this element,
+            so the whole thing hops: background, padding and all. Putting the
+            bounce on an inner span would leave the pill sitting still while its
+            label jumped around inside it. */}
+        <motion.div
+          className="inline-block origin-bottom rounded-full bg-page px-3 py-1.5 text-xs font-medium whitespace-nowrap text-body"
+          animate={
+            reduce
+              ? undefined
+              : {
+                  y: [0, -bounce.height, 0, 0],
+                  scaleY: [1, 1.04, 0.9, 1],
+                  scaleX: [1, 0.97, 1.1, 1],
+                }
+          }
+          transition={
+            reduce
+              ? undefined
+              : {
+                  duration: bounce.duration,
+                  // Up slow, down fast, then the squash and recovery on impact.
+                  times: [0, 0.45, 0.58, 0.75],
+                  ease: ['easeOut', 'easeIn', 'easeOut'],
+                  repeat: Infinity,
+                  repeatDelay: bounce.rest,
+                  // Each chip is on its own beat, so they never pulse in unison.
+                  delay: delay + 0.7 + bounce.offset,
+                }
+          }
+        >
+          {label}
+        </motion.div>
+      </motion.div>
     </motion.li>
   )
 }
