@@ -3,19 +3,39 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { impact, partners, services } from '../data'
 import { Eyebrow, Media, PillLink, Reveal } from './ui'
 
-/* The tags on the Brand Identity card are the one true parallax on the page:
-   they keep drifting while fully visible, each at its own rate and angle. */
+/* The Brand Identity chips.
+   `from` / `spin`  — where each flies in from, and the angle it lands at
+   `drift`          — how far it parallaxes as you scroll past
+   `bounce`         — its own ball bounce: height, speed, pause between hops,
+                      and an offset so the chips never bounce in lockstep. A
+                      row of chips hopping in unison reads as a pulsing UI bug;
+                      staggered, they read as objects. */
 const TAGS = [
-  { from: 50, spin: 30, drift: -46 },
-  { from: -50, spin: -13, drift: -22 },
-  { from: 0, spin: 0, drift: -60 },
-  { from: -50, spin: 12, drift: -34 },
-  { from: -50, spin: 0, drift: -50 },
-  { from: 50, spin: 0, drift: -28 },
-  { from: 50, spin: -8, drift: -40 },
+  { from: 50, spin: 30, drift: -46, bounce: { height: 10, duration: 1.5, rest: 0.5, offset: 0 } },
+  { from: -50, spin: -13, drift: -22, bounce: { height: 7, duration: 1.7, rest: 0.9, offset: 0.35 } },
+  { from: 0, spin: 0, drift: -60, bounce: { height: 12, duration: 1.4, rest: 0.4, offset: 0.7 } },
+  { from: -50, spin: 12, drift: -34, bounce: { height: 8, duration: 1.6, rest: 0.7, offset: 0.15 } },
+  { from: -50, spin: 0, drift: -50, bounce: { height: 11, duration: 1.55, rest: 0.6, offset: 0.5 } },
+  { from: 50, spin: 0, drift: -28, bounce: { height: 6, duration: 1.8, rest: 1, offset: 0.9 } },
+  { from: 50, spin: -8, drift: -40, bounce: { height: 9, duration: 1.45, rest: 0.55, offset: 0.25 } },
 ]
 
-function DriftTag({ label, from, spin, drift, delay, progress }) {
+/**
+ * A Brand Identity chip.
+ *
+ * Three things stack on this one element, on three different layers, because
+ * they'd otherwise fight over the same transform:
+ *
+ *   li    → the scroll parallax drift (a MotionValue bound to `style.y`)
+ *   li    → the fly-in from the side, which only touches x/rotate/opacity
+ *   span  → the perpetual ball bounce (its own `y`, independent of the above)
+ *
+ * The bounce is shaped like gravity rather than a sine wave: the chip is slow
+ * at the top of its arc and fast at the bottom (easeIn on the way down,
+ * easeOut on the way up), and it squashes on impact and stretches as it leaves.
+ * A symmetric ease would read as floating, not bouncing.
+ */
+function DriftTag({ label, from, spin, drift, delay, progress, bounce }) {
   const reduce = useReducedMotion()
   const y = useTransform(progress, [0, 1], [0, drift])
 
@@ -28,7 +48,34 @@ function DriftTag({ label, from, spin, drift, delay, progress }) {
       transition={{ duration: 0.6, delay, ease: [0.44, 0, 0.56, 1], type: 'tween' }}
       className="rounded-full bg-page px-3 py-1.5 text-xs font-medium whitespace-nowrap text-body"
     >
-      {label}
+      <motion.span
+        className="block origin-bottom"
+        animate={
+          reduce
+            ? undefined
+            : {
+                y: [0, -bounce.height, 0, 0],
+                scaleY: [1, 1.04, 0.9, 1],
+                scaleX: [1, 0.97, 1.1, 1],
+              }
+        }
+        transition={
+          reduce
+            ? undefined
+            : {
+                duration: bounce.duration,
+                // Up slow, down fast, then the squash and recovery on impact.
+                times: [0, 0.45, 0.58, 0.75],
+                ease: ['easeOut', 'easeIn', 'easeOut'],
+                repeat: Infinity,
+                repeatDelay: bounce.rest,
+                // Each chip starts on its own beat, so they don't pulse in unison.
+                delay: delay + 0.7 + bounce.offset,
+              }
+        }
+      >
+        {label}
+      </motion.span>
     </motion.li>
   )
 }
