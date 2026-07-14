@@ -241,7 +241,12 @@
 }
 
 /* The oversized ghost word behind the hero portrait. Sits under everything,
-   clipped by the section, and is decorative — screen readers never see it. */
+   clipped by the section, and is decorative — screen readers never see it.
+
+   The colour lives in a gradient that's clipped to the glyphs, so hovering can
+   simply swap the gradient and only the LETTERS darken — the box around them
+   stays invisible. Painting a background on hover instead would light up a
+   giant rectangle across the hero. */
 .ghost-word {
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -251,6 +256,29 @@
   -webkit-background-clip: text;
   background-clip: text;
   user-select: none;
+  transition: background 0.45s var(--ease-out-expo);
+}
+
+/* Toggled from JS, not :hover.
+
+   The word sits at z-0, beneath the .shell that holds the portrait and the
+   headline — and that shell's box covers this whole region, so it swallows the
+   pointer even where it is completely transparent. A CSS :hover on the word can
+   therefore never fire. Raising the word above the shell would fix the hover
+   and break the design: it would paint over the portrait.
+
+   So Hero.jsx works out geometrically whether the pointer is over the word (and
+   not over the portrait) and sets this class. */
+.ghost-word--hot {
+  background: linear-gradient(180deg, rgba(16, 16, 16, 0.5) 0%, rgba(16, 16, 16, 0.06) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost-word {
+    transition: none;
+  }
 }
 
 /* Hero backdrop: a cool grey wash that resolves into the page colour. */

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { profile, heroTags, about } from '../data'
 import StatCard from './StatCard'
@@ -34,33 +34,21 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, ease: EASE, delay, type: 'tween' },
 })
 
-/* The four pills around the portrait. Each has its own corner, angle and drift.
-   The floats are deliberately mismatched in distance, direction and duration —
-   four pills bobbing on the same clock read as a broken loop, not as objects
+/* The four pills, strung along the BOTTOM EDGE of the ghost "DESIGNER" — they
+   sit on its baseline like objects resting on a shelf, rather than scattered
+   around the portrait.
+
+   `left` places each along that line; `drop` nudges it above or below the
+   baseline so they don't form a dead-straight row.
+
+   The floats are deliberately mismatched in distance, direction and duration.
+   Four pills bobbing on the same clock read as a broken loop, not as objects
    hanging in the air. */
 const TAGS = [
-  {
-    className: 'top-[40%] left-0 sm:left-4 lg:left-12',
-    rotate: -26,
-    float: { y: 12, x: 5, duration: 4.2, delay: 0 },
-  },
-  {
-    className: 'top-[22%] right-0 sm:right-4 lg:right-16',
-    rotate: 15,
-    float: { y: -14, x: -6, duration: 5.1, delay: 0.5 },
-  },
-  {
-    className: 'top-[6%] left-2 sm:left-14 lg:left-24',
-    rotate: 11,
-    float: { y: 14, x: -5, duration: 4.7, delay: 0.9 },
-  },
-  {
-    // High and right — NOT bottom-right, which is where the stat cards fly in
-    // and sit in a layer above these, so a pill parked there is simply buried.
-    className: 'top-[2%] right-8 sm:right-24 lg:right-48',
-    rotate: -13,
-    float: { y: -11, x: 7, duration: 5.6, delay: 0.3 },
-  },
+  { left: '3%', drop: 6, rotate: -14, float: { y: 12, x: 5, duration: 4.2, delay: 0 } },
+  { left: '26%', drop: -10, rotate: 9, float: { y: -14, x: -6, duration: 5.1, delay: 0.5 } },
+  { left: '58%', drop: 8, rotate: -8, float: { y: 14, x: -5, duration: 4.7, delay: 0.9 } },
+  { left: '79%', drop: -6, rotate: 13, float: { y: -11, x: 7, duration: 5.6, delay: 0.3 } },
 ]
 
 /**
@@ -70,7 +58,7 @@ const TAGS = [
  * owns the entrance (and the final angle), the inner one owns the endless
  * drift. Put both on one element and the float would overwrite the landing.
  */
-function HeroTag({ label, rotate, className, float }) {
+function HeroTag({ label, rotate, left, drop, float }) {
   const reduce = useReducedMotion()
 
   return (
@@ -79,7 +67,8 @@ function HeroTag({ label, rotate, className, float }) {
       initial={reduce ? { rotate } : { y: -135, rotate: 0 }}
       animate={{ y: 0, rotate }}
       transition={{ duration: 1, ease: EASE, type: 'tween' }}
-      className={`absolute z-20 ${className}`}
+      className="absolute bottom-0"
+      style={{ left, marginBottom: drop }}
     >
       <motion.span
         className="block rounded-full bg-page/90 px-4 py-2 text-xs font-medium whitespace-nowrap text-body shadow-[0_10px_30px_-12px_rgba(16,16,16,0.35)] backdrop-blur"
@@ -123,7 +112,37 @@ function StatSlot({ stat, anchorId, delay = 0 }) {
 export default function Hero() {
   const reduce = useReducedMotion()
   const sectionRef = useRef(null)
+  const ghostRef = useRef(null)
+  const portraitRef = useRef(null)
+  const [ghostHot, setGhostHot] = useState(false)
   const m = (props) => (reduce ? {} : props)
+
+  /* Hovering the ghost word.
+     Worked out geometrically rather than with :hover, because the .shell above
+     it covers this region and eats the pointer — see the note in index.css.
+     Hovering the portrait doesn't count: you're over the photo, not the word. */
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const inside = (r, e) =>
+      r && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom
+
+    const onMove = (e) => {
+      const word = ghostRef.current?.getBoundingClientRect()
+      const face = portraitRef.current?.getBoundingClientRect()
+      setGhostHot(inside(word, e) && !inside(face, e))
+    }
+
+    const onLeave = () => setGhostHot(false)
+
+    section.addEventListener('pointermove', onMove, { passive: true })
+    section.addEventListener('pointerleave', onLeave)
+    return () => {
+      section.removeEventListener('pointermove', onMove)
+      section.removeEventListener('pointerleave', onLeave)
+    }
+  }, [])
 
   /* The stat cards' travel is owned by TravelingStats — they leave this section
      entirely and land in the About bento, so nothing here moves them. All that's
@@ -148,18 +167,42 @@ export default function Hero() {
         className="pointer-events-none absolute inset-x-0 top-[14%] z-0 flex justify-center"
       >
         <motion.span
+          ref={ghostRef}
           {...m(slide(95, 1))}
           style={reduce ? undefined : { y: ghostY }}
-          className="ghost-word text-[24vw] whitespace-nowrap lg:text-[15rem]"
+          className={`ghost-word text-[24vw] whitespace-nowrap lg:text-[15rem] ${
+            ghostHot ? 'ghost-word--hot' : ''
+          }`}
         >
           {profile.ghostWord}
         </motion.span>
+      </div>
+
+      {/* The pills, strung along the bottom edge of that word.
+
+          They live in their own box rather than inside the portrait row, so they
+          can be anchored to the word's baseline. It shares the word's `top` and
+          matches its height (the ghost has line-height 0.8, so its box is 0.8 ×
+          its font size), which puts `bottom-0` exactly on the baseline.
+
+          z-20 keeps them above the portrait — the ghost word itself is z-0 and
+          sits behind everything. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-[14%] z-20 h-[19.2vw] lg:h-[12rem]"
+      >
+        <div className="shell relative h-full">
+          {heroTags.map((label, i) => (
+            <HeroTag key={label} label={label} {...TAGS[i % TAGS.length]} />
+          ))}
+        </div>
       </div>
 
       <div className="shell relative z-10">
         <div className="relative mx-auto flex justify-center">
           {/* The arch + portrait rise together, 170px, linear, over 0.6s. */}
           <motion.div
+            ref={portraitRef}
             {...m(slide(170, 0.6, LINEAR))}
             className="relative z-10 flex w-full max-w-[380px] justify-center lg:max-w-[440px]"
           >
@@ -181,10 +224,6 @@ export default function Hero() {
               className="portrait-fade relative w-full object-contain"
             />
           </motion.div>
-
-          {heroTags.map((label, i) => (
-            <HeroTag key={label} label={label} {...TAGS[i % TAGS.length]} />
-          ))}
 
           {/* Departure slots. No scroll-fade any more — the cards physically
               travel, so fading them out here would delete the thing that moves. */}
