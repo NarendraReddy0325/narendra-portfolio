@@ -19,7 +19,7 @@ export default function Testimonials() {
         </h2>
       </Reveal>
 
-      <Reveal className="mt-14">
+      <Reveal as="panel" className="mt-14">
         <div className="card grid gap-6 p-5 sm:p-7 lg:grid-cols-2 lg:gap-10">
           <div className="flex flex-col justify-between">
             <div>

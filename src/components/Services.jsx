@@ -48,13 +48,13 @@ export default function Services() {
       <div className="mt-14 grid gap-4 lg:grid-cols-12">
         <div className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
           {services.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.06} className="h-full">
+            <Reveal key={s.title} as="card" delay={i * 0.06} className="h-full">
               <ServiceCard s={s} />
             </Reveal>
           ))}
         </div>
 
-        <Reveal delay={0.1} className="lg:col-span-4">
+        <Reveal as="panel" delay={0.1} className="lg:col-span-4">
           <div className="rounded-card flex h-full flex-col justify-between gap-8 bg-dark p-7 text-white">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/80">

@@ -20,7 +20,7 @@ export default function Blog() {
           const linked = Boolean(p.href)
 
           return (
-            <Reveal key={p.title} delay={i * 0.08} className="h-full">
+            <Reveal key={p.title} as="card" delay={i * 0.08} className="h-full">
               <motion.article
                 whileHover={linked ? { y: -6 } : undefined}
                 transition={{ type: 'spring', stiffness: 250, damping: 22 }}

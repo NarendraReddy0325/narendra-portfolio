@@ -4,7 +4,7 @@ import { CountUp, Eyebrow, PillLink, Reveal } from './ui'
 /**
  * The About bento.
  *
- * Left: a tall portrait plate. Right: a 2×2 of small cards — two count-up
+ * Left: a tall portrait plate. Right: a 2x2 of small cards — two count-up
  * stats, a rating tile, and the "approach" tile with its skill chips.
  * On mobile the bento unstacks into a single column in reading order.
  */
@@ -28,8 +28,9 @@ export default function About() {
 
       <div className="mt-14 grid gap-4 lg:grid-cols-12">
         {/* Portrait plate. The cut-out has no background of its own, so the card
-            provides one — a soft grey wash it stands on, bottom-aligned. */}
-        <Reveal className="lg:col-span-5">
+            provides one — a soft grey wash it stands on, bottom-aligned.
+            Images scale up from 0.9 rather than translating, per the reference. */}
+        <Reveal as="image" className="lg:col-span-5">
           <div className="rounded-card relative flex h-full min-h-[20rem] items-end justify-center overflow-hidden bg-gradient-to-b from-[#dfe3ec] to-[#eef0f5]">
             <img
               src={about.image}
@@ -43,9 +44,9 @@ export default function About() {
           </div>
         </Reveal>
 
-        {/* The 2×2 */}
+        {/* The 2x2. These are the "card" reveal — 40px of travel, not 30. */}
         <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-          <Reveal delay={0.05}>
+          <Reveal as="card" delay={0.05}>
             <div className="card flex h-full flex-col justify-between gap-6 p-6">
               <p className="max-w-[10rem] text-sm leading-snug text-body">{about.stats[0].label}</p>
               <CountUp
@@ -56,7 +57,7 @@ export default function About() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal as="card" delay={0.1}>
             <div className="card flex h-full flex-col justify-between gap-6 p-6">
               <p className="max-w-[10rem] text-sm leading-snug text-body">{about.stats[1].label}</p>
               <CountUp
@@ -67,8 +68,8 @@ export default function About() {
             </div>
           </Reveal>
 
-          {/* Rating tile: big number, then the star chip and a small plate. */}
-          <Reveal delay={0.15}>
+          {/* Rating tile: big number, then the star chip. */}
+          <Reveal as="card" delay={0.15}>
             <div className="card flex h-full flex-col justify-between gap-5 p-6">
               <div>
                 <CountUp
@@ -82,7 +83,7 @@ export default function About() {
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5">
                   <span aria-hidden="true" className="text-star">
-                    ★
+                    &#9733;
                   </span>
                   <span className="text-sm font-semibold text-ink">{about.rating.score}</span>
                 </span>
@@ -92,7 +93,7 @@ export default function About() {
           </Reveal>
 
           {/* Approach tile */}
-          <Reveal delay={0.2}>
+          <Reveal as="card" delay={0.2}>
             <div className="card flex h-full flex-col gap-5 p-6">
               <h3 className="text-xl leading-snug font-semibold">{about.approach.title}</h3>
               <ul className="flex flex-wrap gap-2">

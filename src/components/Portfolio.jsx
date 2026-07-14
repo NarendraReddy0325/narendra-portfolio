@@ -28,7 +28,10 @@ export default function Portfolio() {
           const isLive = p.type === 'live'
 
           return (
-            <Reveal key={p.title}>
+            // Project rows travel 60px — twice the text distance. The heavier
+            // the block, the further it moves. That's what gives the scroll
+            // its rhythm in the reference.
+            <Reveal key={p.title} as="panel">
               <article className="card grid gap-6 p-5 sm:p-7 lg:grid-cols-2 lg:gap-10 lg:p-8">
                 {/* Left column: title, ghost number, copy, CTA. */}
                 <div className="flex min-h-[16rem] flex-col lg:min-h-[20rem]">

@@ -1,24 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 
-/* The reference's easing curve — a symmetric in-out. Used site-wide so every
-   transition shares the same feel as the hero. */
-const EASE = [0.44, 0, 0.56, 1]
+/* The reference's easing curve — a symmetric in-out. Traced off the running
+   page frame by frame: the reveal creeps for ~130ms, accelerates hard through
+   the middle, and settles slowly. Used site-wide. */
+export const EASE = [0.44, 0, 0.56, 1]
+export const DURATION = 0.6
 
 /**
- * Scroll-in reveal: fade up 30px over 0.6s — the same values the reference
- * uses for its hero text, reused for section content as it enters the viewport.
+ * Scroll-in reveal.
+ *
+ * The reference does NOT use one distance for everything — the travel scales
+ * with the weight of the thing moving, which is what gives the page its
+ * rhythm. Measured off the original:
+ *
+ *   text  → y 30    headings, eyebrows, body copy
+ *   card  → y 40    the about-bento tiles
+ *   panel → y 60    the big project rows
+ *   image → scale 0.9, no translate
  */
-export function Reveal({ children, delay = 0, y = 30, className = '' }) {
+const VARIANTS = {
+  text: { opacity: 0.001, y: 30 },
+  card: { opacity: 0.001, y: 40 },
+  panel: { opacity: 0.001, y: 60 },
+  image: { opacity: 0.001, scale: 0.9 },
+}
+
+export function Reveal({ children, as = 'text', delay = 0, className = '' }) {
   const reduce = useReducedMotion()
+  const from = VARIANTS[as] ?? VARIANTS.text
 
   return (
     <motion.div
       className={className}
-      initial={reduce ? {} : { opacity: 0.001, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduce ? {} : from}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-70px' }}
-      transition={{ duration: 0.6, delay, ease: EASE, type: 'tween' }}
+      transition={{ duration: DURATION, delay, ease: EASE, type: 'tween' }}
     >
       {children}
     </motion.div>

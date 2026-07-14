@@ -10,7 +10,7 @@ export default function FAQ() {
   return (
     <section className="shell py-20 lg:py-28">
       <div className="grid gap-5 lg:grid-cols-12">
-        <Reveal className="lg:col-span-5">
+        <Reveal as="panel" className="lg:col-span-5">
           <div className="rounded-panel flex h-full flex-col items-center justify-center gap-7 bg-dark p-10 text-center text-white">
             <Eyebrow tone="dark">FAQ Questions</Eyebrow>
             <h2 className="max-w-[14ch] text-3xl font-semibold text-white sm:text-4xl">
@@ -25,7 +25,7 @@ export default function FAQ() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.08} className="lg:col-span-7">
+        <Reveal as="card" delay={0.08} className="lg:col-span-7">
           <div className="space-y-3">
             {faqs.map((f, i) => {
               const isOpen = open === i
