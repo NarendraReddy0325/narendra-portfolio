@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 604 730" width="604" height="730" role="img" aria-label="A design file and the interface it becomes, stacked">
+  <!-- The Impact card's portrait plate. Viewbox is 604x730 = exactly the
+       aspect-[302/365] the card renders at, so object-cover crops nothing.
+       Reads top to bottom: the file, the handoff, the shipped screen. -->
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dfe3ec"/>
+      <stop offset="1" stop-color="#eef0f5"/>
+    </linearGradient>
+  </defs>
+  <rect width="604" height="730" fill="url(#wash)"/>
+
+  <!-- Top: the design file, on canvas, with a selection box -->
+  <g>
+    <rect x="44" y="44" width="516" height="286" rx="16" fill="#ffffff"/>
+    <rect x="44" y="44" width="516" height="34" rx="16" fill="#f6f7fa"/>
+    <rect x="44" y="62" width="516" height="16" fill="#f6f7fa"/>
+    <circle cx="66" cy="61" r="5" fill="#3458ff"/>
+    <rect x="82" y="57" width="54" height="8" rx="4" fill="#dfe0eb"/>
+    <text x="470" y="65" fill="#9a9dab" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600">FIGMA</text>
+
+    <!-- Frame under selection: accent handles at the corners -->
+    <rect x="80" y="104" width="238" height="196" rx="10" fill="#f6f7fa" stroke="#3458ff" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <g fill="#3458ff">
+      <rect x="75" y="99" width="9" height="9" rx="2"/><rect x="314" y="99" width="9" height="9" rx="2"/>
+      <rect x="75" y="296" width="9" height="9" rx="2"/><rect x="314" y="296" width="9" height="9" rx="2"/>
+    </g>
+    <rect x="98" y="124" width="120" height="12" rx="5" fill="#101010" opacity="0.8"/>
+    <rect x="98" y="144" width="84" height="12" rx="5" fill="#101010" opacity="0.8"/>
+    <rect x="98" y="172" width="150" height="6" rx="3" fill="#9a9dab"/>
+    <rect x="98" y="185" width="126" height="6" rx="3" fill="#9a9dab"/>
+    <rect x="98" y="212" width="72" height="22" rx="11" fill="#3458ff"/>
+    <rect x="180" y="212" width="58" height="22" rx="11" fill="#ffffff" stroke="#dfe0eb"/>
+    <rect x="98" y="252" width="200" height="32" rx="8" fill="#2a2a33" opacity="0.08"/>
+
+    <!-- Layers panel -->
+    <g>
+      <rect x="340" y="104" width="180" height="196" rx="10" fill="#f6f7fa"/>
+      <rect x="354" y="118" width="60" height="6" rx="3" fill="#9a9dab"/>
+      <g fill="#ffffff" stroke="#dfe0eb">
+        <rect x="354" y="136" width="152" height="20" rx="4"/>
+        <rect x="354" y="162" width="152" height="20" rx="4"/>
+        <rect x="354" y="188" width="152" height="20" rx="4"/>
+        <rect x="354" y="214" width="152" height="20" rx="4"/>
+        <rect x="354" y="240" width="152" height="20" rx="4"/>
+      </g>
+      <g fill="#cdd5fb"><rect x="362" y="143" width="8" height="6" rx="1"/><rect x="362" y="169" width="8" height="6" rx="1"/><rect x="362" y="195" width="8" height="6" rx="1"/><rect x="362" y="221" width="8" height="6" rx="1"/><rect x="362" y="247" width="8" height="6" rx="1"/></g>
+      <g fill="#dfe0eb"><rect x="378" y="144" width="72" height="4" rx="2"/><rect x="378" y="170" width="54" height="4" rx="2"/><rect x="378" y="196" width="86" height="4" rx="2"/><rect x="378" y="222" width="62" height="4" rx="2"/><rect x="378" y="248" width="78" height="4" rx="2"/></g>
+    </g>
+  </g>
+
+  <!-- The handoff: a labelled arrow, the whole point of the card -->
+  <g>
+    <line x1="302" y1="342" x2="302" y2="386" stroke="#3458ff" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 6"/>
+    <path d="M294 384 l8 12 l8 -12 z" fill="#3458ff"/>
+    <rect x="222" y="352" width="72" height="24" rx="12" fill="#ffffff"/>
+  </g>
+  <text x="302" y="369" fill="#3458ff" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="0.06em">BUILT</text>
+
+  <!-- Bottom: the shipped page in a browser -->
+  <g>
+    <rect x="44" y="412" width="516" height="274" rx="16" fill="#2a2a33"/>
+    <rect x="44" y="412" width="516" height="34" rx="16" fill="#22222a"/>
+    <rect x="44" y="430" width="516" height="16" fill="#22222a"/>
+    <circle cx="66" cy="429" r="4.5" fill="#ff5f57"/>
+    <circle cx="84" cy="429" r="4.5" fill="#febc2e"/>
+    <circle cx="102" cy="429" r="4.5" fill="#28c840"/>
+    <rect x="126" y="422" width="180" height="14" rx="7" fill="#2f2f3a"/>
+
+    <rect x="80" y="474" width="238" height="196" rx="10" fill="#ffffff" opacity="0.06"/>
+    <rect x="98" y="494" width="120" height="12" rx="5" fill="#ffffff" opacity="0.92"/>
+    <rect x="98" y="514" width="84" height="12" rx="5" fill="#ffffff" opacity="0.92"/>
+    <rect x="98" y="542" width="150" height="6" rx="3" fill="#ffffff" opacity="0.4"/>
+    <rect x="98" y="555" width="126" height="6" rx="3" fill="#ffffff" opacity="0.4"/>
+    <rect x="98" y="582" width="72" height="22" rx="11" fill="#3458ff"/>
+    <rect x="180" y="582" width="58" height="22" rx="11" fill="#ffffff" opacity="0.12"/>
+    <rect x="340" y="474" width="180" height="196" rx="10" fill="#ffffff" opacity="0.06"/>
+    <circle cx="430" cy="556" r="42" fill="none" stroke="#3458ff" stroke-width="8" stroke-linecap="round" stroke-dasharray="196 68" transform="rotate(-90 430 556)"/>
+  </g>
+</svg>

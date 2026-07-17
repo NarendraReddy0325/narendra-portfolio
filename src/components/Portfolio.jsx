@@ -26,6 +26,29 @@ import Lightbox from './Lightbox'
 const TOP = 104 // clears the navbar
 const STEP = 14 // the sliver of each card left showing beneath the next
 
+/* The section heading was "Projects That Delivered Real Impact" — a boast, in
+   the template's voice rather than Narendra's, and one currently backed by nine
+   paragraphs reading "TODO(you)". A plain fact is both better writing and a
+   claim that survives contact with a reader.
+
+   It's derived from the deck rather than typed beside it, because a heading
+   that counts things is a lie on a delay: add a tenth project and a hardcoded
+   "nine" is wrong the same day. Spelled out — numerals in a display heading
+   read as data, and this is a sentence. */
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+const say = (n, noun) => `${WORDS[n] ?? n} ${noun}${n === 1 ? '' : 's'}`
+
+function summarise(list) {
+  const live = list.filter((p) => p.type === 'live').length
+  const concepts = list.length - live
+  const parts = []
+  if (live) parts.push(say(live, 'live site'))
+  if (concepts) parts.push(say(concepts, 'concept'))
+  if (!parts.length) return 'Selected work'
+  const s = parts.join(', ')
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 function ProjectCard({ p, i, total, listProgress, onOpen }) {
   const reduce = useReducedMotion()
   const isLive = p.type === 'live'
@@ -117,9 +140,9 @@ export default function Portfolio() {
   return (
     <section id="portfolio" className="shell py-20 lg:py-28">
       <Reveal className="flex flex-col items-center text-center">
-        <Eyebrow>My Portfolio</Eyebrow>
+        <Eyebrow>Work</Eyebrow>
         <h2 className="mt-5 max-w-[16ch] text-3xl font-semibold sm:text-5xl">
-          Projects That Delivered Real Impact
+          {summarise(projects)}
         </h2>
       </Reveal>
 

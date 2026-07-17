@@ -13,7 +13,18 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
  *
  * The blur is what makes it work — hard edges here would look like a coloured
  * band. Rendered behind the content with a negative z-index, and the wrapper is
- * deliberately NOT overflow-clipped so the bloom can spill.
+ * deliberately NOT clipped vertically so the bloom can spill into the sections
+ * above and below.
+ *
+ * Horizontally is another matter. `inset-x-[-6%]` pushed the glow 6% past each
+ * side of the page, and nothing clipped it, so the DOCUMENT grew by that 6% —
+ * 86px at 1440, 23px at 390. The whole page scrolled sideways, at every
+ * breakpoint, purely to reveal blank grey next to a blur nobody can see.
+ *
+ * overflow-x: clip is the fix, and it has to be `clip` rather than `hidden`:
+ * `hidden` is a scroll container, which would force overflow-y to `auto` and
+ * cut the vertical bloom this whole component exists for. `clip` is not, so the
+ * spill survives on the axis that matters.
  */
 export default function DeepGlow({ children, className = '' }) {
   const ref = useRef(null)
@@ -28,7 +39,7 @@ export default function DeepGlow({ children, className = '' }) {
   const opacity = useTransform(scrollYProgress, [0, 0.75], [0.5, 1])
 
   return (
-    <div ref={ref} className={`relative isolate ${className}`}>
+    <div ref={ref} className={`relative isolate overflow-x-clip ${className}`}>
       <motion.div
         aria-hidden="true"
         style={reduce ? { scale: 1, opacity: 1 } : { scale, opacity }}

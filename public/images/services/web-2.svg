@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 312 210" width="312" height="210" role="img" aria-label="Two mobile app screens">
+  <rect width="312" height="210" fill="#e9ecf3"/>
+  <rect x="46" y="22" width="96" height="176" rx="14" fill="#ffffff" stroke="#dfe0eb"/>
+  <rect x="76" y="30" width="36" height="5" rx="2.5" fill="#e9ecf3"/>
+  <rect x="58" y="48" width="52" height="7" rx="3" fill="#101010" opacity="0.85"/>
+  <rect x="58" y="62" width="72" height="4" rx="2" fill="#9a9dab"/>
+  <rect x="58" y="78" width="72" height="40" rx="7" fill="#3458ff"/>
+  <rect x="66" y="90" width="34" height="4" rx="2" fill="#ffffff" opacity="0.9"/>
+  <rect x="66" y="100" width="48" height="4" rx="2" fill="#ffffff" opacity="0.5"/>
+  <g fill="#f6f7fa" stroke="#dfe0eb"><rect x="58" y="126" width="72" height="18" rx="5"/><rect x="58" y="150" width="72" height="18" rx="5"/></g>
+  <rect x="62" y="178" width="64" height="10" rx="5" fill="#e9ecf3"/>
+  <rect x="170" y="22" width="96" height="176" rx="14" fill="#2a2a33"/>
+  <rect x="200" y="30" width="36" height="5" rx="2.5" fill="#ffffff" opacity="0.18"/>
+  <rect x="182" y="48" width="60" height="7" rx="3" fill="#ffffff" opacity="0.9"/>
+  <circle cx="218" cy="104" r="30" fill="none" stroke="#3458ff" stroke-width="6" stroke-linecap="round" stroke-dasharray="140 48" transform="rotate(-90 218 104)"/>
+  <text x="218" y="109" fill="#ffffff" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle">72%</text>
+  <g fill="#ffffff" opacity="0.14"><rect x="182" y="150" width="72" height="14" rx="4"/><rect x="182" y="170" width="52" height="14" rx="4"/></g>
+</svg>

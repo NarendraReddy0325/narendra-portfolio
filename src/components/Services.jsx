@@ -172,7 +172,7 @@ function Ticker({ images, title }) {
           <li key={i} className="shrink-0">
             <Media
               src={src}
-              alt={i < images.length ? `${title} — sample ${i + 1}` : ''}
+              alt={i < images.length ? `${title} — illustration ${i + 1}` : ''}
               rounded="rounded-[10px]"
               className="h-[105px] w-[156px] border-2 border-page/20 object-cover"
             />
@@ -217,11 +217,15 @@ function ServiceCard({ s, progress }) {
 
       {/* One image in a blue-outlined frame. The accent border is the only place
           the blue shows up inside a card. */}
+      {/* alt is deliberately descriptive rather than `${s.title} — sample work`.
+          These slots hold illustrations of the service, not screenshots of
+          Narendra's projects, and the old wording had the markup asserting the
+          artwork was client work — to screen readers and crawlers both. */}
       {s.media === 'frame' && (
         <Reveal as="image" className="mt-auto pt-8">
           <Media
             src={s.image}
-            alt={`${s.title} — sample work`}
+            alt={`${s.title} — illustration`}
             rounded="rounded-[10px]"
             className="h-[163px] w-full border-2 border-accent object-cover"
           />
@@ -236,7 +240,7 @@ function ServiceCard({ s, progress }) {
         <Reveal as="image" className="mt-auto pt-8">
           <Media
             src={s.image}
-            alt={`${s.title} — sample work`}
+            alt={`${s.title} — illustration`}
             rounded="rounded-t-[10px]"
             className="h-[200px] w-full object-cover object-top"
           />
@@ -258,28 +262,45 @@ export default function Services() {
 
   return (
     <section id="services" ref={ref} className="shell py-20 lg:py-28">
+      {/* "Design Solutions Built For Growth" was the template's, and it was the
+          only kind of sentence that survives being said about anybody — swap
+          the name and it still fits. It also broke the page's voice: every
+          heading Narendra actually wrote is sentence case and says something
+          ("I design interfaces people can actually use", "Notes on design, and
+          on building it"), and every leftover was Title Case boilerplate. Two
+          authors on one page is the tell.
+
+          This says the one thing the four cards below have in common and the
+          one thing most designers at his level can't claim. */}
       <Reveal className="flex flex-col items-center text-center">
-        <Eyebrow tone="dark">Core Services</Eyebrow>
-        <h2 className="mt-5 max-w-[16ch] text-3xl font-semibold text-white sm:text-5xl">
-          Design Solutions Built For Growth
+        <Eyebrow tone="dark">Services</Eyebrow>
+        <h2 className="mt-5 max-w-[18ch] text-3xl font-semibold text-white sm:text-5xl">
+          The whole thing, not just the screens
         </h2>
       </Reveal>
 
       {/* The whole block sits inside one glassy panel on the navy — a faint
           diagonal white wash, not a solid card. */}
       <div className="mt-14 rounded-[20px] bg-gradient-to-br from-white/15 via-white/5 to-white/15 p-4 sm:p-8">
+        {/* min-w-0 all the way down is load-bearing, not decoration.
+            Ticker's track is `w-max`, and max-content propagates upward as the
+            min-content size of every ancestor. Grid items default to
+            `min-width: auto`, so the card could not shrink below it and blew its
+            column out to 1388px — on a 390px phone. overflow-hidden clips what
+            you SEE, never what the box is SIZED to. Without these the whole page
+            scrolled sideways by 1034px. */}
         <div className="grid gap-3 lg:grid-cols-[1fr_1fr_22rem]">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {[services[0], services[2]].map((s, i) => (
-              <Reveal key={s.title} as="card" delay={i * 0.06} className="h-full">
+              <Reveal key={s.title} as="card" delay={i * 0.06} className="h-full min-w-0">
                 <ServiceCard s={s} progress={scrollYProgress} />
               </Reveal>
             ))}
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {[services[1], services[3]].map((s, i) => (
-              <Reveal key={s.title} as="card" delay={0.04 + i * 0.06} className="h-full">
+              <Reveal key={s.title} as="card" delay={0.04 + i * 0.06} className="h-full min-w-0">
                 <ServiceCard s={s} progress={scrollYProgress} />
               </Reveal>
             ))}
@@ -300,7 +321,7 @@ export default function Services() {
                 />
                 <Media
                   src={impact.image}
-                  alt="Recent client work"
+                  alt="A design file and the interface it becomes, stacked"
                   rounded="rounded-[10px]"
                   className="relative aspect-[302/365] w-full object-cover"
                 />
@@ -335,15 +356,40 @@ export default function Services() {
           Claiming clients you don't have is the kind of thing that unravels in
           one conversation. These are tools you actually use — a claim you can
           defend in any room. Duplicated once so the -50% scroll loops
-          seamlessly. */}
-      <div className="marquee mt-14" aria-label="Tools I work in">
-        <ul className="marquee__track flex w-max items-center gap-12">
+          seamlessly.
+
+          The second copy is aria-hidden. It exists only so the loop has
+          somewhere to travel to; without this a screen reader announced the
+          whole toolchain twice, back to back. */}
+      <div className="marquee marquee--fade mt-14">
+        <ul className="marquee__track flex w-max items-center gap-10" aria-label="Tools I work in">
           {[...tools, ...tools].map((t, i) => (
             <li
-              key={`${t}-${i}`}
-              className="text-xl font-semibold whitespace-nowrap text-white/35 select-none"
+              key={`${t.label}-${i}`}
+              aria-hidden={i >= tools.length ? 'true' : undefined}
+              className="flex shrink-0 items-center gap-2.5 select-none"
             >
-              {t}
+              {/* The mark is painted, not drawn: the SVG is a mask and the
+                  colour comes from the background, so one tone covers thirteen
+                  logos and they sit at exactly the weight of the label beside
+                  them. */}
+              <span
+                aria-hidden="true"
+                className="block h-6 w-6 shrink-0 bg-white/40"
+                style={{
+                  maskImage: `url(${t.icon})`,
+                  WebkitMaskImage: `url(${t.icon})`,
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskPosition: 'center',
+                  WebkitMaskPosition: 'center',
+                  maskSize: 'contain',
+                  WebkitMaskSize: 'contain',
+                }}
+              />
+              <span className="text-xl font-semibold whitespace-nowrap text-white/35">
+                {t.label}
+              </span>
             </li>
           ))}
         </ul>

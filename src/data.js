@@ -49,7 +49,7 @@ export const about = {
 
   // The small plate tucked into the corner of the third bento tile.
   // TODO(you): a crop of your work — a UI screen, a component sheet, anything.
-  tileImage: '/images/about-tile.jpg',
+  tileImage: '/images/about-tile.svg',
 
   stats: [
     { value: 2, suffix: '+', label: 'Years Designing Digital Products' },
@@ -72,78 +72,100 @@ export const about = {
 }
 
 /* ---------------------------------------------------------------------------
-   PROJECTS — left exactly as they were, per your request.
+   PROJECTS — your real work, replacing the ten invented ones the template
+   shipped with.
+
+   The URLs you sent all carried a `?utm_source=chatgpt.com` tracking parameter.
+   That is not part of your sites' addresses — it would have tagged every
+   outbound link on your portfolio with a third party's analytics. Stripped.
+   The `#/...` fragments on Montestory and SRIQR are real routes and are kept.
+
+   STILL NEEDED FROM YOU (see the chat):
+     - `desc` for every project: what the problem was, what you changed.
+       Every one below is a marked placeholder, NOT copy. Do not publish as is.
+     - `image` for every project: ~1600x1200, cropped to the centre.
+     - `images` for the two concepts: exported PNGs of the screens. A Figma
+       LINK will not work here — the lightbox renders image files. See chat.
 --------------------------------------------------------------------------- */
+const TODO_DESC = 'TODO(you): one paragraph — the problem, and what you changed.'
+
 export const projects = [
   {
-    title: 'Lumen Supply',
+    title: 'Tensor School',
     type: 'live',
-    url: 'https://example.com', // TODO(you)
-    image: '/images/lumen-supply.jpg',
-    desc: 'Rebuilt a direct-to-consumer lighting store around a checkout that stopped losing people at the shipping step — delivery cost surfaced up front, duplicate fields collapsed.',
+    url: 'https://tensorschool.com/',
+    image: '/images/tensor-school.jpg',
+    desc: TODO_DESC,
   },
   {
-    title: 'Northbank',
+    title: 'AlgoUniversity',
     type: 'live',
-    url: 'https://example.com',
-    image: '/images/northbank.jpg',
-    desc: 'A reconciliation dashboard for finance teams, inverted so the exceptions surface first and the forty thousand matched rows collapse into one confirmable line.',
+    url: 'https://algouniversity-web.vercel.app/',
+    image: '/images/algouniversity.jpg',
+    desc: TODO_DESC,
   },
   {
-    title: 'Atlas Retreats',
-    type: 'concept',
-    images: ['/images/atlas-1.jpg', '/images/atlas-2.jpg', '/images/atlas-3.jpg'],
-    image: '/images/atlas-1.jpg',
-    desc: 'A date-first booking flow for remote cabins, where the availability calendar is the product rather than a step buried three screens in.',
-  },
-  {
-    title: 'Meridian',
+    title: 'Montestory',
     type: 'live',
-    url: 'https://example.com',
-    image: '/images/meridian.jpg',
-    desc: 'Onboarding for a project-management tool, rebuilt so the first session ends with the user’s own work in the product instead of a five-step tour.',
+    url: 'https://www.montestory.in/#/montessori/home',
+    image: '/images/montestory.jpg',
+    desc: TODO_DESC,
   },
+  /* Srshta Technologies is PULLED, not lost. As of 2026-07-17 srshta.com serves
+     an ASP.NET "Server Error in '/' Application — Runtime Error" page, behind a
+     TLS certificate that expired 2024-03-15. "Explore Project" would have sent
+     every visitor to a browser security warning and then a stack-trace page,
+     which reads worse than having no entry at all.
+
+     To restore it: get the site back up, or send me screenshots from when it
+     worked and it goes back as a `concept` with no outbound link.
+
   {
-    title: 'Kiln Studio',
+    title: 'Srshta Technologies',
     type: 'live',
-    url: 'https://example.com',
-    image: '/images/kiln-studio.jpg',
-    desc: 'A ceramics studio’s site, designed as a frame for the photography — full-bleed imagery, no interface chrome competing with the objects.',
+    url: 'https://srshta.com/',
+    image: '/images/srshta.jpg',
+    desc: TODO_DESC,
   },
+  */
   {
-    title: 'Verge Health',
-    type: 'concept',
-    images: ['/images/verge-1.jpg', '/images/verge-2.jpg'],
-    image: '/images/verge-1.jpg',
-    desc: 'A patient-records summary layer designed for the ninety seconds a clinician actually has — current medications and anything changed since the last visit, above the fold.',
-  },
-  {
-    title: 'Orbit Analytics',
-    type: 'concept',
-    images: ['/images/orbit-1.jpg', '/images/orbit-2.jpg'],
-    image: '/images/orbit-1.jpg',
-    desc: 'An analytics product that answers the question in a sentence and puts the chart underneath as evidence, rather than handing over twelve charts and hoping.',
-  },
-  {
-    title: 'Ferra Market',
+    title: 'SRIQR',
     type: 'live',
-    url: 'https://example.com',
-    image: '/images/ferra-market.jpg',
-    desc: 'A grocery marketplace whose browse layer is built around meals rather than aisles, with substitutions inline instead of a dead zero-results page.',
+    url: 'https://www.sriqr.com/#/home',
+    image: '/images/sriqr.jpg',
+    desc: TODO_DESC,
   },
   {
-    title: 'Palette',
-    type: 'concept',
-    images: ['/images/palette-1.jpg', '/images/palette-2.jpg'],
-    image: '/images/palette-1.jpg',
-    desc: 'A component library built token-first — primitives, then semantic aliases, then components — so a rebrand is a variable change rather than a redraw.',
+    title: 'Nirmala Foods',
+    type: 'live',
+    url: 'https://www.nirmalafoods.in/en',
+    image: '/images/nirmala-foods.jpg',
+    desc: TODO_DESC,
   },
   {
-    title: 'Tide',
+    title: 'Amoogh Fashions',
+    type: 'live',
+    url: 'https://www.amoogh.com/',
+    image: '/images/amoogh.jpg',
+    desc: TODO_DESC,
+  },
+
+  /* Concepts. `image` is the deck thumbnail; `images` is what the lightbox
+     pages through. TODO(you): export the screens from Figma — add or remove
+     entries to match however many you actually have. */
+  {
+    title: 'Breath — Meditation Application',
     type: 'concept',
-    images: ['/images/tide-1.jpg', '/images/tide-2.jpg'],
-    image: '/images/tide-1.jpg',
-    desc: 'A surf-forecast app that gives you a verdict, not a dataset, in the four seconds before you leave the house — legible at arm’s length in bright sun.',
+    image: '/images/breath-1.jpg',
+    images: ['/images/breath-1.jpg', '/images/breath-2.jpg', '/images/breath-3.jpg'],
+    desc: TODO_DESC,
+  },
+  {
+    title: 'Aura — Wellness',
+    type: 'concept',
+    image: '/images/aura-1.jpg',
+    images: ['/images/aura-1.jpg', '/images/aura-2.jpg', '/images/aura-3.jpg'],
+    desc: TODO_DESC,
   },
 ]
 
@@ -171,7 +193,7 @@ export const services = [
     desc: 'Interviews, usability testing and journey mapping, so the design answers a real problem instead of a guess.',
     tone: 'light',
     media: 'frame',
-    image: '/images/services/ux-research.jpg',
+    image: '/images/services/ux-research.svg',
   },
   {
     title: 'Web & Mobile Experience',
@@ -179,10 +201,10 @@ export const services = [
     tone: 'dark',
     media: 'ticker',
     images: [
-      '/images/services/web-1.jpg',
-      '/images/services/web-2.jpg',
-      '/images/services/web-3.jpg',
-      '/images/services/web-4.jpg',
+      '/images/services/web-1.svg',
+      '/images/services/web-2.svg',
+      '/images/services/web-3.svg',
+      '/images/services/web-4.svg',
     ],
   },
   {
@@ -190,17 +212,23 @@ export const services = [
     desc: 'I build what I design — React, HTML and CSS — so the shipped page matches the file, down to the spacing.',
     tone: 'light',
     media: 'bleed',
-    image: '/images/services/frontend.jpg',
+    image: '/images/services/frontend.svg',
   },
 ]
 
-/* The tall card on the right of the services block. */
+/* The tall card on the right of the services block.
+
+   The title was "Let's Create Impact", which is a phrase with no author — it
+   could sit on any agency site ever made and mean the same nothing. The good
+   line was already sitting in `desc` underneath it. So the strongest sentence
+   is now the heading, and the body finishes it rather than repeating it: the
+   two read as one thought instead of a slogan followed by an explanation. */
 export const impact = {
   chip: 'Design & Build, One Person',
-  title: 'Let’s Create Impact',
-  desc: 'Bring me the problem, not the spec. I’ll come back with the flow, the screens and the build.',
+  title: 'Bring me the problem',
+  desc: 'Not the spec. I’ll come back with the flow, the screens and the build.',
   cta: 'Start A Project',
-  image: '/images/services/impact.jpg',
+  image: '/images/services/impact.svg',
 }
 
 /* ---------------------------------------------------------------------------
@@ -211,21 +239,35 @@ export const impact = {
    is the kind of thing that gets found out in one conversation. It's now your
    actual toolchain, which is a claim you can defend in any room.
 --------------------------------------------------------------------------- */
+/* Marks are from Simple Icons (simpleicons.org), whose paths are CC0, vendored
+   into public/images/tools rather than hot-linked off a CDN — no third party
+   gets to watch your visitors, and the strip can't break when someone else's
+   CDN does. The trademarks stay with their owners; naming the tools you work in
+   is ordinary nominative use.
+
+   Each is a single path with no fill, so the strip drives them through a CSS
+   mask and paints them in one tone. Brand colours were the other option and a
+   worse one: orange Illustrator and navy-on-navy Photoshop against this
+   section's deep blue is noise plus a contrast failure.
+
+   FigJam is gone: Simple Icons has no separate FigJam mark (it's part of the
+   Figma platform), and the choices were an inaccurate logo or one bare label in
+   a row of logos. Figma already covers it. Say the word if you want it back as
+   a text-only entry. */
 export const tools = [
-  'Figma',
-  'FigJam',
-  'Framer',
-  'Adobe Illustrator',
-  'Photoshop',
-  'Canva',
-  'Maze',
-  'Google Sheets',
-  'Notion',
-  'React',
-  'HTML',
-  'CSS',
-  'Tailwind',
-  'Git',
+  { label: 'Figma', icon: '/images/tools/figma.svg' },
+  { label: 'Framer', icon: '/images/tools/framer.svg' },
+  { label: 'Adobe Illustrator', icon: '/images/tools/illustrator.svg' },
+  { label: 'Photoshop', icon: '/images/tools/photoshop.svg' },
+  { label: 'Canva', icon: '/images/tools/canva.svg' },
+  { label: 'Maze', icon: '/images/tools/maze.svg' },
+  { label: 'Google Sheets', icon: '/images/tools/sheets.svg' },
+  { label: 'Notion', icon: '/images/tools/notion.svg' },
+  { label: 'React', icon: '/images/tools/react.svg' },
+  { label: 'HTML', icon: '/images/tools/html.svg' },
+  { label: 'CSS', icon: '/images/tools/css.svg' },
+  { label: 'Tailwind', icon: '/images/tools/tailwind.svg' },
+  { label: 'Git', icon: '/images/tools/git.svg' },
 ]
 
 /* TODO(you): REPLACE BEFORE PUBLISHING.
@@ -243,21 +285,21 @@ export const testimonials = [
       'PLACEHOLDER — replace with a real client quote, or delete this section entirely.',
     name: 'Client name',
     role: 'Role, Company',
-    image: '/images/client-1.jpg',
+    image: '/images/client-1.svg',
   },
   {
     quote:
       'PLACEHOLDER — replace with a real client quote, or delete this section entirely.',
     name: 'Client name',
     role: 'Role, Company',
-    image: '/images/client-2.jpg',
+    image: '/images/client-2.svg',
   },
   {
     quote:
       'PLACEHOLDER — replace with a real client quote, or delete this section entirely.',
     name: 'Client name',
     role: 'Role, Company',
-    image: '/images/client-3.jpg',
+    image: '/images/client-3.svg',
   },
 ]
 
@@ -290,19 +332,19 @@ export const posts = [
   {
     title: 'What I learned designing my first design system',
     tag: 'Design Systems',
-    image: '/images/post-1.jpg',
+    image: '/images/post-1.svg',
     href: null,
   },
   {
     title: 'Designing in Figma, then building it in React',
     tag: 'Design & Code',
-    image: '/images/post-2.jpg',
+    image: '/images/post-2.svg',
     href: null,
   },
   {
     title: 'The usability problems users feel but never report',
     tag: 'UX Research',
-    image: '/images/post-3.jpg',
+    image: '/images/post-3.svg',
     href: null,
   },
 ]

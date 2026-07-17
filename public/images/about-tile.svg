@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220" width="240" height="220" role="img" aria-label="A close crop of an interface being assembled from components">
+  <!-- The About bento's corner plate, rendered at 120x110. Tiny, so this is a
+       close crop with only a few large shapes — anything finer turns to mush at
+       that size. -->
+  <rect width="240" height="220" fill="#2a2a33"/>
+
+  <!-- A component being placed, under selection -->
+  <rect x="26" y="30" width="120" height="76" rx="8" fill="#ffffff" opacity="0.1"/>
+  <rect x="26" y="30" width="120" height="76" rx="8" fill="none" stroke="#3458ff" stroke-width="2" stroke-dasharray="5 5"/>
+  <g fill="#3458ff">
+    <rect x="20" y="24" width="11" height="11" rx="2"/>
+    <rect x="141" y="24" width="11" height="11" rx="2"/>
+    <rect x="20" y="101" width="11" height="11" rx="2"/>
+    <rect x="141" y="101" width="11" height="11" rx="2"/>
+  </g>
+  <rect x="42" y="48" width="64" height="9" rx="4" fill="#ffffff" opacity="0.9"/>
+  <rect x="42" y="64" width="44" height="9" rx="4" fill="#ffffff" opacity="0.5"/>
+  <rect x="42" y="84" width="40" height="12" rx="6" fill="#3458ff"/>
+
+  <!-- Sibling blocks, cropped by the frame -->
+  <rect x="164" y="30" width="70" height="36" rx="6" fill="#ffffff" opacity="0.12"/>
+  <rect x="164" y="74" width="70" height="32" rx="6" fill="#ffffff" opacity="0.07"/>
+  <rect x="26" y="126" width="86" height="14" rx="7" fill="#ffffff" opacity="0.14"/>
+  <rect x="26" y="150" width="140" height="8" rx="4" fill="#ffffff" opacity="0.09"/>
+  <rect x="26" y="166" width="112" height="8" rx="4" fill="#ffffff" opacity="0.09"/>
+  <rect x="128" y="122" width="106" height="52" rx="8" fill="#3458ff" opacity="0.22"/>
+  <rect x="26" y="188" width="208" height="10" rx="5" fill="#ffffff" opacity="0.06"/>
+</svg>

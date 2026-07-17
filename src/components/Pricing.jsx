@@ -13,7 +13,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="shell py-20 lg:py-28">
       <Reveal className="flex flex-col items-center text-center">
-        <Eyebrow>Pricing Plans</Eyebrow>
+        <Eyebrow>Pricing</Eyebrow>
         <h2 className="mt-5 max-w-[18ch] text-3xl font-semibold sm:text-5xl">
           Flexible design support for growing brands
         </h2>
