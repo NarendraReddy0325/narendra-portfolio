@@ -195,7 +195,23 @@
 .marquee {
   position: relative;
   overflow: hidden;
+  /* The track is `w-max`, and that max-content width propagates up as every
+     ancestor's min-content size — so a marquee dropped into any flex or grid
+     item will blow that item wide open unless it is allowed to shrink.
+     overflow:hidden clips the paint, never the sizing. Belt and braces with the
+     min-w-0 on the Services grid items. */
+  min-width: 0;
 }
+/* Soft edges for the toolchain strip. overflow:hidden alone guillotines a logo
+   mid-stroke at each end, which reads as a clipping bug rather than as motion.
+   Fading the last few percent to transparent makes the row travel out of view
+   instead of hitting a wall. Not applied to `.marquee` itself — the ticker
+   inside the Web card is bounded by the card's own edge and wants its crop. */
+.marquee--fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
 .marquee__track {
   animation: marquee-run 38s linear infinite;
 }

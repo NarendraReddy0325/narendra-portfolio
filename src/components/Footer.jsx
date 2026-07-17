@@ -42,9 +42,18 @@ export default function Footer() {
         className="rounded-panel flex origin-bottom flex-col items-center gap-8 bg-deepblue px-6 py-20 text-center text-white lg:py-28"
       >
         {/* Footer blocks each travel 34px — their own distance in the reference. */}
+        {/* "Got Something That Needs Designing?" had two problems: Title Case,
+            which no other heading Narendra wrote uses, and it opened with the
+            same word as the FAQ heading three hundred pixels above it ("Got
+            questions about working together?"). Two "Got …?" questions in a row
+            is a page talking to itself.
+
+            A question is still right for the last thing on the page — it hands
+            the turn to the reader — but this one is open enough to answer
+            whether you're hiring him for a project or for a job. */}
         <Reveal as="footer">
           <h2 className="max-w-[18ch] text-4xl font-semibold text-white sm:text-6xl">
-            Got Something That Needs Designing?
+            What are you working on?
           </h2>
         </Reveal>
 

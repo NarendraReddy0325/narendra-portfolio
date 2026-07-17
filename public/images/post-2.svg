@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" width="720" height="450" role="img" aria-label="A Figma frame beside the React component it becomes">
+  <!-- "Designing in Figma, then building it in React" — the frame, the arrow,
+       the JSX. Same 16:10 as the card. -->
+  <rect width="720" height="450" fill="#e9ecf3"/>
+
+  <rect x="40" y="60" width="290" height="330" rx="14" fill="#ffffff"/>
+  <rect x="40" y="60" width="290" height="30" rx="14" fill="#f6f7fa"/>
+  <rect x="40" y="76" width="290" height="14" fill="#f6f7fa"/>
+  <circle cx="62" cy="75" r="5" fill="#3458ff"/>
+  <text x="78" y="80" fill="#9a9dab" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="0.08em">FIGMA</text>
+
+  <rect x="68" y="112" width="234" height="250" rx="10" fill="#f6f7fa" stroke="#3458ff" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <g fill="#3458ff">
+    <rect x="62" y="106" width="11" height="11" rx="2"/><rect x="297" y="106" width="11" height="11" rx="2"/>
+    <rect x="62" y="357" width="11" height="11" rx="2"/><rect x="297" y="357" width="11" height="11" rx="2"/>
+  </g>
+  <rect x="90" y="140" width="120" height="13" rx="5" fill="#101010" opacity="0.8"/>
+  <rect x="90" y="162" width="84" height="13" rx="5" fill="#101010" opacity="0.8"/>
+  <rect x="90" y="192" width="170" height="6" rx="3" fill="#9a9dab"/>
+  <rect x="90" y="206" width="140" height="6" rx="3" fill="#9a9dab"/>
+  <rect x="90" y="232" width="80" height="24" rx="12" fill="#3458ff"/>
+  <rect x="182" y="232" width="62" height="24" rx="12" fill="#ffffff" stroke="#dfe0eb"/>
+  <rect x="90" y="276" width="188" height="64" rx="8" fill="#ffffff" stroke="#dfe0eb"/>
+  <rect x="104" y="292" width="52" height="32" rx="5" fill="#e9ecf3"/>
+  <rect x="166" y="292" width="52" height="32" rx="5" fill="#e9ecf3"/>
+
+  <g>
+    <line x1="348" y1="225" x2="376" y2="225" stroke="#3458ff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6"/>
+    <path d="M376 215 l14 10 -14 10 z" fill="#3458ff"/>
+  </g>
+
+  <rect x="404" y="60" width="276" height="330" rx="14" fill="#2a2a33"/>
+  <rect x="404" y="60" width="276" height="30" rx="14" fill="#22222a"/>
+  <rect x="404" y="76" width="276" height="14" fill="#22222a"/>
+  <circle cx="424" cy="75" r="4" fill="#ff5f57"/>
+  <circle cx="438" cy="75" r="4" fill="#febc2e"/>
+  <circle cx="452" cy="75" r="4" fill="#28c840"/>
+  <text x="470" y="80" fill="#9a9dab" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600">Hero.jsx</text>
+
+  <g>
+    <rect x="428" y="112" width="42" height="8" rx="3" fill="#c678dd"/>
+    <rect x="478" y="112" width="66" height="8" rx="3" fill="#61afef"/>
+    <rect x="440" y="134" width="34" height="8" rx="3" fill="#e06c75"/>
+    <rect x="482" y="134" width="86" height="8" rx="3" fill="#98c379"/>
+    <rect x="440" y="156" width="56" height="8" rx="3" fill="#e06c75"/>
+    <rect x="504" y="156" width="44" height="8" rx="3" fill="#98c379"/>
+    <rect x="452" y="178" width="72" height="8" rx="3" fill="#61afef"/>
+    <rect x="532" y="178" width="38" height="8" rx="3" fill="#d19a66"/>
+    <rect x="452" y="200" width="50" height="8" rx="3" fill="#d19a66"/>
+    <rect x="510" y="200" width="62" height="8" rx="3" fill="#98c379"/>
+    <rect x="440" y="222" width="38" height="8" rx="3" fill="#c678dd"/>
+    <rect x="486" y="222" width="78" height="8" rx="3" fill="#61afef"/>
+    <rect x="428" y="244" width="30" height="8" rx="3" fill="#c678dd"/>
+    <rect x="440" y="266" width="64" height="8" rx="3" fill="#98c379"/>
+    <rect x="440" y="288" width="88" height="8" rx="3" fill="#61afef"/>
+    <rect x="428" y="310" width="46" height="8" rx="3" fill="#4e4e5c"/>
+    <rect x="428" y="332" width="72" height="8" rx="3" fill="#4e4e5c"/>
+    <rect x="428" y="354" width="54" height="8" rx="3" fill="#4e4e5c"/>
+  </g>
+</svg>

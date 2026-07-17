@@ -43,12 +43,57 @@ const fadeUp = (delay = 0) => ({
 
    The floats are deliberately mismatched in distance, direction and duration.
    Four pills bobbing on the same clock read as a broken loop, not as objects
-   hanging in the air. */
+   hanging in the air.
+
+   WHY THERE ARE TWO SETS OF POSITIONS
+   `left` is a percentage of the WORD, and the word is 24vw — deliberately wider
+   than a phone, because it's a backdrop and is meant to run off both edges. The
+   pills were riding along with it: at 390px the word measures ~449px, so the
+   3% pill sat at -16px and the 79% pill ran ~44px past the right edge. "UI/UX"
+   was sliced down the middle and "Mobile Design" read as "Mobile D".
+
+   Widening the pills' box wouldn't save it either — four pills total ~344px of
+   a 390px screen, so a row of four can only ever overlap or overflow. Below
+   `md` two of them stand down and the survivors move to positions that clear
+   both edges; from `md` up the word is wide enough for all four, so the
+   original composition returns untouched. */
 const TAGS = [
-  { left: '3%', drop: 6, rotate: -14, float: { y: 12, x: 5, duration: 4.2, delay: 0 } },
-  { left: '26%', drop: -10, rotate: 9, float: { y: -14, x: -6, duration: 5.1, delay: 0.5 } },
-  { left: '58%', drop: 8, rotate: -8, float: { y: 14, x: -5, duration: 4.7, delay: 0.9 } },
-  { left: '79%', drop: -6, rotate: 13, float: { y: -11, x: 7, duration: 5.6, delay: 0.3 } },
+  {
+    // 8%, not the 3% this started at. At 768-1088 the word overflows the
+    // viewport far enough that a 3% offset put this pill at -28px — clipped,
+    // on desktop, the whole time. 8% is the smallest offset that clears the
+    // left edge at every width from md up; measured, not eyeballed.
+    left: '8%',
+    leftSm: '10%',
+    drop: 6,
+    rotate: -14,
+    float: { y: 12, x: 5, duration: 4.2, delay: 0 },
+  },
+  {
+    left: '26%',
+    smHidden: true,
+    drop: -10,
+    rotate: 9,
+    float: { y: -14, x: -6, duration: 5.1, delay: 0.5 },
+  },
+  {
+    left: '58%',
+    // 62 rather than the 52 that would mirror the desktop spacing: on a phone
+    // the portrait is far larger relative to the word, and 52% parked this pill
+    // squarely across his mouth. 62% sets it down on the shoulder to the right
+    // of his face, which is where the desktop pills sit anyway.
+    leftSm: '62%',
+    drop: 8,
+    rotate: -8,
+    float: { y: 14, x: -5, duration: 4.7, delay: 0.9 },
+  },
+  {
+    left: '79%',
+    smHidden: true,
+    drop: -6,
+    rotate: 13,
+    float: { y: -11, x: 7, duration: 5.6, delay: 0.3 },
+  },
 ]
 
 /**
@@ -58,7 +103,7 @@ const TAGS = [
  * owns the entrance (and the final angle), the inner one owns the endless
  * drift. Put both on one element and the float would overwrite the landing.
  */
-function HeroTag({ label, rotate, left, drop, float }) {
+function HeroTag({ label, rotate, left, leftSm, smHidden = false, drop, float }) {
   const reduce = useReducedMotion()
 
   return (
@@ -67,8 +112,13 @@ function HeroTag({ label, rotate, left, drop, float }) {
       initial={reduce ? { rotate } : { y: -135, rotate: 0 }}
       animate={{ y: 0, rotate }}
       transition={{ duration: 1, ease: EASE, type: 'tween' }}
-      className="absolute bottom-0"
-      style={{ left, marginBottom: drop }}
+      // The position goes through a CSS variable so the breakpoint can be a
+      // plain Tailwind variant. An inline `left` would be one value for every
+      // viewport, and this pill needs two.
+      className={`absolute bottom-0 left-[var(--tag-left-sm)] md:left-[var(--tag-left)] ${
+        smHidden ? 'hidden md:block' : ''
+      }`}
+      style={{ '--tag-left': left, '--tag-left-sm': leftSm ?? left, marginBottom: drop }}
     >
       <motion.span
         className="block rounded-full bg-page/90 px-4 py-2 text-xs font-medium whitespace-nowrap text-body shadow-[0_10px_30px_-12px_rgba(16,16,16,0.35)] backdrop-blur"

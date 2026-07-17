@@ -14,7 +14,9 @@ export default function FAQ() {
             stretch to match the accordion beside it. */}
         <Reveal as="panel" className="lg:col-span-5 lg:self-start">
           <div className="rounded-panel flex flex-col items-center justify-center gap-7 bg-dark px-8 py-16 text-center text-white">
-            <Eyebrow tone="dark">FAQ Questions</Eyebrow>
+            {/* Was "FAQ Questions", which expands to "Frequently Asked
+                Questions Questions". Nobody proofreads a template. */}
+            <Eyebrow tone="dark">FAQ</Eyebrow>
             <h2 className="max-w-[14ch] text-3xl font-semibold text-white sm:text-4xl">
               Got questions about working together?
             </h2>

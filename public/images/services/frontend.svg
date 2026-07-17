@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 584 400" width="584" height="400" role="img" aria-label="A code editor with the interface it renders floating over it">
+  <!-- Frontend Development: the source, and the thing it renders, in one frame.
+       viewBox 584x400 = 1.46, matching the 292x200 box, so object-cover crops
+       nothing. The card sets pb-0 and clips, so the composition is weighted to
+       the top — object-top means the bottom is what gets eaten. -->
+  <rect width="584" height="400" fill="#2a2a33"/>
+
+  <!-- Editor chrome -->
+  <rect x="0" y="0" width="584" height="34" fill="#22222a"/>
+  <circle cx="22" cy="17" r="5" fill="#ff5f57"/>
+  <circle cx="40" cy="17" r="5" fill="#febc2e"/>
+  <circle cx="58" cy="17" r="5" fill="#28c840"/>
+  <rect x="84" y="7" width="96" height="20" rx="4" fill="#2f2f3a"/>
+  <text x="96" y="21" fill="#c8cbd6" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500">Hero.jsx</text>
+  <rect x="188" y="7" width="86" height="20" rx="4" fill="#22222a"/>
+  <text x="200" y="21" fill="#6b6b7a" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500">Card.jsx</text>
+
+  <!-- Gutter -->
+  <g fill="#4e4e5c" font-family="ui-monospace, Menlo, monospace" font-size="11">
+    <text x="18" y="64">1</text><text x="18" y="86">2</text><text x="18" y="108">3</text>
+    <text x="18" y="130">4</text><text x="18" y="152">5</text><text x="18" y="174">6</text>
+    <text x="18" y="196">7</text><text x="18" y="218">8</text><text x="18" y="240">9</text>
+    <text x="14" y="262">10</text><text x="14" y="284">11</text><text x="14" y="306">12</text>
+    <text x="14" y="328">13</text><text x="14" y="350">14</text><text x="14" y="372">15</text>
+  </g>
+
+  <!-- Tokenised code: coloured bars, legible as code without pretending to be
+       real source. -->
+  <g>
+    <rect x="42" y="56" width="44" height="8" rx="3" fill="#c678dd"/>
+    <rect x="94" y="56" width="66" height="8" rx="3" fill="#61afef"/>
+    <rect x="168" y="56" width="30" height="8" rx="3" fill="#c678dd"/>
+    <rect x="206" y="56" width="80" height="8" rx="3" fill="#98c379"/>
+
+    <rect x="54" y="78" width="34" height="8" rx="3" fill="#e06c75"/>
+    <rect x="96" y="78" width="90" height="8" rx="3" fill="#98c379"/>
+
+    <rect x="54" y="100" width="56" height="8" rx="3" fill="#e06c75"/>
+    <rect x="118" y="100" width="48" height="8" rx="3" fill="#98c379"/>
+
+    <rect x="66" y="122" width="74" height="8" rx="3" fill="#61afef"/>
+    <rect x="148" y="122" width="40" height="8" rx="3" fill="#d19a66"/>
+
+    <rect x="66" y="144" width="52" height="8" rx="3" fill="#d19a66"/>
+    <rect x="126" y="144" width="60" height="8" rx="3" fill="#98c379"/>
+
+    <rect x="54" y="166" width="38" height="8" rx="3" fill="#c678dd"/>
+    <rect x="100" y="166" width="78" height="8" rx="3" fill="#61afef"/>
+
+    <rect x="42" y="188" width="30" height="8" rx="3" fill="#c678dd"/>
+    <rect x="80" y="188" width="64" height="8" rx="3" fill="#98c379"/>
+
+    <rect x="54" y="210" width="70" height="8" rx="3" fill="#61afef"/>
+    <rect x="132" y="210" width="36" height="8" rx="3" fill="#d19a66"/>
+
+    <rect x="42" y="232" width="44" height="8" rx="3" fill="#4e4e5c"/>
+    <rect x="54" y="254" width="58" height="8" rx="3" fill="#e06c75"/>
+    <rect x="120" y="254" width="52" height="8" rx="3" fill="#98c379"/>
+    <rect x="42" y="276" width="26" height="8" rx="3" fill="#c678dd"/>
+    <rect x="42" y="298" width="70" height="8" rx="3" fill="#61afef"/>
+    <rect x="54" y="320" width="46" height="8" rx="3" fill="#d19a66"/>
+    <rect x="42" y="342" width="34" height="8" rx="3" fill="#4e4e5c"/>
+    <rect x="42" y="364" width="58" height="8" rx="3" fill="#4e4e5c"/>
+  </g>
+
+  <!-- The rendered result, floating over the source: the whole claim of the
+       card in one overlap. -->
+  <g>
+    <rect x="286" y="70" width="272" height="240" rx="12" fill="#0f0f14" opacity="0.5"/>
+    <rect x="278" y="62" width="272" height="240" rx="12" fill="#e9ecf3"/>
+    <rect x="278" y="62" width="272" height="30" rx="12" fill="#ffffff"/>
+    <rect x="278" y="80" width="272" height="12" fill="#ffffff"/>
+    <circle cx="296" cy="77" r="4.5" fill="#3458ff"/>
+    <rect x="310" y="73" width="40" height="7" rx="3" fill="#dfe0eb"/>
+    <g fill="#dfe0eb"><rect x="430" y="73" width="24" height="7" rx="3"/><rect x="462" y="73" width="24" height="7" rx="3"/></g>
+    <rect x="498" y="70" width="38" height="13" rx="6" fill="#101010"/>
+
+    <rect x="298" y="112" width="140" height="14" rx="5" fill="#101010" opacity="0.85"/>
+    <rect x="298" y="134" width="98" height="14" rx="5" fill="#101010" opacity="0.85"/>
+    <rect x="298" y="164" width="170" height="7" rx="3" fill="#9a9dab"/>
+    <rect x="298" y="178" width="140" height="7" rx="3" fill="#9a9dab"/>
+    <rect x="298" y="202" width="84" height="24" rx="12" fill="#3458ff"/>
+    <rect x="392" y="202" width="66" height="24" rx="12" fill="#ffffff" stroke="#dfe0eb"/>
+    <rect x="298" y="244" width="236" height="44" rx="8" fill="#ffffff"/>
+    <rect x="312" y="256" width="60" height="20" rx="4" fill="#e9ecf3"/>
+    <rect x="382" y="256" width="60" height="20" rx="4" fill="#e9ecf3"/>
+    <rect x="452" y="256" width="60" height="20" rx="4" fill="#e9ecf3"/>
+  </g>
+
+  <text x="42" y="26" fill="#6b6b7a" font-family="Inter, system-ui, sans-serif" font-size="0">SOURCE</text>
+</svg>

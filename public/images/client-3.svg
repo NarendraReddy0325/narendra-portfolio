@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" width="640" height="440" role="img" aria-label="">
+  <!-- Testimonial panel, variant 3. Decorative (alt=""), no faces, no rating —
+       see client-1.svg. This one is the handover: a file, an arrow, a shipped
+       build, which is what the section is nominally about. -->
+  <defs>
+    <linearGradient id="c3" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#dfe3ec"/>
+      <stop offset="1" stop-color="#eef1ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="440" fill="url(#c3)"/>
+
+  <!-- Quote mark, faint, holding the top-left -->
+  <g fill="#3458ff" opacity="0.1">
+    <path d="M60 150 c0 -44 28 -80 70 -92 l8 22 c-25 8 -40 27 -40 47 l32 0 0 63 -70 0 z"/>
+    <path d="M158 150 c0 -44 28 -80 70 -92 l8 22 c-25 8 -40 27 -40 47 l32 0 0 63 -70 0 z"/>
+  </g>
+
+  <!-- The file -->
+  <rect x="72" y="196" width="230" height="176" rx="14" fill="#ffffff"/>
+  <rect x="72" y="196" width="230" height="28" rx="14" fill="#f6f7fa"/>
+  <rect x="72" y="210" width="230" height="14" fill="#f6f7fa"/>
+  <circle cx="94" cy="210" r="4" fill="#3458ff"/>
+  <rect x="106" y="207" width="44" height="6" rx="3" fill="#dfe0eb"/>
+  <rect x="94" y="244" width="96" height="10" rx="4" fill="#101010" opacity="0.75"/>
+  <rect x="94" y="262" width="66" height="10" rx="4" fill="#101010" opacity="0.75"/>
+  <rect x="94" y="288" width="140" height="6" rx="3" fill="#9a9dab"/>
+  <rect x="94" y="302" width="112" height="6" rx="3" fill="#9a9dab"/>
+  <rect x="94" y="326" width="64" height="20" rx="10" fill="#3458ff"/>
+  <rect x="168" y="326" width="50" height="20" rx="10" fill="#ffffff" stroke="#dfe0eb"/>
+
+  <!-- Handover -->
+  <g>
+    <line x1="318" y1="284" x2="348" y2="284" stroke="#3458ff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6"/>
+    <path d="M346 274 l14 10 -14 10 z" fill="#3458ff"/>
+  </g>
+
+  <!-- The shipped build -->
+  <rect x="376" y="196" width="230" height="176" rx="14" fill="#2a2a33"/>
+  <rect x="376" y="196" width="230" height="28" rx="14" fill="#22222a"/>
+  <rect x="376" y="210" width="230" height="14" fill="#22222a"/>
+  <circle cx="396" cy="210" r="4" fill="#ff5f57"/>
+  <circle cx="410" cy="210" r="4" fill="#febc2e"/>
+  <circle cx="424" cy="210" r="4" fill="#28c840"/>
+  <rect x="440" y="205" width="120" height="10" rx="5" fill="#2f2f3a"/>
+  <rect x="398" y="244" width="96" height="10" rx="4" fill="#ffffff" opacity="0.9"/>
+  <rect x="398" y="262" width="66" height="10" rx="4" fill="#ffffff" opacity="0.9"/>
+  <rect x="398" y="288" width="140" height="6" rx="3" fill="#ffffff" opacity="0.4"/>
+  <rect x="398" y="302" width="112" height="6" rx="3" fill="#ffffff" opacity="0.4"/>
+  <rect x="398" y="326" width="64" height="20" rx="10" fill="#3458ff"/>
+  <rect x="472" y="326" width="50" height="20" rx="10" fill="#ffffff" opacity="0.12"/>
+
+  <!-- A wordless reply bubble, top right -->
+  <rect x="404" y="76" width="200" height="76" rx="18" fill="#ffffff"/>
+  <rect x="428" y="100" width="136" height="7" rx="3.5" fill="#dfe0eb"/>
+  <rect x="428" y="118" width="102" height="7" rx="3.5" fill="#e9ecf3"/>
+</svg>

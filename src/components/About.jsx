@@ -14,7 +14,7 @@ export default function About() {
     <section id="about" className="shell py-20 lg:py-28">
       <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-start">
         <div className="lg:col-span-3">
-          <Eyebrow>About Me</Eyebrow>
+          <Eyebrow>About</Eyebrow>
         </div>
 
         <div className="lg:col-span-9">
@@ -51,14 +51,16 @@ export default function About() {
             invisible and TravelingStats draws the real ones on top; below lg
             there's no travel and these are simply the cards. They don't get a
             reveal, because something is already flying into them. */}
-        {/* content-start is doing real work here. This column stretches to match
+        {/* content-end is doing real work here. This column stretches to match
             the portrait beside it, and a grid's auto rows STRETCH to fill that
             extra height by default — which is what left a gap under each counter
-            card. Pinning align-content to the start keeps both rows at their
-            natural size: the counter cards stay compact around their content,
-            the taller tiles keep their own height, and the only space between
-            them is the gap. */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:content-start">
+            card. Pinning align-content keeps both rows at their natural size:
+            the counter cards stay compact around their content, the taller tiles
+            keep their own height, and the only space between them is the gap.
+            Ending rather than starting it collects the leftover height ABOVE the
+            cards, so the bottom row lands flush with the foot of the portrait —
+            the reference's alignment. */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:content-end">
           <StatCard stat={about.stats[0]} anchorId="stat-about-0" anchor />
           <StatCard stat={about.stats[1]} anchorId="stat-about-1" anchor />
 
@@ -108,19 +110,32 @@ export default function About() {
                 {about.approach.title}
               </h3>
 
-              <ul className="mt-6 flex flex-col items-start gap-2 pr-24">
-                {about.approach.tags.slice(0, 3).map((t) => (
-                  <li key={t} className="chip">
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              {/* The rotated chip is centred against this row, not pinned to the
+                  card's floor. Rotating about the bottom edge swings the chip's
+                  lower end down by ~0.44 x its own width, so the old pinning only
+                  cleared the floor for a word as short as the reference's
+                  "Branding" — anything longer hung out of the card and got
+                  clipped. Centring the chip on a fixed point keeps it put
+                  whatever the label says. */}
+              <div className="relative mt-6 pr-24">
+                <ul className="flex flex-col items-start gap-2">
+                  {about.approach.tags.slice(0, 3).map((t) => (
+                    <li key={t} className="chip">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
 
-              {about.approach.tags[3] && (
-                <span className="chip absolute right-5 bottom-8 rotate-[62deg] origin-bottom">
-                  {about.approach.tags[3]}
-                </span>
-              )}
+                {/* right-12 is as far left as this can go: rotated 62deg the chip
+                    is ~79px wide, so centring it 48px off the row's right edge
+                    leaves its left edge just inside the pr-24 gutter the tag list
+                    keeps clear. Past this it starts biting into the tags. */}
+                {about.approach.tags[3] && (
+                  <span className="chip absolute top-1/2 right-12 translate-x-1/2 -translate-y-1/2 rotate-[62deg] whitespace-nowrap">
+                    {about.approach.tags[3]}
+                  </span>
+                )}
+              </div>
             </div>
           </Reveal>
         </div>
